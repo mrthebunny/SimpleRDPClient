@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ActiveXClient</RootNamespace>
     <AssemblyName>ActiveXClient</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,7 +37,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -44,11 +44,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AwakeCoding\Common\AdvancedSettings.cs" />
+    <Compile Include="AwakeCoding\Common\SecuredSettings.cs" />
+    <Compile Include="AwakeCoding\Common\TransportSettings.cs" />
+    <Compile Include="AwakeCoding\MsRdpClient\IMsRdpClient.cs" />
+    <Compile Include="AwakeCoding\MsRdpClient\MsRDPClient50.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AwakeCoding\MsRdpClient\MsRDPClient60.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AwakeCoding\MsRdpClient\MsRDPClient61.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AwakeCoding\MsRdpClient\MsRDPClient70.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AwakeCoding\MsRdpClient\MsRDPClient80.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AwakeCoding\Common\IRdpClient.cs" />
+    <Compile Include="AwakeCoding\MsRdpClient\MsRdpClient.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AwakeCoding\MsRdpClient\MsRdpClient.Designer.cs">
+      <DependentUpon>MsRdpClient.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,6 +89,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

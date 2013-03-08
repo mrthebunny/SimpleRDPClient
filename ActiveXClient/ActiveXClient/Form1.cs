@@ -6,7 +6,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ActiveXClient
@@ -72,8 +71,8 @@ namespace ActiveXClient
         {
             try
             {
-                rdpConnection.RemoteProgram2.RemoteProgramMode = true;
-                rdpConnection.RemoteProgram2.ServerStartProgram(@"||cmd", "", "", false, "", false);
+                rdpConnection.RemoteProgram.RemoteProgramMode = true;
+                rdpConnection.RemoteProgram.ServerStartProgram(@"c:\windows\system32\cmd.exe", @"c:\windows\system32\", "", false, "", false);
             }
             catch (Exception ex)
             {
