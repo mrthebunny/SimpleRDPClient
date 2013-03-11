@@ -44,38 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\AdvancedSettings.cs" />
-    <Compile Include="Common\EventHandling.cs" />
-    <Compile Include="Common\SecuredSettings.cs" />
-    <Compile Include="Common\TransportSettings.cs" />
-    <Compile Include="MsRdpClient\IMsRDPClient.cs" />
-    <Compile Include="MsRdpClient\MsRDPClient50.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="MsRdpClient\MsRDPClient60.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="MsRdpClient\MsRDPClient61.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="MsRdpClient\MsRDPClient70.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="MsRdpClient\MsRDPClient80.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Common\IRdpClient.cs" />
-    <Compile Include="MsRdpClient\MsRDPClientFrame.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MsRdpClient\MsRDPClientFrame.Designer.cs">
-      <DependentUpon>MsRDPClientFrame.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -124,7 +97,20 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AwakeCoding.Common\AwakeCoding.Common.csproj">
+      <Project>{133e9473-8a64-45af-aea4-b1a8614f44d8}</Project>
+      <Name>AwakeCoding.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AwakeCoding.FreeRDPClient\AwakeCoding.FreeRDPClient.csproj">
+      <Project>{F0AEB698-0338-4E04-949B-60E4448D1597}</Project>
+      <Name>AwakeCoding.FreeRDPClient</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(SolutionDir)\AwakeCoding.MsRdpClient\$(OutDir)\AwakeCoding.MsRdpClient.*" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

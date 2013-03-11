@@ -7,14 +7,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using AwakeCoding.MsRdpClient;
 
 namespace ActiveXClient
 {
     public partial class Form1 : Form
     {
-        private MSRDPClientFrame rdpClientFrame; 
-
         private bool connected;
 
         public bool Connected
@@ -38,9 +35,6 @@ namespace ActiveXClient
         {
             InitializeComponent();
             Connected = false;
-
-            rdpClientFrame = new MSRDPClientFrame();
-            toolStripContainer2.ContentPanel.Controls.Add(rdpClientFrame);
 
         }
 
@@ -66,21 +60,21 @@ namespace ActiveXClient
 
         private void toolStripButtonDisconnect2_Click(object sender, EventArgs e)
         {
-
+            rdpClientFrame1.Disconnect();
         }
 
         private void toolStripButtonConnect2_Click(object sender, EventArgs e)
         {
-            rdpClientFrame.Server = "192.168.3.62";
-            rdpClientFrame.UserName = "Administrator";
-            rdpClientFrame.Domain = "Awake";
+            rdpClientFrame1.Server = "192.168.3.62";
+            rdpClientFrame1.UserName = "Administrator";
+            rdpClientFrame1.Domain = "Awake";
 
-            rdpClientFrame.DesktopWidth = rdpClientFrame.Width;
-            rdpClientFrame.DesktopHeight = rdpClientFrame.Height;
+            rdpClientFrame1.DesktopWidth = rdpClientFrame1.Width;
+            rdpClientFrame1.DesktopHeight = rdpClientFrame1.Height;
 
-            rdpClientFrame.SecuredSettings.ClearTextPassword = "@wake01DC";
+            rdpClientFrame1.SecuredSettings.ClearTextPassword = "@wake01DC";
 
-            rdpConnection.Connect();
+            rdpClientFrame1.Connect();
         }
 
         private void toolStripButtonRemoteProgram_Click(object sender, EventArgs e)
@@ -103,6 +97,16 @@ namespace ActiveXClient
         }
 
         private void rdpConnection_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
+        {
+            Connected = false;
+        }
+
+        private void rdpClientFrame_Connected(object sender, EventArgs e)
+        {
+            Connected = true;
+        }
+
+        private void rdpClientFrame_Disconnected(object sender, AwakeCoding.Common.DisconnectedEventArgs e)
         {
             Connected = false;
         }

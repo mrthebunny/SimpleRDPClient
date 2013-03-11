@@ -13,7 +13,7 @@ using MSTSCLib;
 
 namespace AwakeCoding.MsRdpClient
 {
-    public partial class MSRDPClientFrame : UserControl, IRDPClient
+    public partial class MSRDPClientFrameNew : UserControl, IRDPClient
     {
 
         #region Private members
@@ -38,7 +38,7 @@ namespace AwakeCoding.MsRdpClient
 
         #endregion Events
 
-        public MSRDPClientFrame()
+        public MSRDPClientFrameNew()
         {
             AdvancedSettings = new Common.AdvancedSettings();
             SecuredSettings = new Common.SecuredSettings();
@@ -278,14 +278,14 @@ namespace AwakeCoding.MsRdpClient
 
     }
 
-    public enum MsRdpClientVersion
-    {
-        Unknown,
-        MsClient50,
-        MsClient60,
-        MsClient61,
-        MsClient70,
-        MsClient80
-    }
+    //public enum MsRdpClientVersion
+    //{
+    //    Unknown,
+    //    MsClient50,
+    //    MsClient60,
+    //    MsClient61,
+    //    MsClient70,
+    //    MsClient80
+    //}
 
 }

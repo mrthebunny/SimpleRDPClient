@@ -30,7 +30,7 @@ namespace AwakeCoding.Common
         #region Events
 
         event EventHandler Connected;
-        event EventHandler Disconnected;
+        event DisconnectedEventHandler Disconnected;
         event FatalErrorEventHandler FatalErrorOccurred;
         event WarningEventHandler WarningOccurred;
         
