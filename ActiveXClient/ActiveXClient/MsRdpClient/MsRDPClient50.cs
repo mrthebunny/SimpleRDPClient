@@ -4,7 +4,7 @@ namespace AwakeCoding.MsRdpClient
 
     using MSTSCLib;
 
-    public class MsRDPClient50 : AxMsRdpClient4, IMsRdpClient
+    public class MsRDPClient50 : AxMsRdpClient4, IMsRDPClient
     {
         public IMsRdpClientAdvancedSettings5 AdvancedSettings6
         {

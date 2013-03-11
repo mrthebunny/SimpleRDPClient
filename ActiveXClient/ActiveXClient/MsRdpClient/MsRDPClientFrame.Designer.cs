@@ -1,6 +1,6 @@
 ﻿namespace AwakeCoding.MsRdpClient
 {
-    partial class MsRDPClient
+    partial class MSRDPClientFrame
     {
         /// <summary> 
         /// Required designer variable.

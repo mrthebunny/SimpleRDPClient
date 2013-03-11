@@ -1,5 +1,6 @@
 namespace AwakeCoding.MsRdpClient
 {
+    using System;
     using System.Drawing;
 
     using MSTSCLib;
@@ -8,8 +9,11 @@ namespace AwakeCoding.MsRdpClient
     using IMsTscAxEvents_OnFatalErrorEventHandler = AxMSTSCLib.IMsTscAxEvents_OnFatalErrorEventHandler;
     using IMsTscAxEvents_OnWarningEventHandler = AxMSTSCLib.IMsTscAxEvents_OnWarningEventHandler;
 
-    public interface IMsRdpClient
+
+    public interface IMsRDPClient
     {
+        event EventHandler OnConnected;
+
         event IMsTscAxEvents_OnDisconnectedEventHandler OnDisconnected;
 
         event IMsTscAxEvents_OnFatalErrorEventHandler OnFatalError;

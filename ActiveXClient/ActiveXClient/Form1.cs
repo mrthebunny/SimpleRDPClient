@@ -7,11 +7,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using AwakeCoding.MsRdpClient;
 
 namespace ActiveXClient
 {
     public partial class Form1 : Form
     {
+        private MSRDPClientFrame rdpClientFrame; 
+
         private bool connected;
 
         public bool Connected
@@ -35,6 +38,10 @@ namespace ActiveXClient
         {
             InitializeComponent();
             Connected = false;
+
+            rdpClientFrame = new MSRDPClientFrame();
+            toolStripContainer2.ContentPanel.Controls.Add(rdpClientFrame);
+
         }
 
         private void toolStripButtonConnect_Click(object sender, EventArgs e)
@@ -64,7 +71,16 @@ namespace ActiveXClient
 
         private void toolStripButtonConnect2_Click(object sender, EventArgs e)
         {
+            rdpClientFrame.Server = "192.168.3.62";
+            rdpClientFrame.UserName = "Administrator";
+            rdpClientFrame.Domain = "Awake";
 
+            rdpClientFrame.DesktopWidth = rdpClientFrame.Width;
+            rdpClientFrame.DesktopHeight = rdpClientFrame.Height;
+
+            rdpClientFrame.SecuredSettings.ClearTextPassword = "@wake01DC";
+
+            rdpConnection.Connect();
         }
 
         private void toolStripButtonRemoteProgram_Click(object sender, EventArgs e)

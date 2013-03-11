@@ -8,23 +8,46 @@ using System.Text;
 using System.Windows.Forms;
 using AxMSTSCLib;
 using AwakeCoding.Common;
+using MSTSCLib;
 
 
 
 namespace AwakeCoding.MsRdpClient
 {
-    public partial class MsRDPClient : UserControl, IRdpClient
+    public partial class MSRDPClientFrame : UserControl, IRdpClient
     {
+
+        #region Private members
+
         // Last detected version of the ActiveX control
         private static MsRdpClientVersion lastDetectedVersion = MsRdpClientVersion.Unknown;
 
         // Current instanciated version of IRdpClient
-        private IMsRdpClient internalMsClient = null;
+        private IMsRDPClient internalMsClient = null;
 
-        public MsRDPClient()
+        #endregion // Private members
+
+        #region Events
+
+        public event EventHandler Connected;
+
+        public event DisconnectedEventHandler Disconnected;
+
+        public event FatalErrorEventHandler FatalErrorOccurred;
+
+        public event WarningEventHandler WarningOccurred;
+
+        #endregion Events
+
+        public MSRDPClientFrame()
         {
+            AdvancedSettings = new Common.AdvancedSettings();
+            SecuredSettings = new Common.SecuredSettings();
+            TransportSettings = new Common.TransportSettings();
+
             InitializeComponent();
             InitializeRdpComponent();
+            RegisterEvents();
         }
 
         public static MsRdpClientVersion LastDetectedVersion
@@ -47,6 +70,12 @@ namespace AwakeCoding.MsRdpClient
             {
                 throw new NotSupportedException("MsRrdpClient could not be instanciated");
             }
+
+            System.Diagnostics.Debug.WriteLine("AxRDPClient version instanciated: " + lastDetectedVersion);
+
+            AxHost component = (AxHost) internalMsClient;
+            component.Dock = DockStyle.Fill;
+            Controls.Add(component);
         }
 
         private void TryVersion(MsRdpClientVersion clientVersion, MethodInvoker doApplyVersion)
@@ -92,6 +121,13 @@ namespace AwakeCoding.MsRdpClient
         /// </summary>
         protected virtual void ApplySecuredSettings()
         {
+            IMsTscNonScriptable secured = (IMsTscNonScriptable)internalMsClient.GetOcx();
+
+            secured.ClearTextPassword = SecuredSettings.ClearTextPassword;
+            //secured.BinaryPassword = SecuredSettings.BinaryPassword;
+            //secured.BinarySalt = SecuredSettings.BinarySalt;
+            //secured.PortablePassword = SecuredSettings.PortablePassword;
+            //secured.PortableSalt = SecuredSettings.PortableSalt;
         }
 
         /// <summary>
@@ -105,28 +141,31 @@ namespace AwakeCoding.MsRdpClient
 
         public AdvancedSettings AdvancedSettings
         {
-            get { throw new NotImplementedException(); }
+            get;
+            set;
         }
 
         public SecuredSettings SecuredSettings
         {
-            get { throw new NotImplementedException(); }
+            get;
+            set;
         }
 
         public TransportSettings TransportSettings
         {
-            get { throw new NotImplementedException(); }
+            get;
+            set;
         }
 
         public string Server
         {
             get
             {
-                throw new NotImplementedException();
+                return internalMsClient.Server;
             }
             set
             {
-                throw new NotImplementedException();
+                internalMsClient.Server = value;
             }
         }
 
@@ -134,11 +173,11 @@ namespace AwakeCoding.MsRdpClient
         {
             get
             {
-                throw new NotImplementedException();
+                return internalMsClient.UserName;
             }
             set
             {
-                throw new NotImplementedException();
+                internalMsClient.UserName = value;
             }
         }
 
@@ -146,79 +185,98 @@ namespace AwakeCoding.MsRdpClient
         {
             get
             {
-                throw new NotImplementedException();
+                return internalMsClient.Domain;
             }
             set
             {
-                throw new NotImplementedException();
+                internalMsClient.Domain = value;
             }
         }
 
-        public string DesktopWidth
+        public int DesktopWidth
         {
             get
             {
-                throw new NotImplementedException();
+                return internalMsClient.DesktopWidth;
             }
             set
             {
-                throw new NotImplementedException();
+                internalMsClient.DesktopWidth = value;
             }
         }
 
-        public string DesktopHeight
+        public int DesktopHeight
         {
             get
             {
-                throw new NotImplementedException();
+                return internalMsClient.DesktopHeight;
             }
             set
             {
-                throw new NotImplementedException();
+                internalMsClient.DesktopHeight = value;
             }
         }
 
         public void Connect()
         {
+            ApplySettings();
             ApplyAdvancedSettings();
             ApplySecuredSettings();
             ApplyTransportSettings();
 
-            if (rdp8 != null) rdp8.Connect();
-            else if (rdp7 != null) rdp7.Connect();
-            else if (rdp6 != null) rdp6.Connect();
-            else if (rdp5 != null) rdp5.Connect();
-            else if (rdp4 != null) rdp4.Connect();
-            else if (rdp3 != null) rdp3.Connect();
-            else if (rdp2 != null) rdp2.Connect();
-            else if (rdp != null)  rdp.Connect();
+            internalMsClient.Connect();
         }
 
         public void Disconnect()
         {
-            if (rdp8 != null) rdp8.Disconnect();
-            else if (rdp7 != null) rdp7.Disconnect();
-            else if (rdp6 != null) rdp6.Disconnect();
-            else if (rdp5 != null) rdp5.Disconnect();
-            else if (rdp4 != null) rdp4.Disconnect();
-            else if (rdp3 != null) rdp3.Disconnect();
-            else if (rdp2 != null) rdp2.Disconnect();
-            else if (rdp != null) rdp.Disconnect();
+            internalMsClient.Disconnect();
         }
 
 
         #region Event Handling
 
-        void rdp_OnAuthenticationWarningDismissed(object sender, EventArgs e)
+        private void RegisterEvents()
         {
-            throw new NotImplementedException();
+            internalMsClient.OnConnected += internalMsClient_OnConnected;
+            internalMsClient.OnDisconnected += internalMsClient_OnDisconnected;
+            internalMsClient.OnFatalError += internalMsClient_OnFatalError;
+            internalMsClient.OnWarning += internalMsClient_OnWarning;
         }
 
-        public event EventHandler OnConnected;
+        void internalMsClient_OnConnected(object sender, EventArgs e)
+        {
+            if (Connected != null)
+            {
+                Connected(this, e);
+            }
+        }
 
-        public event EventHandler OnDisconnected;
+        void internalMsClient_OnWarning(object sender, IMsTscAxEvents_OnWarningEvent e)
+        {
+            if (WarningOccurred != null)
+            {
+                WarningOccurred(this, new WarningEventArgs(e.warningCode));
+            }
+        }
+
+        void internalMsClient_OnFatalError(object sender, IMsTscAxEvents_OnFatalErrorEvent e)
+        {
+            if (FatalErrorOccurred != null)
+            {
+                FatalErrorOccurred(this, new FatalErrorEventArgs(e.errorCode));
+            }
+        }
+
+        void internalMsClient_OnDisconnected(object sender, IMsTscAxEvents_OnDisconnectedEvent e)
+        {
+            if (Disconnected != null)
+            {
+                Disconnected(this, new DisconnectedEventArgs(e.discReason));
+            }
+        }
 
         #endregion // Event Handling
+
     }
 
     public enum MsRdpClientVersion

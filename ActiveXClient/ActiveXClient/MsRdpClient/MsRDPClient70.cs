@@ -4,7 +4,7 @@ namespace AwakeCoding.MsRdpClient
 
     using MSTSCLib;
 
-    public class MsRDPClient70 : AxMsRdpClient7NotSafeForScripting, IMsRdpClient
+    public class MsRDPClient70 : AxMsRdpClient7NotSafeForScripting, IMsRDPClient
     {
         public IMsRdpClientAdvancedSettings8 AdvancedSettings9
         {

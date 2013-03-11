@@ -18,8 +18,8 @@ namespace AwakeCoding.Common
         string UserName { get; set; }
         string Domain { get; set; }
 
-        string DesktopWidth { get; set; }
-        string DesktopHeight { get; set; }
+        int DesktopWidth { get; set; }
+        int DesktopHeight { get; set; }
         #endregion // Settings
 
         #region Methods
@@ -31,7 +31,8 @@ namespace AwakeCoding.Common
 
         event EventHandler Connected;
         event EventHandler Disconnected;
-        event FatalErrorEventHandler FatalErrorOccured;
+        event FatalErrorEventHandler FatalErrorOccurred;
+        event WarningEventHandler WarningOccurred;
         
         #endregion // Events
     }

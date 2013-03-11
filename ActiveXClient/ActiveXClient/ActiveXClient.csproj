@@ -7,7 +7,7 @@
     <ProjectGuid>{8DCC0193-C167-46A4-9004-B0CF4FB5EC78}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ActiveXClient</RootNamespace>
+    <RootNamespace>AwakeCoding</RootNamespace>
     <AssemblyName>ActiveXClient</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -44,23 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AwakeCoding\Common\AdvancedSettings.cs" />
-    <Compile Include="AwakeCoding\Common\SecuredSettings.cs" />
-    <Compile Include="AwakeCoding\Common\TransportSettings.cs" />
-    <Compile Include="AwakeCoding\MsRdpClient\IMsRdpClient.cs" />
-    <Compile Include="AwakeCoding\MsRdpClient\MsRDPClient50.cs">
+    <Compile Include="Common\AdvancedSettings.cs" />
+    <Compile Include="Common\EventHandling.cs" />
+    <Compile Include="Common\SecuredSettings.cs" />
+    <Compile Include="Common\TransportSettings.cs" />
+    <Compile Include="MsRdpClient\IMsRDPClient.cs" />
+    <Compile Include="MsRdpClient\MsRDPClient50.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="AwakeCoding\MsRdpClient\MsRDPClient60.cs">
+    <Compile Include="MsRdpClient\MsRDPClient60.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="AwakeCoding\MsRdpClient\MsRDPClient61.cs">
+    <Compile Include="MsRdpClient\MsRDPClient61.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="AwakeCoding\MsRdpClient\MsRDPClient70.cs">
+    <Compile Include="MsRdpClient\MsRDPClient70.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="AwakeCoding\MsRdpClient\MsRDPClient80.cs">
+    <Compile Include="MsRdpClient\MsRDPClient80.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Form1.cs">
@@ -69,12 +70,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="AwakeCoding\Common\IRdpClient.cs" />
-    <Compile Include="AwakeCoding\MsRdpClient\MsRdpClient.cs">
+    <Compile Include="Common\IRdpClient.cs" />
+    <Compile Include="MsRdpClient\MsRDPClientFrame.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AwakeCoding\MsRdpClient\MsRdpClient.Designer.cs">
-      <DependentUpon>MsRdpClient.cs</DependentUpon>
+    <Compile Include="MsRdpClient\MsRDPClientFrame.Designer.cs">
+      <DependentUpon>MsRDPClientFrame.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
