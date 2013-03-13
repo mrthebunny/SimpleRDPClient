@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MsRDPClients")]
+[assembly: AssemblyTitle("ActiveXClient")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MsRDPClients")]
+[assembly: AssemblyProduct("ActiveXClient")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("751010b9-3134-485f-b5cd-9fbf9489bcbd")]
+[assembly: Guid("5e9ba224-f369-4421-a6c9-73887c0eea0d")]
 
 // Version information for an assembly consists of the following four values:
 //

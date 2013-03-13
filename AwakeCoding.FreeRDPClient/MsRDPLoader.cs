@@ -26,18 +26,28 @@ namespace AwakeCoding.MsRdpClient
                 clientType = RDPClientType.Stub;
             }
 
+            IRDPClient client;
+
             switch (clientType)
             {
                 case RDPClientType.Stub:
-                    return new RDPClientStub();
+                    client = new RDPClientStub();
+                    break;
+
                 case RDPClientType.Microsoft:
                     string libPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "AwakeCoding.MsRdpClient.dll");
                     Assembly msRdpClientAssembly = Assembly.LoadFrom(libPath);
-                    return msRdpClientAssembly.CreateInstance("AwakeCoding.MsRdpClient.MsRdpClientAdapter") as IRDPClient;
-                   
+                    client = msRdpClientAssembly.CreateInstance("AwakeCoding.MsRdpClient.MsRdpClientAdapter") as IRDPClient;
+                    break;
+
+                case RDPClientType.FreeRDP:
+                    client = new RDPClientStub();
+                    break;
                 default:
                     throw new NotImplementedException();
             }
+
+            return client;
         }
     }
 }

@@ -42,8 +42,11 @@ namespace AwakeCoding.MsRdpClient
 
         private void InitializeRdpComponent()
         {
-            rdpClient = MsRDPLoader.NewRDPClient(MsRDPLoader.RDPClientType.Microsoft);
-
+#if __MONO
+			rdpClient = MsRDPLoader.NewRDPClient(MsRDPLoader.RDPClientType.FreeRDP);
+#else
+			rdpClient = MsRDPLoader.NewRDPClient(MsRDPLoader.RDPClientType.Microsoft);
+#endif
             Control ctrl = rdpClient.GetControl();
             ctrl.Dock = DockStyle.Fill;
             Controls.Add(ctrl);
