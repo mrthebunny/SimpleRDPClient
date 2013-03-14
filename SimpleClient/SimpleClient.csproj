@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8DCC0193-C167-46A4-9004-B0CF4FB5EC78}</ProjectGuid>
+    <ProjectGuid>{A52092E6-3719-4495-ADE1-D0550602B913}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AwakeCoding</RootNamespace>

@@ -31,10 +31,6 @@ namespace AwakeCoding.MsRdpClient
 
         public MsRdpClientAdapter()
         {
-            SecuredSettings = new Common.SecuredSettings();
-            AdvancedSettings = new Common.AdvancedSettings();
-            TransportSettings = new Common.TransportSettings();
-
             TryVersion(MsRdpClientVersion.MsClient80, () => { client = new MsRDPClient80(); });
             TryVersion(MsRdpClientVersion.MsClient70, () => { client = new MsRDPClient70(); });
             TryVersion(MsRdpClientVersion.MsClient61, () => { client = new MsRDPClient61(); });
@@ -47,6 +43,10 @@ namespace AwakeCoding.MsRdpClient
             }
 
             System.Diagnostics.Debug.WriteLine("AxRDPClient version instanciated: " + lastDetectedVersion);
+
+            SecuredSettings = new MsSecuredSettings(client);
+            AdvancedSettings = new MsAdvancedSettings(client);
+            TransportSettings = new MsTransportSettings(client);
 
             RegisterEvents();
         }
@@ -134,19 +134,19 @@ namespace AwakeCoding.MsRdpClient
             UnregisterEvents();
         }
 
-        public AdvancedSettings AdvancedSettings
+        public IAdvancedSettings AdvancedSettings
         {
             get;
             private set;
         }
 
-        public SecuredSettings SecuredSettings
+        public ISecuredSettings SecuredSettings
         {
             get;
             private set;
         }
 
-        public TransportSettings TransportSettings
+        public ITransportSettings TransportSettings
         {
             get;
             private set;
@@ -239,7 +239,7 @@ namespace AwakeCoding.MsRdpClient
         {
             IMsTscNonScriptable secured = (IMsTscNonScriptable) client.GetOcx();
 
-            secured.ClearTextPassword = SecuredSettings.ClearTextPassword;
+            //secured.ClearTextPassword = SecuredSettings.ClearTextPassword;
             //secured.BinaryPassword = SecuredSettings.BinaryPassword;
             //secured.BinarySalt = SecuredSettings.BinarySalt;
             //secured.PortablePassword = SecuredSettings.PortablePassword;

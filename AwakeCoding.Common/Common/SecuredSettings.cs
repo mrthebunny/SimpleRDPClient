@@ -5,16 +5,16 @@ namespace AwakeCoding.Common
     /// <summary>
     /// Contains the security-related settings for the RDP client
     /// </summary>
-    public class SecuredSettings
+    public interface ISecuredSettings
     {
-        public string ClearTextPassword { get; set; }
+        string ClearTextPassword { set; }
 
-        public string BinaryPassword { get; set; }
+        string BinaryPassword { get; set; }
 
-        public string BinarySalt { get; set; }
+        string BinarySalt { get; set; }
 
-        public string PortablePassword { get; set; }
+        string PortablePassword { get; set; }
 
-        public string PortableSalt { get; set; }
+        string PortableSalt { get; set; }
     }
 }

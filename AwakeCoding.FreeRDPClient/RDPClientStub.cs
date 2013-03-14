@@ -17,9 +17,9 @@ namespace AwakeCoding.FreeRDPClient
 
         public RDPClientStub()
         {
-            AdvancedSettings = new Common.AdvancedSettings();
-            SecuredSettings = new Common.SecuredSettings();
-            TransportSettings = new Common.TransportSettings();
+            AdvancedSettings = new AdvancedSettingsStub();
+            SecuredSettings = new SecuredSettingsStub();
+            TransportSettings = new TransportSettingsStub();
 
             textBox.Dock = DockStyle.Fill;
             textBox.ReadOnly = true;
@@ -35,18 +35,18 @@ namespace AwakeCoding.FreeRDPClient
             UpdateDisplay();
         }
 
-        public AdvancedSettings AdvancedSettings
+        public IAdvancedSettings AdvancedSettings
         {
             get;
             set;
         }
 
-        public SecuredSettings SecuredSettings
+        public ISecuredSettings SecuredSettings
         {
             get;
             set;
         }
-        public TransportSettings TransportSettings
+        public ITransportSettings TransportSettings
         {
             get;
             set;

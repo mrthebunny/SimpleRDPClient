@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 
 using System.Data;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -53,7 +52,7 @@ namespace AwakeCoding.MsRdpClient
         }
 
 
-        public AdvancedSettings AdvancedSettings
+        public IAdvancedSettings AdvancedSettings
         {
             get
             {
@@ -61,7 +60,7 @@ namespace AwakeCoding.MsRdpClient
             }
         }
 
-        public SecuredSettings SecuredSettings
+        public ISecuredSettings SecuredSettings
         {
             get
             {
@@ -69,7 +68,7 @@ namespace AwakeCoding.MsRdpClient
             }
         }
 
-        public TransportSettings TransportSettings
+        public ITransportSettings TransportSettings
         {
             get
             {

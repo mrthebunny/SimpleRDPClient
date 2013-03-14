@@ -10,9 +10,9 @@ namespace AwakeCoding.Common
     public interface IRDPClient
     {
         #region Settings
-        AdvancedSettings AdvancedSettings { get; }
-        SecuredSettings SecuredSettings { get; }
-        TransportSettings TransportSettings { get; }
+        IAdvancedSettings AdvancedSettings { get; }
+        ISecuredSettings SecuredSettings { get; }
+        ITransportSettings TransportSettings { get; }
 
         string Server { get; set; }
         string UserName { get; set; }

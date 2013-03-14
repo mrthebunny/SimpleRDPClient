@@ -47,6 +47,14 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="MsRdpClient\AdvancedSettings\MsAdvancedSettings.Settings9.cs" />
+    <Compile Include="MsRdpClient\AdvancedSettings\MsAdvancedSettings.Settings8.cs" />
+    <Compile Include="MsRdpClient\AdvancedSettings\MsAdvancedSettings.Settings7.cs" />
+    <Compile Include="MsRdpClient\AdvancedSettings\MsAdvancedSettings.Settings6.cs" />
+    <Compile Include="MsRdpClient\AdvancedSettings\MsAdvancedSettings.Settings5.cs" />
+    <Compile Include="MsRdpClient\AdvancedSettings\MsAdvancedSettings.Settings2.cs" />
+    <Compile Include="MsRdpClient\AdvancedSettings\MsAdvancedSettings.cs" />
+    <Compile Include="MsRdpClient\AdvancedSettings\MsAdvancedSettings.Settings3.cs" />
     <Compile Include="MsRdpClient\IMsRDPClient.cs" />
     <Compile Include="MsRdpClient\MsRDPClient50.cs">
       <SubType>Component</SubType>
@@ -64,6 +72,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MsRdpClient\MsRdpClientAdapter.cs" />
+    <Compile Include="MsRdpClient\MsSecuredSettings.cs" />
+    <Compile Include="MsRdpClient\MsTransportSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

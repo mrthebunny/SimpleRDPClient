@@ -5,7 +5,10 @@ using System.Text;
 
 namespace AwakeCoding.Common
 {
-    public class TransportSettings
+    public enum ClientSpec
     {
+        FullMode = 0,
+        ThinClientMode = 1,
+        SmallCacheMode = 2,
     }
 }

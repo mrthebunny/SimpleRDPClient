@@ -41,11 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\AdvancedSettings.cs" />
+    <Compile Include="Common\ClientSpecs.cs" />
     <Compile Include="Common\EventHandling.cs" />
     <Compile Include="Common\IRdpClient.cs" />
     <Compile Include="Common\SecuredSettings.cs" />
-    <Compile Include="Common\TransportSettings.cs" />
+    <Compile Include="Common\IAdvancedSettings.cs" />
+    <Compile Include="Common\ITransportSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
