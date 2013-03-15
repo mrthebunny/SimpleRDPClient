@@ -1,4 +1,4 @@
-﻿namespace ActiveXClient
+﻿namespace AwakeCoding
 {
     partial class Form1
     {

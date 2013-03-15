@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace AwakeCoding.FreeRDPClient
 {
-    class RDPClientStub : IRDPClient
+    public class RDPClientStub : IRDPClient
     {
         private bool isConnected = false;
 

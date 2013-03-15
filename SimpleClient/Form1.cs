@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ActiveXClient
+namespace AwakeCoding
 {
     public partial class Form1 : Form
     {
@@ -38,15 +38,13 @@ namespace ActiveXClient
 
         private void toolStripButtonConnect2_Click(object sender, EventArgs e)
         {
-            rdpClientFrame1.Server = "192.168.3.62";
-            rdpClientFrame1.UserName = "Administrator";
-            rdpClientFrame1.Domain = "Awake";
-
             rdpClientFrame1.DesktopWidth = rdpClientFrame1.Width;
             rdpClientFrame1.DesktopHeight = rdpClientFrame1.Height;
 
+            rdpClientFrame1.Server = "192.168.3.62";
+            rdpClientFrame1.UserName = "Administrator";
+            rdpClientFrame1.Domain = "Awake";
             rdpClientFrame1.SecuredSettings.ClearTextPassword = "@wake01DC";
-
             rdpClientFrame1.Connect();
         }
 

@@ -1,4 +1,5 @@
 ﻿using AwakeCoding.Common;
+using AwakeCoding.Reflection;
 using AxMSTSCLib;
 using MSTSCLib;
 using System;
@@ -28,29 +29,80 @@ namespace AwakeCoding.MsRdpClient
         private static MsRdpClientVersion lastDetectedVersion = MsRdpClientVersion.Unknown;
 
         private IMsRDPClient client;
+        private InterfaceProxy<ISecuredSettings> securedSettingsProxy;
+        private InterfaceProxy<IAdvancedSettings> advancedSettingsProxy;
+        private InterfaceProxy<ITransportSettings> transportSettingsProxy;
+
 
         public MsRdpClientAdapter()
         {
-            TryVersion(MsRdpClientVersion.MsClient80, () => { client = new MsRDPClient80(); });
-            TryVersion(MsRdpClientVersion.MsClient70, () => { client = new MsRDPClient70(); });
-            TryVersion(MsRdpClientVersion.MsClient61, () => { client = new MsRDPClient61(); });
-            TryVersion(MsRdpClientVersion.MsClient60, () => { client = new MsRDPClient60(); });
-            TryVersion(MsRdpClientVersion.MsClient50, () => { client = new MsRDPClient50(); });
-
-            if (lastDetectedVersion == MsRdpClientVersion.Unknown)
+            try
             {
-                throw new NotSupportedException("MsRrdpClient could not be instanciated");
+                TryVersion(MsRdpClientVersion.MsClient80, () => { client = new MsRDPClient80(); });
+                TryVersion(MsRdpClientVersion.MsClient70, () => { client = new MsRDPClient70(); });
+                TryVersion(MsRdpClientVersion.MsClient61, () => { client = new MsRDPClient61(); });
+                TryVersion(MsRdpClientVersion.MsClient60, () => { client = new MsRDPClient60(); });
+                TryVersion(MsRdpClientVersion.MsClient50, () => { client = new MsRDPClient50(); });
+
+                if (lastDetectedVersion == MsRdpClientVersion.Unknown)
+                {
+                    throw new NotSupportedException("MsRrdpClient could not be instanciated");
+                }
+
+                System.Diagnostics.Debug.WriteLine("AxRDPClient version instanciated: " + lastDetectedVersion);
+
+                ((AxHost)client).HandleCreated += MsRdpClientAdapter_HandleCreated;
+
+                RegisterEvents();
             }
-
-            System.Diagnostics.Debug.WriteLine("AxRDPClient version instanciated: " + lastDetectedVersion);
-
-            SecuredSettings = new MsSecuredSettings(client);
-            AdvancedSettings = new MsAdvancedSettings(client);
-            TransportSettings = new MsTransportSettings(client);
-
-            RegisterEvents();
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+            }
         }
 
+        void MsRdpClientAdapter_HandleCreated(object sender, EventArgs e)
+        {
+            // Finish initialization - com object proxies
+
+            IMsTscNonScriptable securedSettingsOcx = (IMsTscNonScriptable)client.GetOcx();
+            securedSettingsProxy = new InterfaceProxy<ISecuredSettings>();
+            securedSettingsProxy.TargetInstance = securedSettingsOcx;
+            securedSettingsProxy.TargetType = typeof(IMsTscNonScriptable);
+            SecuredSettings = securedSettingsProxy.GetStrongTypedProxy();
+
+            TrySetAdvancedSettings(client.AdvancedSettings9, typeof(IMsRdpClientAdvancedSettings8));
+            TrySetAdvancedSettings(client.AdvancedSettings8, typeof(IMsRdpClientAdvancedSettings7));
+            TrySetAdvancedSettings(client.AdvancedSettings7, typeof(IMsRdpClientAdvancedSettings6));
+            TrySetAdvancedSettings(client.AdvancedSettings6, typeof(IMsRdpClientAdvancedSettings5));
+            TrySetAdvancedSettings(client.AdvancedSettings5, typeof(IMsRdpClientAdvancedSettings4));
+            TrySetAdvancedSettings(client.AdvancedSettings3, typeof(IMsRdpClientAdvancedSettings2));
+            TrySetAdvancedSettings(client.AdvancedSettings2, typeof(IMsRdpClientAdvancedSettings));
+            TrySetAdvancedSettings(client.AdvancedSettings, typeof(IMsTscAdvancedSettings));
+
+            securedSettingsProxy = new InterfaceProxy<ISecuredSettings>();
+            securedSettingsProxy.TargetInstance = securedSettingsOcx;
+            securedSettingsProxy.TargetType = typeof(IMsTscNonScriptable);
+            SecuredSettings = securedSettingsProxy.GetStrongTypedProxy();
+
+            transportSettingsProxy = new InterfaceProxy<ITransportSettings>();
+            transportSettingsProxy.TargetInstance = client.TransportSettings2;
+            transportSettingsProxy.TargetType = typeof(IMsRdpClientTransportSettings2);
+            TransportSettings = transportSettingsProxy.GetStrongTypedProxy();
+        }
+
+        private void TrySetAdvancedSettings(object targetInstance, Type targetType)
+        {
+            if (AdvancedSettings == null && targetInstance != null)
+            {
+                advancedSettingsProxy = new InterfaceProxy<IAdvancedSettings>();
+                advancedSettingsProxy.TargetInstance = targetInstance;
+                advancedSettingsProxy.TargetType = targetType;
+                AdvancedSettings = advancedSettingsProxy.GetStrongTypedProxy();
+            }
+        }
+
+        
         public Control GetControl()
         {
             return client as Control;
@@ -142,7 +194,7 @@ namespace AwakeCoding.MsRdpClient
 
         public ISecuredSettings SecuredSettings
         {
-            get;
+            get; 
             private set;
         }
 
@@ -237,7 +289,7 @@ namespace AwakeCoding.MsRdpClient
         /// </summary>
         protected virtual void ApplySecuredSettings()
         {
-            IMsTscNonScriptable secured = (IMsTscNonScriptable) client.GetOcx();
+            //IMsTscNonScriptable secured = (IMsTscNonScriptable) client.GetOcx();
 
             //secured.ClearTextPassword = SecuredSettings.ClearTextPassword;
             //secured.BinaryPassword = SecuredSettings.BinaryPassword;

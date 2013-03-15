@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AwakeCoding.FreeRDPClient
 {
-    class AdvancedSettingsStub : IAdvancedSettings
+    public class AdvancedSettingsStub : IAdvancedSettings
     {
         public int AcceleratorPassthrough
         {

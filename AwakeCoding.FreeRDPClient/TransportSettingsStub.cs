@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AwakeCoding.FreeRDPClient
 {
-    class TransportSettingsStub : ITransportSettings
+    public class TransportSettingsStub : ITransportSettings
     {
         public uint GatewayCredsSource
         {

@@ -40,12 +40,13 @@ namespace ActiveXClient
 
         private void toolStripButtonConnect_Click(object sender, EventArgs e)
         {
-            rdpConnection.Server = "192.168.3.62";
-            rdpConnection.UserName = "Administrator";
-            rdpConnection.Domain = "Awake";
 
             rdpConnection.DesktopWidth = rdpConnection.Width;
             rdpConnection.DesktopHeight = rdpConnection.Height;
+
+            rdpConnection.Server = "192.168.3.62";
+            rdpConnection.UserName = "Administrator";
+            rdpConnection.Domain = "Awake";
 
             IMsTscNonScriptable secured = (IMsTscNonScriptable) rdpConnection.GetOcx();
             secured.ClearTextPassword = "@wake01DC";
@@ -65,13 +66,12 @@ namespace ActiveXClient
 
         private void toolStripButtonConnect2_Click(object sender, EventArgs e)
         {
-            rdpClientFrame1.Server = "192.168.3.62";
-            rdpClientFrame1.UserName = "Administrator";
-            rdpClientFrame1.Domain = "Awake";
-
             rdpClientFrame1.DesktopWidth = rdpClientFrame1.Width;
             rdpClientFrame1.DesktopHeight = rdpClientFrame1.Height;
 
+            rdpClientFrame1.Server = "192.168.3.62";
+            rdpClientFrame1.UserName = "Administrator";
+            rdpClientFrame1.Domain = "Awake";
             rdpClientFrame1.SecuredSettings.ClearTextPassword = "@wake01DC";
 
             rdpClientFrame1.Connect();

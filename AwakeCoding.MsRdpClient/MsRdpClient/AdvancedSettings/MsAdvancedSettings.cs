@@ -11,7 +11,7 @@ namespace AwakeCoding.MsRdpClient
     /// <summary>
     /// Contains the advanced configuration settings for a given RDP component
     /// </summary>
-    public partial class MsAdvancedSettings : IAdvancedSettings, IMsTscAdvancedSettings
+    public partial class MsAdvancedSettings : IAdvancedSettings //, IMsTscAdvancedSettings
     {
         private IMsRDPClient client;
 
