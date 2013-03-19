@@ -34,8 +34,8 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonConnect2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDisconnect2 = new System.Windows.Forms.ToolStripButton();
-            this.rdpClientFrame1 = new AwakeCoding.MsRdpClient.RDPClientFrame();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.rdpClientFrame1 = new AwakeCoding.MsRdpClient.RDPClientFrame();
             this.tabPageActiveXWrapper.SuspendLayout();
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
@@ -105,17 +105,6 @@
             this.toolStripButtonDisconnect2.Text = "Disconnect";
             this.toolStripButtonDisconnect2.Click += new System.EventHandler(this.toolStripButtonDisconnect2_Click);
             // 
-            // rdpClientFrame1
-            // 
-            this.rdpClientFrame1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rdpClientFrame1.Location = new System.Drawing.Point(0, 0);
-            this.rdpClientFrame1.Margin = new System.Windows.Forms.Padding(4);
-            this.rdpClientFrame1.Name = "rdpClientFrame1";
-            this.rdpClientFrame1.Size = new System.Drawing.Size(1045, 652);
-            this.rdpClientFrame1.TabIndex = 0;
-            this.rdpClientFrame1.Connected += new System.EventHandler(this.rdpClientFrame_Connected);
-            this.rdpClientFrame1.Disconnected += new AwakeCoding.Common.DisconnectedEventHandler(this.rdpClientFrame_Disconnected);
-            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPageActiveXWrapper);
@@ -127,13 +116,25 @@
             this.tabControl1.Size = new System.Drawing.Size(1061, 716);
             this.tabControl1.TabIndex = 2;
             // 
+            // rdpClientFrame1
+            // 
+            this.rdpClientFrame1.ClientVersion = AwakeCoding.Common.RDPClientVersion.Stub;
+            this.rdpClientFrame1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rdpClientFrame1.Location = new System.Drawing.Point(0, 0);
+            this.rdpClientFrame1.Margin = new System.Windows.Forms.Padding(4);
+            this.rdpClientFrame1.Name = "rdpClientFrame1";
+            this.rdpClientFrame1.Size = new System.Drawing.Size(1045, 652);
+            this.rdpClientFrame1.TabIndex = 0;
+            this.rdpClientFrame1.Connected += new System.EventHandler(this.rdpClientFrame_Connected);
+            this.rdpClientFrame1.Disconnected += new AwakeCoding.Common.DisconnectedEventHandler(this.rdpClientFrame_Disconnected);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1061, 716);
             this.Controls.Add(this.tabControl1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "RDP Control Test";
             this.tabPageActiveXWrapper.ResumeLayout(false);

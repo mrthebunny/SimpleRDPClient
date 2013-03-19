@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdvancedSettingsStub.cs" />
-    <Compile Include="MsRDPLoader.cs" />
+    <Compile Include="RDPClientLoader.cs" />
     <Compile Include="RDPClientFrame.cs">
       <SubType>UserControl</SubType>
     </Compile>

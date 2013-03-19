@@ -15,18 +15,9 @@ namespace AwakeCoding.MsRdpClient
 {
     public class MsRdpClientAdapter : IRDPClient, IDisposable
     {
-        public enum MsRdpClientVersion
-        {
-            Unknown,
-            MsClient50,
-            MsClient60,
-            MsClient61,
-            MsClient70,
-            MsClient80
-        }
 
         // Last detected version of the ActiveX control
-        private static MsRdpClientVersion lastDetectedVersion = MsRdpClientVersion.Unknown;
+        private static RDPClientVersion lastDetectedVersion = RDPClientVersion.Unknown;
 
         private IMsRDPClient client;
         private InterfaceProxy<ISecuredSettings> securedSettingsProxy;
@@ -38,13 +29,13 @@ namespace AwakeCoding.MsRdpClient
         {
             try
             {
-                TryVersion(MsRdpClientVersion.MsClient80, () => { client = new MsRDPClient80(); });
-                TryVersion(MsRdpClientVersion.MsClient70, () => { client = new MsRDPClient70(); });
-                TryVersion(MsRdpClientVersion.MsClient61, () => { client = new MsRDPClient61(); });
-                TryVersion(MsRdpClientVersion.MsClient60, () => { client = new MsRDPClient60(); });
-                TryVersion(MsRdpClientVersion.MsClient50, () => { client = new MsRDPClient50(); });
+                TryVersion(RDPClientVersion.MsRDPClient80, () => { client = new MsRDPClient80(); });
+                TryVersion(RDPClientVersion.MsRDPClient70, () => { client = new MsRDPClient70(); });
+                TryVersion(RDPClientVersion.MsRDPClient61, () => { client = new MsRDPClient61(); });
+                TryVersion(RDPClientVersion.MsRDPClient60, () => { client = new MsRDPClient60(); });
+                TryVersion(RDPClientVersion.MsRDPClient50, () => { client = new MsRDPClient50(); });
 
-                if (lastDetectedVersion == MsRdpClientVersion.Unknown)
+                if (lastDetectedVersion == RDPClientVersion.Unknown)
                 {
                     throw new NotSupportedException("MsRrdpClient could not be instanciated");
                 }
@@ -71,14 +62,14 @@ namespace AwakeCoding.MsRdpClient
             securedSettingsProxy.TargetType = typeof(IMsTscNonScriptable);
             SecuredSettings = securedSettingsProxy.GetStrongTypedProxy();
 
-            TrySetAdvancedSettings(client.AdvancedSettings9, typeof(IMsRdpClientAdvancedSettings8));
-            TrySetAdvancedSettings(client.AdvancedSettings8, typeof(IMsRdpClientAdvancedSettings7));
-            TrySetAdvancedSettings(client.AdvancedSettings7, typeof(IMsRdpClientAdvancedSettings6));
-            TrySetAdvancedSettings(client.AdvancedSettings6, typeof(IMsRdpClientAdvancedSettings5));
-            TrySetAdvancedSettings(client.AdvancedSettings5, typeof(IMsRdpClientAdvancedSettings4));
-            TrySetAdvancedSettings(client.AdvancedSettings3, typeof(IMsRdpClientAdvancedSettings2));
-            TrySetAdvancedSettings(client.AdvancedSettings2, typeof(IMsRdpClientAdvancedSettings));
-            TrySetAdvancedSettings(client.AdvancedSettings, typeof(IMsTscAdvancedSettings));
+            TrySetAdvancedSettings(client.AdvancedSettings9, typeof(MSTSCLib.IMsRdpClientAdvancedSettings8));
+            TrySetAdvancedSettings(client.AdvancedSettings8, typeof(MSTSCLib.IMsRdpClientAdvancedSettings7));
+            TrySetAdvancedSettings(client.AdvancedSettings7, typeof(MSTSCLib.IMsRdpClientAdvancedSettings6));
+            TrySetAdvancedSettings(client.AdvancedSettings6, typeof(MSTSCLib.IMsRdpClientAdvancedSettings5));
+            TrySetAdvancedSettings(client.AdvancedSettings5, typeof(MSTSCLib.IMsRdpClientAdvancedSettings4));
+            TrySetAdvancedSettings(client.AdvancedSettings3, typeof(MSTSCLib.IMsRdpClientAdvancedSettings2));
+            TrySetAdvancedSettings(client.AdvancedSettings2, typeof(MSTSCLib.IMsRdpClientAdvancedSettings));
+            TrySetAdvancedSettings(client.AdvancedSettings, typeof(MSTSCLib.IMsTscAdvancedSettings));
 
             securedSettingsProxy = new InterfaceProxy<ISecuredSettings>();
             securedSettingsProxy.TargetInstance = securedSettingsOcx;
@@ -102,6 +93,13 @@ namespace AwakeCoding.MsRdpClient
             }
         }
 
+        public RDPClientVersion ClientVersion
+        {
+            get
+            {
+                return lastDetectedVersion;
+            }
+        }
         
         public Control GetControl()
         {
@@ -156,11 +154,11 @@ namespace AwakeCoding.MsRdpClient
         }
 
 
-        private void TryVersion(MsRdpClientVersion clientVersion, MethodInvoker doApplyVersion)
+        private void TryVersion(RDPClientVersion clientVersion, MethodInvoker doApplyVersion)
         {
             try
             {
-                if (lastDetectedVersion == MsRdpClientVersion.Unknown || lastDetectedVersion == clientVersion)
+                if (lastDetectedVersion == RDPClientVersion.Unknown || lastDetectedVersion == clientVersion)
                 {
                     doApplyVersion();
                     lastDetectedVersion = clientVersion;
@@ -169,11 +167,11 @@ namespace AwakeCoding.MsRdpClient
             catch
             {
 
-                lastDetectedVersion = MsRdpClientVersion.Unknown;
+                lastDetectedVersion = RDPClientVersion.Unknown;
             }
         }
 
-        public static MsRdpClientVersion LastDetectedVersion
+        public static RDPClientVersion LastDetectedVersion
         {
             get
             {

@@ -9,6 +9,8 @@ namespace AwakeCoding.Common
     /// </summary>
     public interface IRDPClient
     {
+        RDPClientVersion ClientVersion { get; }
+
         #region Settings
         IAdvancedSettings AdvancedSettings { get; }
         ISecuredSettings SecuredSettings { get; }

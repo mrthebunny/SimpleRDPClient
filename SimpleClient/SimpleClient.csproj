@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AwakeCoding</RootNamespace>
-    <AssemblyName>ActiveXClient</AssemblyName>
+    <AssemblyName>SimpleClient</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProductVersion>10.0.0</ProductVersion>
@@ -32,6 +32,15 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_Mono|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug_Mono\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -97,9 +106,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(SolutionDir)\AwakeCoding.MsRdpClient\$(OutDir)\AxInterop.MSTSCLib.dll" "$(TargetDir)"
-copy "$(SolutionDir)\AwakeCoding.MsRdpClient\$(OutDir)\Interop.MSTSCLib.dll" "$(TargetDir)"
-copy "$(SolutionDir)\AwakeCoding.MsRdpClient\$(OutDir)\AwakeCoding.MsRdpClient.*" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>copy "$(SolutionDir)\AwakeCoding.MsRdpClient\bin\Debug\AxInterop.MSTSCLib.dll" "$(TargetDir)"
+copy "$(SolutionDir)\AwakeCoding.MsRdpClient\bin\Debug\Interop.MSTSCLib.dll" "$(TargetDir)"
+copy "$(SolutionDir)\AwakeCoding.MsRdpClient\bin\Debug\AwakeCoding.MsRdpClient.*" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

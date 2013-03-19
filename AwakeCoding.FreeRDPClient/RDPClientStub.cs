@@ -35,6 +35,14 @@ namespace AwakeCoding.FreeRDPClient
             UpdateDisplay();
         }
 
+        public RDPClientVersion ClientVersion 
+        {
+            get
+            {
+                return RDPClientVersion.Stub;
+            }
+        }
+
         public IAdvancedSettings AdvancedSettings
         {
             get;

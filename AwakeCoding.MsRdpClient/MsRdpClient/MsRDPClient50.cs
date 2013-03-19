@@ -1,11 +1,20 @@
 namespace AwakeCoding.MsRdpClient
 {
+    using AwakeCoding.Common;
     using AxMSTSCLib;
-
     using MSTSCLib;
 
     public class MsRDPClient50 : AxMsRdpClient4, IMsRDPClient
     {
+
+        public RDPClientVersion ClientVersion
+        {
+            get
+            {
+                return RDPClientVersion.MsRDPClient50;
+            }
+        }
+
         public IMsRdpClientAdvancedSettings5 AdvancedSettings6
         {
             get
@@ -30,7 +39,7 @@ namespace AwakeCoding.MsRdpClient
             }
         }
 
-        public IMsRdpClientAdvancedSettings8 AdvancedSettings9
+        public MSTSCLib.IMsRdpClientAdvancedSettings8 AdvancedSettings9
         {
             get
             {

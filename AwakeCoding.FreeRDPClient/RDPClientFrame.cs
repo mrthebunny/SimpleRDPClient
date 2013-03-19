@@ -15,8 +15,15 @@ namespace AwakeCoding.MsRdpClient
 
         #region Private members
 
+        // Default value differs depending on platform
+#if __MONO
+        private RDPClientVersion clientVersion = RDPClientVersion.FreeRDP;
+#else
+        private RDPClientVersion clientVersion = RDPClientVersion.MsRDPClient;
+#endif
+
         // Current instanciated version of IRdpClient
-        private IRDPClient rdpClient = null;
+        private IRDPClient rdpClientImpl = null;
 
         #endregion // Private members
 
@@ -35,44 +42,74 @@ namespace AwakeCoding.MsRdpClient
         public RDPClientFrame()
         {
             InitializeComponent();
+
+        }
+
+        //protected override void InitLayout()
+        protected override void OnLoad(EventArgs e)
+{
+ 	 base.OnLoad(e);
+
             InitializeRdpComponent();
             RegisterEvents();
+
+            //base.InitLayout();
         }
+
+        private void RegisterEvents()
+        {
+            rdpClientImpl.Connected += rdpClient_Connected;
+            rdpClientImpl.Disconnected += rdpClient_Disconnected;
+            rdpClientImpl.WarningOccurred += rdpClient_WarningOccurred;
+            rdpClientImpl.FatalErrorOccurred += rdpClient_FatalErrorOccurred;
+        }
+
 
         private void InitializeRdpComponent()
         {
-#if __MONO
-			rdpClient = MsRDPLoader.NewRDPClient(MsRDPLoader.RDPClientType.FreeRDP);
-#else
-			rdpClient = MsRDPLoader.NewRDPClient(MsRDPLoader.RDPClientType.Microsoft);
-#endif
-            Control ctrl = rdpClient.GetControl();
+            rdpClientImpl = RDPClientLoader.NewRDPClient(ClientVersion);
+
+            Control ctrl = rdpClientImpl.GetControl();
             ctrl.Dock = DockStyle.Fill;
             Controls.Add(ctrl);
         }
 
-
+        [Browsable(false)]
         public IAdvancedSettings AdvancedSettings
         {
             get
             {
-                return rdpClient.AdvancedSettings;
+                return rdpClientImpl.AdvancedSettings;
             }
         }
 
+        [Browsable(false)]
         public ISecuredSettings SecuredSettings
         {
             get
             {
-                return rdpClient.SecuredSettings;
+                return rdpClientImpl.SecuredSettings;
             }
         }
 
+        [Browsable(false)]
         public ITransportSettings TransportSettings
         {
             get
             {
-                return rdpClient.TransportSettings;
+                return rdpClientImpl.TransportSettings;
+            }
+        }
+
+        public RDPClientVersion ClientVersion
+        {
+            get
+            {
+                return clientVersion;
+            }
+            set
+            {
+                clientVersion = value;
             }
         }
 
@@ -81,11 +118,11 @@ namespace AwakeCoding.MsRdpClient
         {
             get
             {
-                return rdpClient.Server;
+                return rdpClientImpl.Server;
             }
             set
             {
-                rdpClient.Server = value;
+                rdpClientImpl.Server = value;
             }
         }
 
@@ -94,11 +131,11 @@ namespace AwakeCoding.MsRdpClient
         {
             get
             {
-                return rdpClient.UserName;
+                return rdpClientImpl.UserName;
             }
             set
             {
-                rdpClient.UserName = value;
+                rdpClientImpl.UserName = value;
             }
         }
 
@@ -107,11 +144,11 @@ namespace AwakeCoding.MsRdpClient
         {
             get
             {
-                return rdpClient.Domain;
+                return rdpClientImpl.Domain;
             }
             set
             {
-                rdpClient.Domain = value;
+                rdpClientImpl.Domain = value;
             }
         }
 
@@ -120,11 +157,11 @@ namespace AwakeCoding.MsRdpClient
         {
             get
             {
-                return rdpClient.DesktopWidth;
+                return rdpClientImpl.DesktopWidth;
             }
             set
             {
-                rdpClient.DesktopWidth = value;
+                rdpClientImpl.DesktopWidth = value;
             }
         }
 
@@ -133,11 +170,11 @@ namespace AwakeCoding.MsRdpClient
         {
             get
             {
-                return rdpClient.DesktopHeight;
+                return rdpClientImpl.DesktopHeight;
             }
             set
             {
-                rdpClient.DesktopHeight = value;
+                rdpClientImpl.DesktopHeight = value;
             }
         }
 
@@ -148,24 +185,16 @@ namespace AwakeCoding.MsRdpClient
 
         public void Connect()
         {
-            rdpClient.Connect();
+            rdpClientImpl.Connect();
         }
 
         public void Disconnect()
         {
-            rdpClient.Disconnect();
+            rdpClientImpl.Disconnect();
         }
 
 
         #region Event Handling
-
-        private void RegisterEvents()
-        {
-            rdpClient.Connected += rdpClient_Connected;
-            rdpClient.Disconnected += rdpClient_Disconnected;
-            rdpClient.WarningOccurred += rdpClient_WarningOccurred;
-            rdpClient.FatalErrorOccurred += rdpClient_FatalErrorOccurred;
-        }
 
         void rdpClient_FatalErrorOccurred(object sender, FatalErrorEventArgs e)
         {
@@ -201,16 +230,6 @@ namespace AwakeCoding.MsRdpClient
 
         #endregion // Event Handling
 
-    }
-
-    public enum MsRdpClientVersion
-    {
-        Unknown,
-        MsClient50,
-        MsClient60,
-        MsClient61,
-        MsClient70,
-        MsClient80
     }
 
 }
