@@ -45,6 +45,32 @@ namespace AwakeCoding.MsRdpClient
 
         }
 
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                IDisposable disp = rdpClientImpl as IDisposable;
+                if (disp != null)
+                {
+                    disp.Dispose();
+                    rdpClientImpl = null;
+                }
+            }
+
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+
+
         //protected override void InitLayout()
         protected override void OnLoad(EventArgs e)
 {
@@ -229,7 +255,6 @@ namespace AwakeCoding.MsRdpClient
         }
 
         #endregion // Event Handling
-
     }
 
 }

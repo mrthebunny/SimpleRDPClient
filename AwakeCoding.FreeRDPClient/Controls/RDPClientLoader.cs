@@ -34,7 +34,7 @@ namespace AwakeCoding.MsRdpClient
             }
             else if (clientType == RDPClientVersion.FreeRDP)
             {
-                client = new RDPClientStub();
+                client = new FreeRDPClient.FreeRDPClient();
             }
 #if !__MONO
             else if (clientType == RDPClientVersion.MsRDPClient
