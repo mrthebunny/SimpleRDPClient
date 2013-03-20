@@ -50,18 +50,19 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdvancedSettingsStub.cs" />
-    <Compile Include="RDPClientLoader.cs" />
-    <Compile Include="RDPClientFrame.cs">
+    <Compile Include="API\NativeMethods.cs" />
+    <Compile Include="Stubs\AdvancedSettingsStub.cs" />
+    <Compile Include="Controls\RDPClientLoader.cs" />
+    <Compile Include="Controls\RDPClientFrame.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="RDPClientFrame.Designer.cs">
+    <Compile Include="Controls\RDPClientFrame.Designer.cs">
       <DependentUpon>RDPClientFrame.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RDPClientStub.cs" />
-    <Compile Include="SecuredSettingsStub.cs" />
-    <Compile Include="TransportSettingsStub.cs" />
+    <Compile Include="Stubs\RDPClientStub.cs" />
+    <Compile Include="Stubs\SecuredSettingsStub.cs" />
+    <Compile Include="Stubs\TransportSettingsStub.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AwakeCoding.Common\AwakeCoding.Common.csproj">
@@ -69,6 +70,7 @@
       <Name>AwakeCoding.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
