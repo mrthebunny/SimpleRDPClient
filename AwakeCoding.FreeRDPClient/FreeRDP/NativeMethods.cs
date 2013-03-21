@@ -46,7 +46,7 @@ namespace AwakeCoding.FreeRDPClient
 
         /// Return Type: IntPtr
         [DllImport("libwfreerdp-client")]
-        public static extern IntPtr wf_new(IntPtr hInstance, IntPtr hWndParent, int argc, ref string[] argv);
+        public static extern IntPtr wf_new(IntPtr hInstance, IntPtr hWndParent, int argc, string[] argv);
 
         /// Return Type: int
         [DllImport("libwfreerdp-client")]

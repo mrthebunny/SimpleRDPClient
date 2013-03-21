@@ -8,6 +8,8 @@ namespace AwakeCoding.FreeRDPClient
 {
     public class SecuredSettingsStub : ISecuredSettings
     {
+        private string clearPassword;
+
         public void SetClearTextPassword(string value)
         {
             
@@ -17,7 +19,12 @@ namespace AwakeCoding.FreeRDPClient
         {
             set
             {
-                Console.WriteLine("SecuredSettingsStub.set_ClearTextPassword " + value);
+                //Console.WriteLine("SecuredSettingsStub.set_ClearTextPassword " + value);
+                clearPassword = value;
+            }
+            get
+            {
+                return clearPassword;
             }
         }
 

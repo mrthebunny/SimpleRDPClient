@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 using AwakeCoding.Common;
 
-namespace AwakeCoding.MsRdpClient
+namespace AwakeCoding.FreeRDPClient
 {
     public partial class RDPClientFrame : UserControl, IRDPClient
     {
@@ -41,7 +41,7 @@ namespace AwakeCoding.MsRdpClient
 
         public RDPClientFrame()
         {
-            InitializeComponent();
+            //InitializeComponent();
 
         }
 
@@ -62,10 +62,10 @@ namespace AwakeCoding.MsRdpClient
                 }
             }
 
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
+            //if (disposing && (components != null))
+            //{
+            //    components.Dispose();
+            //}
             base.Dispose(disposing);
         }
 

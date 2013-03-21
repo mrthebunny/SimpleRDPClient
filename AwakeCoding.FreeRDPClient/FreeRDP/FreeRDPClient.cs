@@ -11,19 +11,15 @@ namespace AwakeCoding.FreeRDPClient
     {
         private IntPtr wfi = IntPtr.Zero;
 
-        static FreeRDPClient()
+        private static bool staticInitialized = false;
+        private static void GlobalInit()
         {
-            //try
-            //{
+            if (!staticInitialized)
+            {
                 NativeMethods.wf_global_init();
-
+                staticInitialized = true;
                 AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
-            //}
-            //catch(Exception ex)
-            //{
-            //    System.Diagnostics.Debug.WriteLine("FreeRDPClient Error on static ctor: " + ex.ToString());
-            //}
-
+            }
         }
 
         static void CurrentDomain_ProcessExit(object sender, EventArgs e)
@@ -54,18 +50,23 @@ namespace AwakeCoding.FreeRDPClient
         {
             base.InitLayout();
         }
-        
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+
+        protected void FreeWfi()
         {
             if (wfi != IntPtr.Zero)
             {
                 NativeMethods.wf_free(wfi);
                 wfi = IntPtr.Zero;
             }
+        }
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            FreeWfi();
 
             base.Dispose(disposing);
         }
@@ -127,11 +128,30 @@ namespace AwakeCoding.FreeRDPClient
             set;
         }
 
-        static volatile string[] argv = new string[] { "SimpleClient.exe", "/u:JaneDoe", "/p:D0e123!", "/d:AWAKE", "/cert-ignore", "/v:awakecoding.mine.nu:6003" };
-
         public void Connect()
         {
-            wfi = NativeMethods.wf_new(IntPtr.Zero, this.Handle, argv.Length, ref argv);
+            GlobalInit();
+
+            string[] argv = new string[] 
+            { 
+                "SimpleClient.exe", 
+                "/u:" + UserName, 
+                "/p:" + ((SecuredSettingsStub)SecuredSettings).ClearTextPassword, 
+                "/d:" + Domain, 
+                "/cert-ignore", 
+                "/v:" + Server
+            };
+
+            StringBuilder cmdline = new StringBuilder();
+            for (int i = 0; i < argv.Length; i++)
+            {
+                cmdline.Append(argv[i] + " ");
+            }
+
+            System.Diagnostics.Debug.WriteLine(cmdline.ToString());
+
+            FreeWfi();
+            wfi = NativeMethods.wf_new(IntPtr.Zero, this.Handle, argv.Length, argv);
 
             NativeMethods.wf_start(wfi);
             if (Connected != null)

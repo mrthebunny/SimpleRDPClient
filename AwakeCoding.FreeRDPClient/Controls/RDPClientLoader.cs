@@ -2,12 +2,13 @@
 using AwakeCoding.FreeRDPClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace AwakeCoding.MsRdpClient
+namespace AwakeCoding.FreeRDPClient
 {
     class RDPClientLoader
     {
@@ -15,10 +16,20 @@ namespace AwakeCoding.MsRdpClient
         public static IRDPClient NewRDPClient(RDPClientVersion clientType)
         {
             bool designMode = (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime);
+
+            if (!designMode)
+            {
+                using (var process = Process.GetCurrentProcess())
+                {
+                    designMode = process.ProcessName.ToLowerInvariant().Contains("devenv");
+                }
+            }
+
             if (designMode)
             {
                 clientType = RDPClientVersion.Stub;
             }
+
 #if __MONO
             else
             {
@@ -34,7 +45,7 @@ namespace AwakeCoding.MsRdpClient
             }
             else if (clientType == RDPClientVersion.FreeRDP)
             {
-                client = new FreeRDPClient.FreeRDPClient();
+                client = new FreeRDPClient();
             }
 #if !__MONO
             else if (clientType == RDPClientVersion.MsRDPClient

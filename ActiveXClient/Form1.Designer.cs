@@ -39,10 +39,16 @@
             this.toolStripButtonRemoteProgram = new System.Windows.Forms.ToolStripButton();
             this.tabPageActiveXWrapper = new System.Windows.Forms.TabPage();
             this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
+            this.rdpClientFrame1 = new AwakeCoding.FreeRDPClient.RDPClientFrame();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonConnect2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDisconnect2 = new System.Windows.Forms.ToolStripButton();
-            this.rdpClientFrame1 = new AwakeCoding.MsRdpClient.RDPClientFrame();
+            this.tabPageFreeRDP = new System.Windows.Forms.TabPage();
+            this.toolStripContainer3 = new System.Windows.Forms.ToolStripContainer();
+            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonConnect3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonDisconnect3 = new System.Windows.Forms.ToolStripButton();
+            this.rdpClientFrame2 = new AwakeCoding.FreeRDPClient.RDPClientFrame();
             this.tabControl1.SuspendLayout();
             this.tabPageActiveX.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -55,12 +61,18 @@
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
             this.toolStrip2.SuspendLayout();
+            this.tabPageFreeRDP.SuspendLayout();
+            this.toolStripContainer3.ContentPanel.SuspendLayout();
+            this.toolStripContainer3.TopToolStripPanel.SuspendLayout();
+            this.toolStripContainer3.SuspendLayout();
+            this.toolStrip3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPageActiveX);
             this.tabControl1.Controls.Add(this.tabPageActiveXWrapper);
+            this.tabControl1.Controls.Add(this.tabPageFreeRDP);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -165,7 +177,7 @@
             // toolStripContainer2.ContentPanel
             // 
             this.toolStripContainer2.ContentPanel.Controls.Add(this.rdpClientFrame1);
-            this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(782, 525);
+            this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(757, 525);
             this.toolStripContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer2.Location = new System.Drawing.Point(3, 3);
             this.toolStripContainer2.Name = "toolStripContainer2";
@@ -176,6 +188,17 @@
             // toolStripContainer2.TopToolStripPanel
             // 
             this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStrip2);
+            // 
+            // rdpClientFrame1
+            // 
+            this.rdpClientFrame1.ClientVersion = AwakeCoding.Common.RDPClientVersion.MsRDPClient;
+            this.rdpClientFrame1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rdpClientFrame1.Location = new System.Drawing.Point(0, 0);
+            this.rdpClientFrame1.Name = "rdpClientFrame1";
+            this.rdpClientFrame1.Size = new System.Drawing.Size(757, 525);
+            this.rdpClientFrame1.TabIndex = 0;
+            this.rdpClientFrame1.Connected += new System.EventHandler(this.rdpClientFrame_Connected);
+            this.rdpClientFrame1.Disconnected += new AwakeCoding.Common.DisconnectedEventHandler(this.rdpClientFrame_Disconnected);
             // 
             // toolStrip2
             // 
@@ -206,15 +229,74 @@
             this.toolStripButtonDisconnect2.Text = "Disconnect";
             this.toolStripButtonDisconnect2.Click += new System.EventHandler(this.toolStripButtonDisconnect2_Click);
             // 
-            // rdpClientFrame1
+            // tabPageFreeRDP
             // 
-            this.rdpClientFrame1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rdpClientFrame1.Location = new System.Drawing.Point(0, 0);
-            this.rdpClientFrame1.Name = "rdpClientFrame1";
-            this.rdpClientFrame1.Size = new System.Drawing.Size(782, 525);
-            this.rdpClientFrame1.TabIndex = 0;
-            this.rdpClientFrame1.Connected += new System.EventHandler(this.rdpClientFrame_Connected);
-            this.rdpClientFrame1.Disconnected += new AwakeCoding.Common.DisconnectedEventHandler(this.rdpClientFrame_Disconnected);
+            this.tabPageFreeRDP.Controls.Add(this.toolStripContainer3);
+            this.tabPageFreeRDP.Location = new System.Drawing.Point(4, 22);
+            this.tabPageFreeRDP.Name = "tabPageFreeRDP";
+            this.tabPageFreeRDP.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFreeRDP.Size = new System.Drawing.Size(788, 556);
+            this.tabPageFreeRDP.TabIndex = 2;
+            this.tabPageFreeRDP.Text = "FreeRDP";
+            this.tabPageFreeRDP.UseVisualStyleBackColor = true;
+            // 
+            // toolStripContainer3
+            // 
+            // 
+            // toolStripContainer3.ContentPanel
+            // 
+            this.toolStripContainer3.ContentPanel.Controls.Add(this.rdpClientFrame2);
+            this.toolStripContainer3.ContentPanel.Size = new System.Drawing.Size(782, 525);
+            this.toolStripContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainer3.Location = new System.Drawing.Point(3, 3);
+            this.toolStripContainer3.Name = "toolStripContainer3";
+            this.toolStripContainer3.Size = new System.Drawing.Size(782, 550);
+            this.toolStripContainer3.TabIndex = 1;
+            this.toolStripContainer3.Text = "toolStripContainer3";
+            // 
+            // toolStripContainer3.TopToolStripPanel
+            // 
+            this.toolStripContainer3.TopToolStripPanel.Controls.Add(this.toolStrip3);
+            // 
+            // toolStrip3
+            // 
+            this.toolStrip3.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonConnect3,
+            this.toolStripButtonDisconnect3});
+            this.toolStrip3.Location = new System.Drawing.Point(3, 0);
+            this.toolStrip3.Name = "toolStrip3";
+            this.toolStrip3.Size = new System.Drawing.Size(170, 25);
+            this.toolStrip3.TabIndex = 2;
+            // 
+            // toolStripButtonConnect3
+            // 
+            this.toolStripButtonConnect3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonConnect3.Image")));
+            this.toolStripButtonConnect3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonConnect3.Name = "toolStripButtonConnect3";
+            this.toolStripButtonConnect3.Size = new System.Drawing.Size(72, 22);
+            this.toolStripButtonConnect3.Text = "Connect";
+            this.toolStripButtonConnect3.Click += new System.EventHandler(this.toolStripButtonConnect3_Click);
+            // 
+            // toolStripButtonDisconnect3
+            // 
+            this.toolStripButtonDisconnect3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDisconnect3.Image")));
+            this.toolStripButtonDisconnect3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDisconnect3.Name = "toolStripButtonDisconnect3";
+            this.toolStripButtonDisconnect3.Size = new System.Drawing.Size(86, 22);
+            this.toolStripButtonDisconnect3.Text = "Disconnect";
+            this.toolStripButtonDisconnect3.Click += new System.EventHandler(this.toolStripButtonDisconnect3_Click);
+            // 
+            // rdpClientFrame2
+            // 
+            this.rdpClientFrame2.ClientVersion = AwakeCoding.Common.RDPClientVersion.FreeRDP;
+            this.rdpClientFrame2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rdpClientFrame2.Location = new System.Drawing.Point(0, 0);
+            this.rdpClientFrame2.Name = "rdpClientFrame2";
+            this.rdpClientFrame2.Size = new System.Drawing.Size(782, 525);
+            this.rdpClientFrame2.TabIndex = 1;
+            this.rdpClientFrame2.Connected += new System.EventHandler(this.rdpClientFrame2_Connected);
+            this.rdpClientFrame2.Disconnected += new AwakeCoding.Common.DisconnectedEventHandler(this.rdpClientFrame2_Disconnected);
             // 
             // Form1
             // 
@@ -242,6 +324,14 @@
             this.toolStripContainer2.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
+            this.tabPageFreeRDP.ResumeLayout(false);
+            this.toolStripContainer3.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer3.TopToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer3.TopToolStripPanel.PerformLayout();
+            this.toolStripContainer3.ResumeLayout(false);
+            this.toolStripContainer3.PerformLayout();
+            this.toolStrip3.ResumeLayout(false);
+            this.toolStrip3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -261,7 +351,13 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonConnect2;
         private System.Windows.Forms.ToolStripButton toolStripButtonDisconnect2;
         private System.Windows.Forms.ToolStripButton toolStripButtonRemoteProgram;
-        private AwakeCoding.MsRdpClient.RDPClientFrame rdpClientFrame1;
+        private AwakeCoding.FreeRDPClient.RDPClientFrame rdpClientFrame1;
+        private System.Windows.Forms.TabPage tabPageFreeRDP;
+        private System.Windows.Forms.ToolStripContainer toolStripContainer3;
+        private System.Windows.Forms.ToolStrip toolStrip3;
+        private System.Windows.Forms.ToolStripButton toolStripButtonConnect3;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDisconnect3;
+        private AwakeCoding.FreeRDPClient.RDPClientFrame rdpClientFrame2;
 
     }
 }

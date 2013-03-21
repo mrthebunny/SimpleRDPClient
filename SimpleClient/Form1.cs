@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace AwakeCoding
@@ -8,6 +10,11 @@ namespace AwakeCoding
     public partial class Form1 : Form
     {
         private bool connected;
+
+        private string server;
+        private string userName;
+        private string domain;
+        private string clearTextPassword;      
 
         public bool Connected
         {
@@ -28,8 +35,36 @@ namespace AwakeCoding
             InitializeComponent();
             Connected = false;
 
+            ReadSettings(
+                Environment.GetEnvironmentVariable("HOMEDRIVE") +
+                Path.Combine(
+                Environment.GetEnvironmentVariable("HOMEPATH"), 
+                @"Dropbox\connect.txt"));
+
         }
 
+        private void ReadSettings(string path)
+        {
+            Dictionary<string, string> settings = new Dictionary<string, string>();
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string line = reader.ReadLine();
+                while (line != null)
+                {
+                    string[] tokens = line.Split(new char[] { '=' }, 2);
+                    if (tokens.Length == 2)
+                    {
+                        settings[tokens[0].Trim().ToLower()] = tokens[1].Trim();
+                    }
+                    line = reader.ReadLine();
+                }
+            }
+
+            server = settings["server"];
+            userName = settings["username"];
+            domain = settings["domain"];
+            clearTextPassword = settings["password"];
+        }
 
         private void toolStripButtonDisconnect2_Click(object sender, EventArgs e)
         {
@@ -41,10 +76,10 @@ namespace AwakeCoding
             rdpClientFrame1.DesktopWidth = rdpClientFrame1.Width;
             rdpClientFrame1.DesktopHeight = rdpClientFrame1.Height;
 
-            rdpClientFrame1.Server = "192.168.3.62";
-            rdpClientFrame1.UserName = "Administrator";
-            rdpClientFrame1.Domain = "Awake";
-            rdpClientFrame1.SecuredSettings.ClearTextPassword = "@wake01DC";
+            rdpClientFrame1.Server = server;
+            rdpClientFrame1.UserName = userName;
+            rdpClientFrame1.Domain = domain;
+            rdpClientFrame1.SecuredSettings.ClearTextPassword = clearTextPassword;
             rdpClientFrame1.Connect();
         }
 

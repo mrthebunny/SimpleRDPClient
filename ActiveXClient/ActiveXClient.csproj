@@ -125,14 +125,12 @@
       <Project>{F0AEB698-0338-4E04-949B-60E4448D1597}</Project>
       <Name>AwakeCoding.FreeRDPClient</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AwakeCoding.MsRdpClient\AwakeCoding.MsRdpClient.csproj">
-      <Project>{c172d4c2-75d8-44c6-8511-09baeb9317e0}</Project>
-      <Name>AwakeCoding.MsRdpClient</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(SolutionDir)\AwakeCoding.MsRdpClient\$(OutDir)\AwakeCoding.MsRdpClient.*" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>copy "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\Debug\AxInterop.MSTSCLib.dll" "$(TargetDir)"
+copy "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\Debug\Interop.MSTSCLib.dll" "$(TargetDir)"
+copy "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\Debug\AwakeCoding.MsRdpClient.*" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
