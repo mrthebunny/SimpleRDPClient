@@ -50,6 +50,9 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -128,9 +131,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\Debug\AxInterop.MSTSCLib.dll" "$(TargetDir)"
-copy "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\Debug\Interop.MSTSCLib.dll" "$(TargetDir)"
-copy "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\Debug\AwakeCoding.MsRdpClient.*" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>
+xcopy /Y /D  "$(ProjectDir)\..\..\FreeRDP\Debug\*.*" "$(TargetDir)"
+copy /y "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\Debug\AxInterop.MSTSCLib.dll" "$(TargetDir)"
+copy /y "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\Debug\Interop.MSTSCLib.dll" "$(TargetDir)"
+copy /y "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\Debug\AwakeCoding.MsRdpClient.*" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
