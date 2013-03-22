@@ -76,17 +76,12 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FreeRDP\FreeRDPClient.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="FreeRDP\FreeRDPClient.cs" />
     <Compile Include="FreeRDP\NativeMethods.cs" />
     <Compile Include="Stubs\AdvancedSettingsStub.cs" />
     <Compile Include="Controls\RDPClientLoader.cs" />
     <Compile Include="Controls\RDPClientFrame.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\RDPClientFrame.Designer.cs">
-      <DependentUpon>RDPClientFrame.cs</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stubs\RDPClientStub.cs" />

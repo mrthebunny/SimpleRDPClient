@@ -10,7 +10,7 @@ using AwakeCoding.Common;
 
 namespace AwakeCoding.FreeRDPClient
 {
-    public partial class RDPClientFrame : UserControl, IRDPClient
+    public partial class RDPClientFrame : Panel, IRDPClient
     {
 
         #region Private members
@@ -41,8 +41,14 @@ namespace AwakeCoding.FreeRDPClient
 
         public RDPClientFrame()
         {
-            //InitializeComponent();
+            this.AutoScroll = true;
+        }
 
+        protected override void InitLayout()
+        {
+ 	        base.InitLayout();
+            InitializeRdpComponent();
+            RegisterEvents();
         }
 
 
@@ -62,24 +68,7 @@ namespace AwakeCoding.FreeRDPClient
                 }
             }
 
-            //if (disposing && (components != null))
-            //{
-            //    components.Dispose();
-            //}
             base.Dispose(disposing);
-        }
-
-
-
-        //protected override void InitLayout()
-        protected override void OnLoad(EventArgs e)
-{
- 	 base.OnLoad(e);
-
-            InitializeRdpComponent();
-            RegisterEvents();
-
-            //base.InitLayout();
         }
 
         private void RegisterEvents()
@@ -94,10 +83,7 @@ namespace AwakeCoding.FreeRDPClient
         private void InitializeRdpComponent()
         {
             rdpClientImpl = RDPClientLoader.NewRDPClient(ClientVersion);
-
-            Control ctrl = rdpClientImpl.GetControl();
-            ctrl.Dock = DockStyle.Fill;
-            Controls.Add(ctrl);
+            rdpClientImpl.Attach(this);
         }
 
         [Browsable(false)]
@@ -204,9 +190,9 @@ namespace AwakeCoding.FreeRDPClient
             }
         }
 
-        public Control GetControl()
+        public void Attach(Control parent)
         {
-            return this;
+            parent.Controls.Add(this);
         }
 
         public void Connect()
@@ -255,6 +241,17 @@ namespace AwakeCoding.FreeRDPClient
         }
 
         #endregion // Event Handling
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // RDPClientFrame
+            // 
+            this.Name = "RDPClientFrame";
+            this.ResumeLayout(false);
+
+        }
     }
 
 }

@@ -80,6 +80,10 @@ namespace AwakeCoding.MsRdpClient
             transportSettingsProxy.TargetInstance = client.TransportSettings2;
             transportSettingsProxy.TargetType = typeof(IMsRdpClientTransportSettings2);
             TransportSettings = transportSettingsProxy.GetStrongTypedProxy();
+
+            AxHost host = (AxHost)client;
+
+            host.Dock = DockStyle.Fill;
         }
 
         private void TrySetAdvancedSettings(object targetInstance, Type targetType)
@@ -100,10 +104,10 @@ namespace AwakeCoding.MsRdpClient
                 return lastDetectedVersion;
             }
         }
-        
-        public Control GetControl()
+
+        public void Attach(Control parent)
         {
-            return client as Control;
+            parent.Controls.Add((Control) client);
         }
 
         private void RegisterEvents()

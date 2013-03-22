@@ -23,12 +23,12 @@ namespace AwakeCoding.Common
         int DesktopWidth { get; set; }
         int DesktopHeight { get; set; }
 
-        Control GetControl();
         #endregion // Settings
 
         #region Methods
         void Connect();
         void Disconnect();
+        void Attach(Control parent);
         #endregion // Methods
 
         #region Events
@@ -39,5 +39,7 @@ namespace AwakeCoding.Common
         event WarningEventHandler WarningOccurred;
         
         #endregion // Events
+
+        
     }
 }

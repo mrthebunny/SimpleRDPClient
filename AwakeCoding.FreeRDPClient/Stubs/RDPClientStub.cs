@@ -110,9 +110,9 @@ namespace AwakeCoding.FreeRDPClient
             }
         }
 
-        public Control GetControl()
+        public void Attach(Control parent)
         {
-            return panel;
+            parent.Controls.Add(panel);
         }
 
         public event EventHandler Connected;

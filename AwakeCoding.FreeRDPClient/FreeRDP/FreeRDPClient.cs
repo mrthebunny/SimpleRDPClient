@@ -7,10 +7,10 @@ using System.Windows.Forms;
 
 namespace AwakeCoding.FreeRDPClient
 {
-    public class FreeRDPClient : Panel, IRDPClient, IDisposable
+    public class FreeRDPClient : IRDPClient, IDisposable
     {
         private IntPtr wfi = IntPtr.Zero;
-
+        private Control parent;
         private static bool staticInitialized = false;
         private static void GlobalInit()
         {
@@ -35,20 +35,17 @@ namespace AwakeCoding.FreeRDPClient
                 SecuredSettings = new SecuredSettingsStub();
                 TransportSettings = new TransportSettingsStub();
 
-                this.SetStyle(
-                ControlStyles.UserPaint |
-                ControlStyles.AllPaintingInWmPaint |
-                ControlStyles.DoubleBuffer, true);
+                //this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                
+                //this.SetStyle(
+                //ControlStyles.UserPaint |
+                //ControlStyles.AllPaintingInWmPaint |
+                //ControlStyles.DoubleBuffer, true);
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("FreeRDPClient Error on ctor: " + ex.ToString());
             }
-        }
-
-        protected override void InitLayout()
-        {
-            base.InitLayout();
         }
 
         protected void FreeWfi()
@@ -64,11 +61,9 @@ namespace AwakeCoding.FreeRDPClient
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+        public void Dispose()
         {
             FreeWfi();
-
-            base.Dispose(disposing);
         }
 
         void panel_HandleCreated(object sender, EventArgs e)
@@ -118,14 +113,12 @@ namespace AwakeCoding.FreeRDPClient
 
         public int DesktopWidth
         {
-            get;
-            set;
+            get;set;
         }
 
         public int DesktopHeight
         {
-            get;
-            set;
+            get;set;
         }
 
         public void Connect()
@@ -139,7 +132,10 @@ namespace AwakeCoding.FreeRDPClient
                 "/p:" + ((SecuredSettingsStub)SecuredSettings).ClearTextPassword, 
                 "/d:" + Domain, 
                 "/cert-ignore", 
-                "/v:" + Server
+                "/v:" + Server,
+                "-decorations",
+                "/w:" + DesktopWidth,
+                "/h:" + DesktopHeight
             };
 
             StringBuilder cmdline = new StringBuilder();
@@ -151,7 +147,7 @@ namespace AwakeCoding.FreeRDPClient
             System.Diagnostics.Debug.WriteLine(cmdline.ToString());
 
             FreeWfi();
-            wfi = NativeMethods.wf_new(IntPtr.Zero, this.Handle, argv.Length, argv);
+            wfi = NativeMethods.wf_new(IntPtr.Zero, parent.Handle, argv.Length, argv);
 
             NativeMethods.wf_start(wfi);
             if (Connected != null)
@@ -169,9 +165,9 @@ namespace AwakeCoding.FreeRDPClient
             }
         }
 
-        public Control GetControl()
+        public void Attach(Control parent)
         {
-            return this;
+            this.parent = parent;
         }
 
         public event EventHandler Connected;
