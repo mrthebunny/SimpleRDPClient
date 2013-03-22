@@ -41,14 +41,18 @@ namespace AwakeCoding.FreeRDPClient
 
         public RDPClientFrame()
         {
-            this.AutoScroll = true;
+            this.HandleCreated += RDPClientFrame_HandleCreated;
+        }
+
+        void RDPClientFrame_HandleCreated(object sender, EventArgs e)
+        {
+            InitializeRdpComponent();
+            RegisterEvents();
         }
 
         protected override void InitLayout()
         {
  	        base.InitLayout();
-            InitializeRdpComponent();
-            RegisterEvents();
         }
 
 
@@ -197,6 +201,7 @@ namespace AwakeCoding.FreeRDPClient
 
         public void Connect()
         {
+            this.MaximumSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
             rdpClientImpl.Connect();
         }
 

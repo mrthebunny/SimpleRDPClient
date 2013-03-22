@@ -76,6 +76,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FreeRDP\FreeRDPAdvancedSettings.cs" />
     <Compile Include="FreeRDP\FreeRDPClient.cs" />
     <Compile Include="FreeRDP\NativeMethods.cs" />
     <Compile Include="Stubs\AdvancedSettingsStub.cs" />

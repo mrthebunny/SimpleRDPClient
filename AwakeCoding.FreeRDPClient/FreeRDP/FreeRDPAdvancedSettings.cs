@@ -4,10 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AwakeCoding.FreeRDPClient
+namespace AwakeCoding.FreeRDPClient.FreeRDP
 {
-    public class AdvancedSettingsStub : IAdvancedSettings
+    public class FreeRDPAdvancedSettings : IAdvancedSettings
     {
+        private bool smartSizing = false;
+
+        public event EventHandler SettingsChanged;
+
         public int AcceleratorPassthrough
         {
             get
@@ -1070,14 +1074,22 @@ namespace AwakeCoding.FreeRDPClient
 
         public bool SmartSizing
         {
-            get;set;
-            //{
-            //    throw new NotImplementedException();
-            //}
-            //set
-            //{
-            //    throw new NotImplementedException();
-            //}
+            get
+            {
+                return smartSizing;
+            }
+            set
+            {
+                if (smartSizing != value)
+                {
+                    smartSizing = value;
+
+                    if (SettingsChanged != null)
+                    {
+                        SettingsChanged(this, EventArgs.Empty);
+                    }
+                }
+            }
         }
 
         public int SmoothScroll
@@ -1138,11 +1150,6 @@ namespace AwakeCoding.FreeRDPClient
             {
                 throw new NotImplementedException();
             }
-        }
-
-        public void set_ConnectWithEndpoint(ref object value)
-        {
-            throw new NotImplementedException();
         }
     }
 }

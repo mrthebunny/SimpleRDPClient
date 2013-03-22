@@ -1,4 +1,5 @@
 ﻿using AwakeCoding.Common;
+using AwakeCoding.FreeRDPClient.FreeRDP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,11 @@ namespace AwakeCoding.FreeRDPClient
     public class FreeRDPClient : IRDPClient, IDisposable
     {
         private IntPtr wfi = IntPtr.Zero;
-        private Control parent;
         private static bool staticInitialized = false;
+
+        private Panel host;
+
+
         private static void GlobalInit()
         {
             if (!staticInitialized)
@@ -31,21 +35,56 @@ namespace AwakeCoding.FreeRDPClient
         {
             try
             {
-                AdvancedSettings = new AdvancedSettingsStub();
+                AdvancedSettings = new FreeRDPAdvancedSettings();
                 SecuredSettings = new SecuredSettingsStub();
                 TransportSettings = new TransportSettingsStub();
 
-                //this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                ((FreeRDPAdvancedSettings)AdvancedSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
                 
-                //this.SetStyle(
-                //ControlStyles.UserPaint |
-                //ControlStyles.AllPaintingInWmPaint |
-                //ControlStyles.DoubleBuffer, true);
+                host = new Panel();
+                host.Dock = DockStyle.Fill;
+                host.SizeChanged += host_SizeChanged;
+                //host.AutoScroll = true;
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("FreeRDPClient Error on ctor: " + ex.ToString());
             }
+        }
+
+        void host_SizeChanged(object sender, EventArgs e)
+        {
+            //if (AdvancedSettings.SmartSizing)
+            //{
+            //    UpdateRatio();
+            //}
+        }
+
+        void FreeRDPClient_SettingsChanged(object sender, EventArgs e)
+        {
+            // Update smart sizing
+
+            if (!AdvancedSettings.SmartSizing)
+            {
+                host.Scale(new System.Drawing.SizeF(1.0F, 1.0F));
+            }
+            else
+            {
+                UpdateRatio();
+            }
+        }
+
+        private void UpdateRatio()
+        {
+            //host.Scale(new System.Drawing.SizeF(0.5F, 0.5F));
+
+            //if (DesktopWidth > 0 && DesktopHeight > 0)
+            //{
+            //    float xRatio = Math.Min(1.0F, (float)host.Width / (float)DesktopWidth);
+            //    float yRatio = Math.Min(1.0F, (float)host.Height / (float)DesktopHeight);
+
+            //    host.Scale(new System.Drawing.SizeF(xRatio, yRatio));
+            //}
         }
 
         protected void FreeWfi()
@@ -125,6 +164,9 @@ namespace AwakeCoding.FreeRDPClient
         {
             GlobalInit();
 
+            //host.MaximumSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
+            host.AutoScrollMinSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
+
             string[] argv = new string[] 
             { 
                 "SimpleClient.exe", 
@@ -147,7 +189,7 @@ namespace AwakeCoding.FreeRDPClient
             System.Diagnostics.Debug.WriteLine(cmdline.ToString());
 
             FreeWfi();
-            wfi = NativeMethods.wf_new(IntPtr.Zero, parent.Handle, argv.Length, argv);
+            wfi = NativeMethods.wf_new(IntPtr.Zero, /*parent.Handle*/ host.Handle, argv.Length, argv);
 
             NativeMethods.wf_start(wfi);
             if (Connected != null)
@@ -167,7 +209,8 @@ namespace AwakeCoding.FreeRDPClient
 
         public void Attach(Control parent)
         {
-            this.parent = parent;
+            //this.parent = parent;
+            parent.Controls.Add(host);
         }
 
         public event EventHandler Connected;

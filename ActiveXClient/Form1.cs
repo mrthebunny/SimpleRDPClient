@@ -66,6 +66,8 @@ namespace ActiveXClient
             IMsTscNonScriptable secured = (IMsTscNonScriptable) rdpConnection.GetOcx();
             secured.ClearTextPassword = clearTextPassword;
 
+            //rdpConnection.AdvancedSettings9.SmartSizing = true;
+
             rdpConnection.Connect();
         }
 
@@ -148,6 +150,8 @@ namespace ActiveXClient
             rdpClientFrame.Domain = domain;
             rdpClientFrame.SecuredSettings.ClearTextPassword = clearTextPassword;
 
+            //rdpClientFrame.AdvancedSettings.SmartSizing = true;
+
             rdpClientFrame.Connect();
         }
 
@@ -168,6 +172,18 @@ namespace ActiveXClient
                     toolStripButtonDisconnect3.Enabled = connected;
                     break;
             }
+        }
+
+        private void toolStripButtonSmartSize1_Click(object sender, EventArgs e)
+        {
+            toolStripButtonSmartSize1.Checked = !toolStripButtonSmartSize1.Checked;
+            rdpClientFrame1.AdvancedSettings.SmartSizing = toolStripButtonSmartSize1.Checked;
+        }
+
+        private void toolStripButtonSmartSize2_Click(object sender, EventArgs e)
+        {
+            toolStripButtonSmartSize2.Checked = !toolStripButtonSmartSize2.Checked;
+            rdpClientFrame2.AdvancedSettings.SmartSizing = toolStripButtonSmartSize2.Checked;
         }
     }
 }
