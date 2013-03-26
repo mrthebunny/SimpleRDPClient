@@ -77,8 +77,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FreeRDP\FreeRDPAdvancedSettings.cs" />
-    <Compile Include="FreeRDP\FreeRDPClient.cs" />
+    <Compile Include="FreeRDP\FreeRDPClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FreeRDP\NativeMethods.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Stubs\AdvancedSettingsStub.cs" />
     <Compile Include="Controls\RDPClientLoader.cs" />
     <Compile Include="Controls\RDPClientFrame.cs">
@@ -98,6 +105,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Controls\RDPClientFrame.resx">
       <DependentUpon>RDPClientFrame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

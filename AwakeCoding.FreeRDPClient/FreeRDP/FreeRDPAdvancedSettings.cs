@@ -228,7 +228,7 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 
         public string ClearTextPassword
         {
-            set { throw new NotImplementedException(); }
+           get; set;
         }
 
         public ClientSpec ClientProtocolSpec
@@ -894,14 +894,7 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 
         public int RDPPort
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;set;
         }
 
         public bool RedirectClipboard

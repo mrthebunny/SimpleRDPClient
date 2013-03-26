@@ -100,20 +100,20 @@ namespace AwakeCoding.FreeRDPClient
         }
 
         [Browsable(false)]
-        public ISecuredSettings SecuredSettings
-        {
-            get
-            {
-                return rdpClientImpl.SecuredSettings;
-            }
-        }
-
-        [Browsable(false)]
         public ITransportSettings TransportSettings
         {
             get
             {
                 return rdpClientImpl.TransportSettings;
+            }
+        }
+
+        [Browsable(false)]
+        public ISecuredSettings SecuredSettings
+        {
+            get
+            {
+                return rdpClientImpl.SecuredSettings;
             }
         }
 
@@ -194,6 +194,19 @@ namespace AwakeCoding.FreeRDPClient
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int ColorDepth
+        {
+            get
+            {
+                return rdpClientImpl.ColorDepth;
+            }
+            set
+            {
+                rdpClientImpl.ColorDepth = value;
+            }
+        }
+
         public void Attach(Control parent)
         {
             parent.Controls.Add(this);
@@ -201,7 +214,7 @@ namespace AwakeCoding.FreeRDPClient
 
         public void Connect()
         {
-            this.MaximumSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
+            //this.MaximumSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
             rdpClientImpl.Connect();
         }
 
@@ -253,9 +266,112 @@ namespace AwakeCoding.FreeRDPClient
             // 
             // RDPClientFrame
             // 
-            this.Name = "RDPClientFrame";
+            this.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.ResumeLayout(false);
 
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new bool ContainsFocus
+        {
+            get
+            {
+                return rdpClientImpl.ContainsFocus;
+            }
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string ConnectedStatusText
+        {
+            get
+            {
+                return rdpClientImpl.ConnectedStatusText;
+            }
+            set
+            {
+                rdpClientImpl.ConnectedStatusText = value;
+            }
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string ConnectingText
+        {
+            get
+            {
+                return rdpClientImpl.ConnectingText;
+            }
+            set
+            {
+                rdpClientImpl.ConnectingText = value;
+            }
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string DisconnectedText
+        {
+            get
+            {
+                return rdpClientImpl.DisconnectedText;
+            }
+            set
+            {
+                rdpClientImpl.DisconnectedText = value;
+            }
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool FullScreen
+        {
+            get
+            {
+                return rdpClientImpl.FullScreen;
+            }
+            set
+            {
+                rdpClientImpl.FullScreen = value;
+            }
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string FullScreenTitle
+        {
+            set 
+            { 
+                rdpClientImpl.FullScreenTitle = value; 
+            }
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool HorizontalScrollBarVisible
+        {
+            get 
+            {
+                return rdpClientImpl.HorizontalScrollBarVisible;
+            }
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool IsConnected
+        {
+            get
+            {
+                return rdpClientImpl.IsConnected;
+            }
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool VerticalScrollBarVisible
+        {
+            get 
+            {
+                return rdpClientImpl.VerticalScrollBarVisible;
+            }
+        }
+
+
+        public string GetErrorDescription(uint discReason, uint extendedDisconnectReason)
+        {
+            return rdpClientImpl.GetErrorDescription(discReason, extendedDisconnectReason);
         }
     }
 

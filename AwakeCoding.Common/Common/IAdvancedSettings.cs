@@ -107,8 +107,5 @@ namespace AwakeCoding.Common
         int TransportType { get; set; }
         uint VideoPlaybackMode { get; set; }
         int WinceFixedPalette { get; set; }
-        
-        //void set_ConnectWithEndpoint(ref object value);
-
     }
 }

@@ -63,9 +63,9 @@
     <Compile Include="Common\EventHandling.cs" />
     <Compile Include="Common\RdpClientVersion.cs" />
     <Compile Include="Common\IRdpClient.cs" />
-    <Compile Include="Common\SecuredSettings.cs" />
     <Compile Include="Common\IAdvancedSettings.cs" />
     <Compile Include="Common\ITransportSettings.cs" />
+    <Compile Include="Common\ISecuredSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\InterfaceProxy.cs" />
   </ItemGroup>

@@ -76,8 +76,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MsRdpClient\MsRdpClientAdapter.cs" />
-    <Compile Include="MsRdpClient\MsSecuredSettings.cs" />
-    <Compile Include="MsRdpClient\MsTransportSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

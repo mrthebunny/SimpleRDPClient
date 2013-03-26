@@ -18,8 +18,8 @@ namespace AwakeCoding.FreeRDPClient
         public RDPClientStub()
         {
             AdvancedSettings = new AdvancedSettingsStub();
-            SecuredSettings = new SecuredSettingsStub();
             TransportSettings = new TransportSettingsStub();
+            SecuredSettings = new SecuredSettingsStub();
 
             textBox.Dock = DockStyle.Fill;
             textBox.ReadOnly = true;
@@ -49,16 +49,18 @@ namespace AwakeCoding.FreeRDPClient
             set;
         }
 
-        public ISecuredSettings SecuredSettings
-        {
-            get;
-            set;
-        }
         public ITransportSettings TransportSettings
         {
             get;
             set;
         }
+
+        public ISecuredSettings SecuredSettings
+        {
+            get;
+            set;
+        }
+
         public string Server
         {
             get;
@@ -83,6 +85,12 @@ namespace AwakeCoding.FreeRDPClient
         }
 
         public int DesktopHeight
+        {
+            get;
+            set;
+        }
+
+        public int ColorDepth
         {
             get;
             set;
@@ -136,6 +144,67 @@ namespace AwakeCoding.FreeRDPClient
                 DesktopWidth,
                 DesktopHeight);       
         }
-    
+
+
+
+        public bool ContainsFocus
+        {
+            get;
+            set;
+        }
+
+        public string ConnectedStatusText
+        {
+            get;
+            set;
+        }
+
+        public string ConnectingText
+        {
+            get;
+            set;
+        }
+
+        public string DisconnectedText
+        {
+             get;
+             set;
+        }
+
+        public bool FullScreen
+        {
+            get;
+            set;
+        }
+
+        public string FullScreenTitle
+        {
+            get;
+            set;
+        }
+
+        public bool HorizontalScrollBarVisible
+        {
+            get;
+            set;        
+        }
+
+        public bool IsConnected
+        {
+            get;
+            set;       
+        }
+
+        public bool VerticalScrollBarVisible
+        {
+            get;
+            set;
+        }
+
+
+        public string GetErrorDescription(uint discReason, uint extendedDisconnectReason)
+        {
+            return "";
+        }
     }
 }

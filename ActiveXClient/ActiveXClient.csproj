@@ -128,6 +128,10 @@
       <Project>{F0AEB698-0338-4E04-949B-60E4448D1597}</Project>
       <Name>AwakeCoding.FreeRDPClient</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AwakeCoding.MsRdpClient\AwakeCoding.MsRdpClient.csproj">
+      <Project>{c172d4c2-75d8-44c6-8511-09baeb9317e0}</Project>
+      <Name>AwakeCoding.MsRdpClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

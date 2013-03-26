@@ -20,10 +20,10 @@ namespace AwakeCoding.MsRdpClient
         private static RDPClientVersion lastDetectedVersion = RDPClientVersion.Unknown;
 
         private IMsRDPClient client;
-        private InterfaceProxy<ISecuredSettings> securedSettingsProxy;
         private InterfaceProxy<IAdvancedSettings> advancedSettingsProxy;
         private InterfaceProxy<ITransportSettings> transportSettingsProxy;
-
+        private InterfaceProxy<ISecuredSettings> securedSettingsProxy;
+        private AxHost host;
 
         public MsRdpClientAdapter()
         {
@@ -42,7 +42,8 @@ namespace AwakeCoding.MsRdpClient
 
                 System.Diagnostics.Debug.WriteLine("AxRDPClient version instanciated: " + lastDetectedVersion);
 
-                ((AxHost)client).HandleCreated += MsRdpClientAdapter_HandleCreated;
+                host = (AxHost)client;
+                host.HandleCreated += MsRdpClientAdapter_HandleCreated;
 
                 RegisterEvents();
             }
@@ -56,11 +57,15 @@ namespace AwakeCoding.MsRdpClient
         {
             // Finish initialization - com object proxies
 
+            // Rewrap to "authentication settings" ?
             IMsTscNonScriptable securedSettingsOcx = (IMsTscNonScriptable)client.GetOcx();
-            securedSettingsProxy = new InterfaceProxy<ISecuredSettings>();
-            securedSettingsProxy.TargetInstance = securedSettingsOcx;
-            securedSettingsProxy.TargetType = typeof(IMsTscNonScriptable);
-            SecuredSettings = securedSettingsProxy.GetStrongTypedProxy();
+            //securedSettingsProxy = new InterfaceProxy<ISecuredSettings>();
+            //securedSettingsProxy.TargetInstance = securedSettingsOcx;
+            //securedSettingsProxy.TargetType = typeof(IMsTscNonScriptable);
+            //SecuredSettings = securedSettingsProxy.GetStrongTypedProxy();
+
+            TrySetSecuredSettings(client.SecuredSettings, typeof(IMsTscSecuredSettings));
+            TrySetSecuredSettings(client.SecuredSettings2, typeof(IMsRdpClientSecuredSettings));
 
             TrySetAdvancedSettings(client.AdvancedSettings9, typeof(MSTSCLib.IMsRdpClientAdvancedSettings8));
             TrySetAdvancedSettings(client.AdvancedSettings8, typeof(MSTSCLib.IMsRdpClientAdvancedSettings7));
@@ -71,19 +76,54 @@ namespace AwakeCoding.MsRdpClient
             TrySetAdvancedSettings(client.AdvancedSettings2, typeof(MSTSCLib.IMsRdpClientAdvancedSettings));
             TrySetAdvancedSettings(client.AdvancedSettings, typeof(MSTSCLib.IMsTscAdvancedSettings));
 
-            securedSettingsProxy = new InterfaceProxy<ISecuredSettings>();
-            securedSettingsProxy.TargetInstance = securedSettingsOcx;
-            securedSettingsProxy.TargetType = typeof(IMsTscNonScriptable);
-            SecuredSettings = securedSettingsProxy.GetStrongTypedProxy();
-
             transportSettingsProxy = new InterfaceProxy<ITransportSettings>();
             transportSettingsProxy.TargetInstance = client.TransportSettings2;
             transportSettingsProxy.TargetType = typeof(IMsRdpClientTransportSettings2);
             TransportSettings = transportSettingsProxy.GetStrongTypedProxy();
 
-            AxHost host = (AxHost)client;
+            host.Visible = false;
 
-            host.Dock = DockStyle.Fill;
+            host.Parent.SizeChanged += Parent_SizeChanged;
+        }
+
+        void Parent_SizeChanged(object sender, EventArgs e)
+        {
+            int x = host.Location.X;
+            int y = host.Location.Y;
+            int width = host.Width;
+            int height = host.Height;
+
+            if (DesktopHeight > 0 && host.Parent.Height > 0)
+            {
+                if (host.Parent.Height <= DesktopHeight)
+                {
+                    y = 0;
+                    height = host.Parent.Height;
+                }
+                else
+                {
+                    y = (host.Parent.Height - DesktopHeight) / 2;
+                    height = DesktopHeight;
+                }
+            }
+
+            if (DesktopWidth > 0 && host.Parent.Width > 0)
+            {
+                if (host.Parent.Width <= DesktopWidth)
+                {
+                    x = 0;
+                    width = host.Parent.Width;
+                }
+                else
+                {
+                    x = (host.Parent.Width - DesktopWidth) / 2;
+                    width = DesktopWidth;
+                }
+            }
+
+            host.Location = new System.Drawing.Point(x, y);
+            host.Height = height;
+            host.Width = width;
         }
 
         private void TrySetAdvancedSettings(object targetInstance, Type targetType)
@@ -94,6 +134,18 @@ namespace AwakeCoding.MsRdpClient
                 advancedSettingsProxy.TargetInstance = targetInstance;
                 advancedSettingsProxy.TargetType = targetType;
                 AdvancedSettings = advancedSettingsProxy.GetStrongTypedProxy();
+            }
+        }
+
+
+        private void TrySetSecuredSettings(object targetInstance, Type targetType)
+        {
+            if (SecuredSettings == null && targetInstance != null)
+            {
+                securedSettingsProxy = new InterfaceProxy<ISecuredSettings>();
+                securedSettingsProxy.TargetInstance = targetInstance;
+                securedSettingsProxy.TargetType = targetType;
+                SecuredSettings = securedSettingsProxy.GetStrongTypedProxy();
             }
         }
 
@@ -194,13 +246,13 @@ namespace AwakeCoding.MsRdpClient
             private set;
         }
 
-        public ISecuredSettings SecuredSettings
+        public ITransportSettings TransportSettings
         {
-            get; 
+            get;
             private set;
         }
 
-        public ITransportSettings TransportSettings
+        public ISecuredSettings SecuredSettings
         {
             get;
             private set;
@@ -266,6 +318,19 @@ namespace AwakeCoding.MsRdpClient
             }
         }
 
+        public int ColorDepth
+        {
+            get
+            {
+                return client.ColorDepth;
+            }
+            set
+            {
+                client.ColorDepth = value;
+            }
+        }
+
+
         /// <summary>
         /// Apply the values of the current RDP Client internal RDP ActiveX component
         /// Override in derived classes to extend the settings that apply to a given version. Always call
@@ -318,10 +383,13 @@ namespace AwakeCoding.MsRdpClient
             ApplyTransportSettings();
 
             client.Connect();
+            host.Visible = true;
+            Parent_SizeChanged(this, EventArgs.Empty);
         }
 
         public void Disconnect()
         {
+            host.Visible = false;
             client.Disconnect();
         }
 
@@ -332,5 +400,95 @@ namespace AwakeCoding.MsRdpClient
         public event FatalErrorEventHandler FatalErrorOccurred;
 
         public event WarningEventHandler WarningOccurred;
+
+
+        public bool ContainsFocus
+        {
+            get
+            {
+                return client.ContainsFocus;
+            }
+        }
+
+        public string ConnectedStatusText
+        {
+            get
+            {
+                return client.ConnectedStatusText;
+            }
+            set
+            {
+                client.ConnectedStatusText = value;
+            }
+        }
+
+        public string ConnectingText
+        {
+            get
+            {
+                return client.ConnectingText;
+            }
+            set
+            {
+                client.ConnectingText = value;
+            }
+        }
+
+        public string DisconnectedText
+        {
+            get
+            {
+                return client.DisconnectedText;
+            }
+            set
+            {
+                client.DisconnectedText = value;
+            }
+        }
+
+        public bool FullScreen
+        {
+            get
+            {
+                return client.FullScreen;
+            }
+            set
+            {
+                client.FullScreen = value;
+            }
+        }
+
+        public string FullScreenTitle
+        {
+            set 
+            { 
+                client.FullScreenTitle = value; 
+            }
+        }
+
+        public bool HorizontalScrollBarVisible
+        {
+            get
+            {
+                return (client.HorizontalScrollBarVisible != 0);
+            }
+        }
+
+        public bool IsConnected
+        {
+            get { return (client.Connected != 0);  }
+        }
+
+        public bool VerticalScrollBarVisible
+        {
+            get {
+                return ( client.VerticalScrollBarVisible != 0);
+            }
+        }
+
+        public string GetErrorDescription(uint discReason, uint extendedDisconnectReason)
+        {
+            return client.GetErrorDescription(discReason, extendedDisconnectReason);
+        }
     }
 }

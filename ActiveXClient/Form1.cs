@@ -17,7 +17,9 @@ namespace ActiveXClient
         private string server;
         private string userName;
         private string domain;
-        private string clearTextPassword;        
+        private string clearTextPassword;
+        private int port = 0;
+        private int bpp = 0;
 
         public Form1()
         {
@@ -39,19 +41,32 @@ namespace ActiveXClient
                 string line = reader.ReadLine();
                 while(line != null)
                 {
-                    string[] tokens = line.Split(new char[] { '=' }, 2);
-                    if (tokens.Length == 2)
+                    if (!line.StartsWith("#")) // commented lines start with #. Ignore.
                     {
-                        settings[tokens[0].Trim().ToLower()] = tokens[1].Trim();
+                        string[] tokens = line.Split(new char[] { '=' }, 2);
+                        if (tokens.Length == 2)
+                        {
+                            settings[tokens[0].Trim().ToLower()] = tokens[1].Trim();
+                        }
                     }
                     line = reader.ReadLine();
                 }
             }
 
+            settings.TryGetValue("domain", out domain);
+            settings.TryGetValue("domain", out domain);
+            settings.TryGetValue("domain", out domain);
             server = settings["server"];
             userName = settings["username"];
-            domain = settings["domain"];
             clearTextPassword = settings["password"];
+            settings.TryGetValue("domain", out domain);
+
+
+            txtDomain.Text = domain;
+            txtPassword.Text = clearTextPassword;
+            txtPort.Text = "";
+            txtServer.Text = server;
+            txtUsername.Text = userName;
         }
 
         private void toolStripButtonConnect_Click(object sender, EventArgs e)
@@ -63,12 +78,38 @@ namespace ActiveXClient
             rdpConnection.UserName = userName;
             rdpConnection.Domain = domain;
 
-            IMsTscNonScriptable secured = (IMsTscNonScriptable) rdpConnection.GetOcx();
-            secured.ClearTextPassword = clearTextPassword;
+            if (bpp > 0)
+            {
+                rdpConnection.ColorDepth = bpp;
+            }
 
+            //IMsTscNonScriptable secured = (IMsTscNonScriptable) rdpConnection.GetOcx();
+            //secured.ClearTextPassword = clearTextPassword;
+            rdpConnection.AdvancedSettings9.ClearTextPassword = clearTextPassword;
             //rdpConnection.AdvancedSettings9.SmartSizing = true;
 
             rdpConnection.Connect();
+        }
+
+
+        private void DoConnect(AwakeCoding.FreeRDPClient.RDPClientFrame rdpClientFrame)
+        {
+            rdpClientFrame.DesktopWidth = rdpClientFrame1.Width;
+            rdpClientFrame.DesktopHeight = rdpClientFrame1.Height;
+
+            rdpClientFrame.Server = server;
+            rdpClientFrame.UserName = userName;
+            rdpClientFrame.Domain = domain;
+            rdpClientFrame.AdvancedSettings.ClearTextPassword = clearTextPassword;
+
+            if (bpp > 0)
+            {
+                rdpClientFrame.ColorDepth = bpp;
+            }
+
+            //rdpClientFrame.AdvancedSettings.SmartSizing = true;
+
+            rdpClientFrame.Connect();
         }
 
         private void toolStripButtonDisconnect_Click(object sender, EventArgs e)
@@ -140,21 +181,6 @@ namespace ActiveXClient
             SetConnected(3, false);
         }
 
-        private void DoConnect(AwakeCoding.FreeRDPClient.RDPClientFrame rdpClientFrame)
-        {
-            rdpClientFrame.DesktopWidth = rdpClientFrame1.Width;
-            rdpClientFrame.DesktopHeight = rdpClientFrame1.Height;
-
-            rdpClientFrame.Server = server;
-            rdpClientFrame.UserName = userName;
-            rdpClientFrame.Domain = domain;
-            rdpClientFrame.SecuredSettings.ClearTextPassword = clearTextPassword;
-
-            //rdpClientFrame.AdvancedSettings.SmartSizing = true;
-
-            rdpClientFrame.Connect();
-        }
-
         private void SetConnected(int tabIndex, bool connected)
         {
             switch (tabIndex)
@@ -185,5 +211,36 @@ namespace ActiveXClient
             toolStripButtonSmartSize2.Checked = !toolStripButtonSmartSize2.Checked;
             rdpClientFrame2.AdvancedSettings.SmartSizing = toolStripButtonSmartSize2.Checked;
         }
+
+        private void txtUsername_Validated(object sender, EventArgs e)
+        {
+            userName = txtUsername.Text;
+        }
+
+        private void txtDomain_Validated(object sender, EventArgs e)
+        {
+            domain = txtDomain.Text;
+        }
+
+        private void txtPassword_Validated(object sender, EventArgs e)
+        {
+            clearTextPassword = txtPassword.Text;
+        }
+
+        private void txtServer_Validated(object sender, EventArgs e)
+        {
+            server = txtServer.Text;
+        }
+
+        private void txtPort_Validated(object sender, EventArgs e)
+        {
+            port = Convert.ToInt32(txtPort.Text);
+        }
+
+        private void cbColorDepth_Validated(object sender, EventArgs e)
+        {
+            bpp = Convert.ToInt32(cbColorDepth.SelectedItem);
+        }
+
     }
 }

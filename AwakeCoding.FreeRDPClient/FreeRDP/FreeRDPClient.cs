@@ -8,13 +8,10 @@ using System.Windows.Forms;
 
 namespace AwakeCoding.FreeRDPClient
 {
-    public class FreeRDPClient : IRDPClient, IDisposable
+    public class FreeRDPClient : Panel, IRDPClient
     {
         private IntPtr wfi = IntPtr.Zero;
         private static bool staticInitialized = false;
-
-        private Panel host;
-
 
         private static void GlobalInit()
         {
@@ -36,15 +33,11 @@ namespace AwakeCoding.FreeRDPClient
             try
             {
                 AdvancedSettings = new FreeRDPAdvancedSettings();
-                SecuredSettings = new SecuredSettingsStub();
                 TransportSettings = new TransportSettingsStub();
 
                 ((FreeRDPAdvancedSettings)AdvancedSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
-                
-                host = new Panel();
-                host.Dock = DockStyle.Fill;
-                host.SizeChanged += host_SizeChanged;
-                //host.AutoScroll = true;
+
+                //this.SizeChanged += host_SizeChanged;
             }
             catch (Exception ex)
             {
@@ -52,26 +45,18 @@ namespace AwakeCoding.FreeRDPClient
             }
         }
 
-        void host_SizeChanged(object sender, EventArgs e)
+        void FreeRDPClient_SettingsChanged(object sender, EventArgs e)
         {
-            //if (AdvancedSettings.SmartSizing)
+            //// Update smart sizing
+
+            //if (!AdvancedSettings.SmartSizing)
+            //{
+            //    host.Scale(new System.Drawing.SizeF(1.0F, 1.0F));
+            //}
+            //else
             //{
             //    UpdateRatio();
             //}
-        }
-
-        void FreeRDPClient_SettingsChanged(object sender, EventArgs e)
-        {
-            // Update smart sizing
-
-            if (!AdvancedSettings.SmartSizing)
-            {
-                host.Scale(new System.Drawing.SizeF(1.0F, 1.0F));
-            }
-            else
-            {
-                UpdateRatio();
-            }
         }
 
         private void UpdateRatio()
@@ -95,18 +80,19 @@ namespace AwakeCoding.FreeRDPClient
                 wfi = IntPtr.Zero;
             }
         }
-
+        
         /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        public void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            FreeWfi();
-        }
+            if (disposing)
+            {
+                FreeWfi();
+            }
 
-        void panel_HandleCreated(object sender, EventArgs e)
-        {
+            base.Dispose(disposing);
         }
 
         public RDPClientVersion ClientVersion 
@@ -120,19 +106,23 @@ namespace AwakeCoding.FreeRDPClient
         public IAdvancedSettings AdvancedSettings
         {
             get;
-            set;
+            private set;
+        }
+
+        public ITransportSettings TransportSettings
+        {
+            get;
+            private set;
         }
 
         public ISecuredSettings SecuredSettings
         {
-            get;
-            set;
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
-        public ITransportSettings TransportSettings
-        {
-            get;
-            set;
-        }
+
         public string Server
         {
             get;
@@ -152,33 +142,37 @@ namespace AwakeCoding.FreeRDPClient
 
         public int DesktopWidth
         {
-            get;set;
+            get;
+            set;
         }
 
         public int DesktopHeight
         {
-            get;set;
+            get;
+            set;
+        }
+
+        public int ColorDepth
+        {
+            get;
+            set;
         }
 
         public void Connect()
         {
             GlobalInit();
 
-            //host.MaximumSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
-            host.AutoScrollMinSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
 
-            string[] argv = new string[] 
-            { 
-                "SimpleClient.exe", 
-                "/u:" + UserName, 
-                "/p:" + ((SecuredSettingsStub)SecuredSettings).ClearTextPassword, 
-                "/d:" + Domain, 
-                "/cert-ignore", 
-                "/v:" + Server,
-                "-decorations",
-                "/w:" + DesktopWidth,
-                "/h:" + DesktopHeight
-            };
+            this.AutoScroll = true;
+            //this.Dock = DockStyle.Fill;
+            //this.Location = new  System.Drawing.Point(0, 0);
+            //this.Width = DesktopWidth;
+            //this.Height = DesktopHeight;
+
+            //host.MaximumSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
+           this.AutoScrollMinSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
+
+            string[] argv = GetCommandLine();
 
             StringBuilder cmdline = new StringBuilder();
             for (int i = 0; i < argv.Length; i++)
@@ -189,18 +183,67 @@ namespace AwakeCoding.FreeRDPClient
             System.Diagnostics.Debug.WriteLine(cmdline.ToString());
 
             FreeWfi();
-            wfi = NativeMethods.wf_new(IntPtr.Zero, /*parent.Handle*/ host.Handle, argv.Length, argv);
+            wfi = NativeMethods.wf_new(IntPtr.Zero, /*parent.Handle*/ Handle, argv.Length, argv);
 
             NativeMethods.wf_start(wfi);
+
+            IsConnected = true;
+
             if (Connected != null)
             {
                 Connected(this, EventArgs.Empty);
             }
         }
 
+        /// <summary>
+        /// Build the commandline array for FreeRDP with the current settings.
+        /// </summary>
+        /// <returns></returns>
+        private string[] GetCommandLine()
+        {
+            List<string> argv = new List<string>();
+
+            // Mandatory arguments
+            argv.Add("SimpleClient.exe");
+            argv.Add("-decorations");
+            argv.Add("/cert-ignore");
+
+            if (DesktopHeight > 0)
+            { argv.Add("/h:" + DesktopHeight); }
+
+            if (DesktopWidth > 0)
+            { argv.Add("/w:" + DesktopWidth); }
+
+            if (!String.IsNullOrEmpty(Domain))
+            { argv.Add("/d:" + Domain); }
+
+            if (!String.IsNullOrEmpty(Server))
+            { argv.Add("/v:" + Server); }
+
+            if (!String.IsNullOrEmpty(UserName))
+            { argv.Add("/u:" + UserName); }
+
+
+            // Secured settings
+            FreeRDPAdvancedSettings advanced = (FreeRDPAdvancedSettings)AdvancedSettings;
+            if (!String.IsNullOrEmpty(advanced.ClearTextPassword))
+            { argv.Add("/p:" + advanced.ClearTextPassword); }
+
+            // Advanced settings
+
+            if (AdvancedSettings.RDPPort > 0)
+            {
+                argv.Add("/port:" + AdvancedSettings.RDPPort);
+            }
+            
+            return argv.ToArray();
+        }
+
         public void Disconnect()
         {
             NativeMethods.wf_stop(wfi);
+
+            IsConnected = false;
             if (Disconnected != null)
             {
                 Disconnected(this, new DisconnectedEventArgs(0));
@@ -209,8 +252,51 @@ namespace AwakeCoding.FreeRDPClient
 
         public void Attach(Control parent)
         {
-            //this.parent = parent;
-            parent.Controls.Add(host);
+            parent.Controls.Add(this);
+            this.Width = parent.Width;
+            this.Height = parent.Height;
+
+            parent.SizeChanged += parent_SizeChanged;
+        }
+
+        void parent_SizeChanged(object sender, EventArgs e)
+        {
+            int x = Location.X;
+            int y = Location.Y;
+            int width = this.Width;
+            int height = this.Height;
+
+            if (DesktopHeight > 0 && Parent.Height > 0)
+            {
+                if (Parent.Height <= DesktopHeight)
+                {
+                    y = 0;
+                    height = Parent.Height;
+                }
+                else
+                {
+                    y = (Parent.Height - DesktopHeight) / 2;
+                    height = DesktopHeight;
+                }
+            }
+
+            if (DesktopWidth > 0 && Parent.Width > 0)
+            {
+                if (Parent.Width <= DesktopWidth)
+                {
+                    x = 0;
+                    width = Parent.Width;
+                }
+                else
+                {
+                    x = (Parent.Width - DesktopWidth) / 2;
+                    width = DesktopWidth;
+                }
+            }
+
+            this.Location = new System.Drawing.Point(x, y);
+            this.Height = height;
+            this.Width = width;
         }
 
         public event EventHandler Connected;
@@ -220,5 +306,91 @@ namespace AwakeCoding.FreeRDPClient
         public event FatalErrorEventHandler FatalErrorOccurred;
 
         public event WarningEventHandler WarningOccurred;
+
+
+        public string ConnectedStatusText
+        {
+            get;
+            set;
+        }
+
+        public string ConnectingText
+        {
+            get;
+            set;
+        }
+
+        public string DisconnectedText
+        {
+            get;
+            set;
+        }
+
+        public bool FullScreen
+        {
+            get;
+            set;
+        }
+
+        public string FullScreenTitle
+        {
+            get;
+            set;
+        }
+
+        public bool HorizontalScrollBarVisible
+        {
+            get
+            {
+                return HorizontalScroll.Visible;
+            }
+        }
+
+        public bool IsConnected
+        {
+            get;
+            private set;
+        }
+
+        public bool VerticalScrollBarVisible
+        {
+            get
+            {
+                return VerticalScroll.Visible;
+            }
+        }
+
+        public string GetErrorDescription(uint discReason, uint extendedDisconnectReason)
+        {
+            throw new NotImplementedException();
+        }
+
+        //protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
+        //{
+        //    //if (IsConnected)
+        //    //{
+        //    //    if (DesktopHeight > 0 && height >= DesktopHeight)
+        //    //    {
+        //    //        height = DesktopHeight;
+        //    //        VerticalScroll.Visible = false;
+        //    //    }
+        //    //    else if (height < DesktopHeight) 
+        //    //    {
+        //    //        VerticalScroll.Visible = true;
+        //    //    }
+
+        //    //    if (DesktopWidth > 0 && width >= DesktopWidth)
+        //    //    {
+        //    //        width = DesktopWidth;
+        //    //        HorizontalScroll.Visible = false;
+        //    //    }
+        //    //    else if (width < DesktopWidth)
+        //    //    {
+        //    //        HorizontalScroll.Visible = true;
+        //    //    }
+        //    //}
+
+        //    base.SetBoundsCore(x, y, width, height, specified);
+        //}
     }
 }

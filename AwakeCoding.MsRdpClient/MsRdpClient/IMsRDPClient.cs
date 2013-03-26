@@ -8,8 +8,7 @@ namespace AwakeCoding.MsRdpClient
     using IMsTscAxEvents_OnDisconnectedEventHandler = AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler;
     using IMsTscAxEvents_OnFatalErrorEventHandler = AxMSTSCLib.IMsTscAxEvents_OnFatalErrorEventHandler;
     using IMsTscAxEvents_OnWarningEventHandler = AxMSTSCLib.IMsTscAxEvents_OnWarningEventHandler;
-
-
+    
     public interface IMsRDPClient
     {
         event EventHandler OnConnected;
@@ -40,6 +39,8 @@ namespace AwakeCoding.MsRdpClient
 
         short Connected { get; }
 
+        string ConnectingText { get; set; }
+
         bool ContainsFocus { get; }
 
         int DesktopHeight { get; set; }
@@ -68,12 +69,21 @@ namespace AwakeCoding.MsRdpClient
 
         void Connect();
 
+        string ConnectedStatusText { get; set; }
+
         void Disconnect();
+
+        string DisconnectedText { get; set; }
 
         bool Focus();
 
         string GetErrorDescription(uint discReason, uint extendedDisconnectReason);
 
         object GetOcx();
+
+        int HorizontalScrollBarVisible { get; }
+        int VerticalScrollBarVisible { get; }
+
+        
     }
 }

@@ -1,38 +1,38 @@
-﻿using System;
+﻿using AwakeCoding.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AwakeCoding.Common;
 
 namespace AwakeCoding.FreeRDPClient
 {
     public class SecuredSettingsStub : ISecuredSettings
     {
-        public string ClearTextPassword
+        public int AudioRedirectionMode
+        {
+            get; 
+            set;
+        }
+
+        public int FullScreen
         {
             get;
             set;
         }
 
-        public string BinaryPassword
+        public int KeyboardHookMode
         {
             get;
             set;
         }
 
-        public string BinarySalt
+        public string StartProgram
         {
             get;
             set;
         }
 
-        public string PortablePassword
-        {
-            get;
-            set;
-        }
-
-        public string PortableSalt
+        public string WorkDir
         {
             get;
             set;
