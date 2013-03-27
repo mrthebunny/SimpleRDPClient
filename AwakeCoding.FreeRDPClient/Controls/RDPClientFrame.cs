@@ -373,6 +373,15 @@ namespace AwakeCoding.FreeRDPClient
         {
             return rdpClientImpl.GetErrorDescription(discReason, extendedDisconnectReason);
         }
+
+        public void ForceSize(int width, int height)
+        {
+            FreeRDPClient client = rdpClientImpl as FreeRDPClient;
+            if (client != null)
+            {
+                client.ForceSize(width, height);
+            }
+        }
     }
 
 }

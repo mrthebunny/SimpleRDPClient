@@ -13,13 +13,13 @@ namespace ActiveXClient
 {
     public partial class Form1 : Form
     {
-
         private string server;
         private string userName;
         private string domain;
         private string clearTextPassword;
         private int port = 0;
         private int bpp = 0;
+        private bool smartSizing = false;
 
         public Form1()
         {
@@ -67,6 +67,7 @@ namespace ActiveXClient
             txtPort.Text = "";
             txtServer.Text = server;
             txtUsername.Text = userName;
+            cxSmartSize.Checked = smartSizing;
         }
 
         private void toolStripButtonConnect_Click(object sender, EventArgs e)
@@ -83,31 +84,27 @@ namespace ActiveXClient
                 rdpConnection.ColorDepth = bpp;
             }
 
-            //IMsTscNonScriptable secured = (IMsTscNonScriptable) rdpConnection.GetOcx();
-            //secured.ClearTextPassword = clearTextPassword;
             rdpConnection.AdvancedSettings9.ClearTextPassword = clearTextPassword;
-            //rdpConnection.AdvancedSettings9.SmartSizing = true;
-
+            rdpConnection.AdvancedSettings9.SmartSizing = smartSizing;
             rdpConnection.Connect();
         }
 
 
         private void DoConnect(AwakeCoding.FreeRDPClient.RDPClientFrame rdpClientFrame)
         {
-            rdpClientFrame.DesktopWidth = rdpClientFrame1.Width;
-            rdpClientFrame.DesktopHeight = rdpClientFrame1.Height;
+            rdpClientFrame.DesktopWidth = rdpClientFrame.Width;
+            rdpClientFrame.DesktopHeight = rdpClientFrame.Height;
 
             rdpClientFrame.Server = server;
             rdpClientFrame.UserName = userName;
             rdpClientFrame.Domain = domain;
             rdpClientFrame.AdvancedSettings.ClearTextPassword = clearTextPassword;
+            rdpClientFrame.AdvancedSettings.SmartSizing = smartSizing;
 
             if (bpp > 0)
             {
                 rdpClientFrame.ColorDepth = bpp;
             }
-
-            //rdpClientFrame.AdvancedSettings.SmartSizing = true;
 
             rdpClientFrame.Connect();
         }
@@ -125,20 +122,6 @@ namespace ActiveXClient
         private void toolStripButtonConnect2_Click(object sender, EventArgs e)
         {
             DoConnect(rdpClientFrame1);
-        }
-
-        private void toolStripButtonRemoteProgram_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                rdpConnection.RemoteProgram.RemoteProgramMode = true;
-                rdpConnection.RemoteProgram.ServerStartProgram(@"c:\windows\system32\cmd.exe", @"c:\windows\system32\", "", false, "", false);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.ToString());
-            }
-
         }
 
         private void rdpConnection_OnConnected(object sender, EventArgs e)
@@ -200,18 +183,6 @@ namespace ActiveXClient
             }
         }
 
-        private void toolStripButtonSmartSize1_Click(object sender, EventArgs e)
-        {
-            toolStripButtonSmartSize1.Checked = !toolStripButtonSmartSize1.Checked;
-            rdpClientFrame1.AdvancedSettings.SmartSizing = toolStripButtonSmartSize1.Checked;
-        }
-
-        private void toolStripButtonSmartSize2_Click(object sender, EventArgs e)
-        {
-            toolStripButtonSmartSize2.Checked = !toolStripButtonSmartSize2.Checked;
-            rdpClientFrame2.AdvancedSettings.SmartSizing = toolStripButtonSmartSize2.Checked;
-        }
-
         private void txtUsername_Validated(object sender, EventArgs e)
         {
             userName = txtUsername.Text;
@@ -242,5 +213,14 @@ namespace ActiveXClient
             bpp = Convert.ToInt32(cbColorDepth.SelectedItem);
         }
 
+        private void cxSmartSize_CheckedChanged(object sender, EventArgs e)
+        {
+            smartSizing = cxSmartSize.Checked;
+        }
+
+        private void btForceSize_Click(object sender, EventArgs e)
+        {
+            rdpClientFrame2.ForceSize(Convert.ToInt32(txtWidth.Text), Convert.ToInt32(txtHeight.Text));
+        }
     }
 }

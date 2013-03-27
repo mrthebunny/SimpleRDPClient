@@ -162,15 +162,17 @@ namespace AwakeCoding.FreeRDPClient
         {
             GlobalInit();
 
+            if (AdvancedSettings.SmartSizing)
+            {
+                this.AutoScroll = false;
+            }
+            else
+            {
+                this.AutoScroll = true;
+                this.AutoScrollMinSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
+            }
 
-            this.AutoScroll = true;
-            //this.Dock = DockStyle.Fill;
-            //this.Location = new  System.Drawing.Point(0, 0);
-            //this.Width = DesktopWidth;
-            //this.Height = DesktopHeight;
-
-            //host.MaximumSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
-           this.AutoScrollMinSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
+            AdjustSizeAndPosition();
 
             string[] argv = GetCommandLine();
 
@@ -186,7 +188,7 @@ namespace AwakeCoding.FreeRDPClient
             wfi = NativeMethods.wf_new(IntPtr.Zero, /*parent.Handle*/ Handle, argv.Length, argv);
 
             NativeMethods.wf_start(wfi);
-
+            Visible = true;
             IsConnected = true;
 
             if (Connected != null)
@@ -223,6 +225,10 @@ namespace AwakeCoding.FreeRDPClient
             if (!String.IsNullOrEmpty(UserName))
             { argv.Add("/u:" + UserName); }
 
+            if (ColorDepth > 0)
+            {
+                argv.Add("/bpp:" + ColorDepth);
+            }
 
             // Secured settings
             FreeRDPAdvancedSettings advanced = (FreeRDPAdvancedSettings)AdvancedSettings;
@@ -241,6 +247,7 @@ namespace AwakeCoding.FreeRDPClient
 
         public void Disconnect()
         {
+            Visible = false;
             NativeMethods.wf_stop(wfi);
 
             IsConnected = false;
@@ -261,42 +268,7 @@ namespace AwakeCoding.FreeRDPClient
 
         void parent_SizeChanged(object sender, EventArgs e)
         {
-            int x = Location.X;
-            int y = Location.Y;
-            int width = this.Width;
-            int height = this.Height;
-
-            if (DesktopHeight > 0 && Parent.Height > 0)
-            {
-                if (Parent.Height <= DesktopHeight)
-                {
-                    y = 0;
-                    height = Parent.Height;
-                }
-                else
-                {
-                    y = (Parent.Height - DesktopHeight) / 2;
-                    height = DesktopHeight;
-                }
-            }
-
-            if (DesktopWidth > 0 && Parent.Width > 0)
-            {
-                if (Parent.Width <= DesktopWidth)
-                {
-                    x = 0;
-                    width = Parent.Width;
-                }
-                else
-                {
-                    x = (Parent.Width - DesktopWidth) / 2;
-                    width = DesktopWidth;
-                }
-            }
-
-            this.Location = new System.Drawing.Point(x, y);
-            this.Height = height;
-            this.Width = width;
+            AdjustSizeAndPosition();
         }
 
         public event EventHandler Connected;
@@ -365,32 +337,67 @@ namespace AwakeCoding.FreeRDPClient
             throw new NotImplementedException();
         }
 
-        //protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
-        //{
-        //    //if (IsConnected)
-        //    //{
-        //    //    if (DesktopHeight > 0 && height >= DesktopHeight)
-        //    //    {
-        //    //        height = DesktopHeight;
-        //    //        VerticalScroll.Visible = false;
-        //    //    }
-        //    //    else if (height < DesktopHeight) 
-        //    //    {
-        //    //        VerticalScroll.Visible = true;
-        //    //    }
+        // Temporary - test method
+        internal void ForceSize(int width, int height)
+        {
+            NativeMethods.wf_set_size(wfi, width, height);
+        }
 
-        //    //    if (DesktopWidth > 0 && width >= DesktopWidth)
-        //    //    {
-        //    //        width = DesktopWidth;
-        //    //        HorizontalScroll.Visible = false;
-        //    //    }
-        //    //    else if (width < DesktopWidth)
-        //    //    {
-        //    //        HorizontalScroll.Visible = true;
-        //    //    }
-        //    //}
+        private void AdjustSizeAndPosition()
+        {
+            int x = Location.X;
+            int y = Location.Y;
+            int width = this.Width;
+            int height = this.Height;
 
-        //    base.SetBoundsCore(x, y, width, height, specified);
-        //}
+            if (DesktopHeight > 0 && Parent.Height > 0)
+            {
+                if (Parent.Height <= DesktopHeight)
+                {
+                    y = 0;
+                    height = Parent.Height;
+                }
+                else
+                {
+                    y = (Parent.Height - DesktopHeight) / 2;
+                    height = DesktopHeight;
+                }
+            }
+
+            if (DesktopWidth > 0 && Parent.Width > 0)
+            {
+                if (Parent.Width <= DesktopWidth)
+                {
+                    x = 0;
+                    width = Parent.Width;
+                }
+                else
+                {
+                    x = (Parent.Width - DesktopWidth) / 2;
+                    width = DesktopWidth;
+                }
+            }
+
+            this.Location = new System.Drawing.Point(x, y);
+
+            if (width != this.Width || height != this.Height)
+            {
+                this.Height = height;
+                this.Width = width;
+                System.Diagnostics.Debug.WriteLine("width:" + this.Width + " height:" + this.Height);
+
+                if (IsConnected)
+                {
+                    if (AdvancedSettings.SmartSizing)
+                    {
+                        NativeMethods.wf_set_size(wfi, Math.Min(DesktopWidth, Parent.Width), Math.Min(DesktopHeight, Parent.Height));
+                    }
+                    else
+                    {
+                        NativeMethods.wf_set_size(wfi, DesktopWidth, DesktopHeight);
+                    }
+                }
+            }
+        }
     }
 }

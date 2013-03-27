@@ -32,26 +32,23 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageActiveX = new System.Windows.Forms.TabPage();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.rdpConnection = new AxMSTSCLib.AxMsRdpClient8NotSafeForScripting();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonConnect = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDisconnect = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonRemoteProgram = new System.Windows.Forms.ToolStripButton();
             this.tabPageActiveXWrapper = new System.Windows.Forms.TabPage();
             this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonConnect2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDisconnect2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonSmartSize1 = new System.Windows.Forms.ToolStripButton();
             this.tabPageFreeRDP = new System.Windows.Forms.TabPage();
             this.toolStripContainer3 = new System.Windows.Forms.ToolStripContainer();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonConnect3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDisconnect3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonSmartSize2 = new System.Windows.Forms.ToolStripButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cxSmartSize = new System.Windows.Forms.CheckBox();
             this.cbColorDepth = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtPort = new System.Windows.Forms.MaskedTextBox();
@@ -64,6 +61,12 @@
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.txtDomain = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtWidth = new System.Windows.Forms.MaskedTextBox();
+            this.txtHeight = new System.Windows.Forms.MaskedTextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.btForceSize = new System.Windows.Forms.Button();
+            this.rdpConnection = new AxMSTSCLib.AxMsRdpClient8NotSafeForScripting();
             this.rdpClientFrame1 = new AwakeCoding.FreeRDPClient.RDPClientFrame();
             this.rdpClientFrame2 = new AwakeCoding.FreeRDPClient.RDPClientFrame();
             this.tabControl1.SuspendLayout();
@@ -71,7 +74,6 @@
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.rdpConnection)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.tabPageActiveXWrapper.SuspendLayout();
             this.toolStripContainer2.ContentPanel.SuspendLayout();
@@ -84,6 +86,7 @@
             this.toolStripContainer3.SuspendLayout();
             this.toolStrip3.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rdpConnection)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -129,28 +132,15 @@
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
             // 
-            // rdpConnection
-            // 
-            this.rdpConnection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rdpConnection.Enabled = true;
-            this.rdpConnection.Location = new System.Drawing.Point(0, 0);
-            this.rdpConnection.Name = "rdpConnection";
-            this.rdpConnection.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("rdpConnection.OcxState")));
-            this.rdpConnection.Size = new System.Drawing.Size(680, 425);
-            this.rdpConnection.TabIndex = 0;
-            this.rdpConnection.OnConnected += new System.EventHandler(this.rdpConnection_OnConnected);
-            this.rdpConnection.OnDisconnected += new AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler(this.rdpConnection_OnDisconnected);
-            // 
             // toolStrip1
             // 
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonConnect,
-            this.toolStripButtonDisconnect,
-            this.toolStripButtonRemoteProgram});
+            this.toolStripButtonDisconnect});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(287, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(170, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // toolStripButtonConnect
@@ -170,15 +160,6 @@
             this.toolStripButtonDisconnect.Size = new System.Drawing.Size(86, 22);
             this.toolStripButtonDisconnect.Text = "Disconnect";
             this.toolStripButtonDisconnect.Click += new System.EventHandler(this.toolStripButtonDisconnect_Click);
-            // 
-            // toolStripButtonRemoteProgram
-            // 
-            this.toolStripButtonRemoteProgram.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRemoteProgram.Image")));
-            this.toolStripButtonRemoteProgram.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonRemoteProgram.Name = "toolStripButtonRemoteProgram";
-            this.toolStripButtonRemoteProgram.Size = new System.Drawing.Size(117, 22);
-            this.toolStripButtonRemoteProgram.Text = "Remote Program";
-            this.toolStripButtonRemoteProgram.Click += new System.EventHandler(this.toolStripButtonRemoteProgram_Click);
             // 
             // tabPageActiveXWrapper
             // 
@@ -215,11 +196,10 @@
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonConnect2,
             this.toolStripButtonDisconnect2,
-            this.toolStripSeparator1,
-            this.toolStripButtonSmartSize1});
+            this.toolStripSeparator1});
             this.toolStrip2.Location = new System.Drawing.Point(3, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(257, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(176, 25);
             this.toolStrip2.TabIndex = 0;
             // 
             // toolStripButtonConnect2
@@ -244,15 +224,6 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonSmartSize1
-            // 
-            this.toolStripButtonSmartSize1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSmartSize1.Image")));
-            this.toolStripButtonSmartSize1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSmartSize1.Name = "toolStripButtonSmartSize1";
-            this.toolStripButtonSmartSize1.Size = new System.Drawing.Size(81, 22);
-            this.toolStripButtonSmartSize1.Text = "Smart Size";
-            this.toolStripButtonSmartSize1.Click += new System.EventHandler(this.toolStripButtonSmartSize1_Click);
             // 
             // tabPageFreeRDP
             // 
@@ -290,11 +261,10 @@
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonConnect3,
             this.toolStripButtonDisconnect3,
-            this.toolStripSeparator2,
-            this.toolStripButtonSmartSize2});
+            this.toolStripSeparator2});
             this.toolStrip3.Location = new System.Drawing.Point(3, 0);
             this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(257, 25);
+            this.toolStrip3.Size = new System.Drawing.Size(176, 25);
             this.toolStrip3.TabIndex = 2;
             // 
             // toolStripButtonConnect3
@@ -320,17 +290,16 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButtonSmartSize2
-            // 
-            this.toolStripButtonSmartSize2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSmartSize2.Image")));
-            this.toolStripButtonSmartSize2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSmartSize2.Name = "toolStripButtonSmartSize2";
-            this.toolStripButtonSmartSize2.Size = new System.Drawing.Size(81, 22);
-            this.toolStripButtonSmartSize2.Text = "Smart Size";
-            this.toolStripButtonSmartSize2.Click += new System.EventHandler(this.toolStripButtonSmartSize2_Click);
-            // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.btForceSize);
+            this.groupBox1.Controls.Add(this.txtHeight);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.txtWidth);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.cxSmartSize);
             this.groupBox1.Controls.Add(this.cbColorDepth);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.txtPort);
@@ -345,21 +314,30 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Location = new System.Drawing.Point(7, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(777, 117);
+            this.groupBox1.Size = new System.Drawing.Size(680, 117);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
             // 
+            // cxSmartSize
+            // 
+            this.cxSmartSize.AutoSize = true;
+            this.cxSmartSize.Location = new System.Drawing.Point(462, 54);
+            this.cxSmartSize.Name = "cxSmartSize";
+            this.cxSmartSize.Size = new System.Drawing.Size(82, 17);
+            this.cxSmartSize.TabIndex = 12;
+            this.cxSmartSize.Text = "Smart sizing";
+            this.cxSmartSize.UseVisualStyleBackColor = true;
+            this.cxSmartSize.CheckedChanged += new System.EventHandler(this.cxSmartSize_CheckedChanged);
+            // 
             // cbColorDepth
             // 
+            this.cbColorDepth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbColorDepth.FormattingEnabled = true;
             this.cbColorDepth.Items.AddRange(new object[] {
+            "0",
             "32",
-            "24",
-            "16",
-            "15",
-            "8",
-            "1"});
+            "16"});
             this.cbColorDepth.Location = new System.Drawing.Point(462, 27);
             this.cbColorDepth.Name = "cbColorDepth";
             this.cbColorDepth.Size = new System.Drawing.Size(121, 21);
@@ -465,6 +443,68 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Password";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(392, 86);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(15, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "w";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            // 
+            // txtWidth
+            // 
+            this.txtWidth.Location = new System.Drawing.Point(407, 83);
+            this.txtWidth.Mask = "00000";
+            this.txtWidth.Name = "txtWidth";
+            this.txtWidth.Size = new System.Drawing.Size(43, 20);
+            this.txtWidth.TabIndex = 14;
+            this.txtWidth.Text = "200";
+            this.txtWidth.ValidatingType = typeof(int);
+            // 
+            // txtHeight
+            // 
+            this.txtHeight.Location = new System.Drawing.Point(471, 83);
+            this.txtHeight.Mask = "00000";
+            this.txtHeight.Name = "txtHeight";
+            this.txtHeight.Size = new System.Drawing.Size(43, 20);
+            this.txtHeight.TabIndex = 16;
+            this.txtHeight.Text = "200";
+            this.txtHeight.ValidatingType = typeof(int);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(456, 86);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(13, 13);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "h";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            // 
+            // btForceSize
+            // 
+            this.btForceSize.Location = new System.Drawing.Point(520, 83);
+            this.btForceSize.Name = "btForceSize";
+            this.btForceSize.Size = new System.Drawing.Size(63, 21);
+            this.btForceSize.TabIndex = 17;
+            this.btForceSize.Text = "Force";
+            this.btForceSize.UseVisualStyleBackColor = true;
+            this.btForceSize.Click += new System.EventHandler(this.btForceSize_Click);
+            // 
+            // rdpConnection
+            // 
+            this.rdpConnection.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rdpConnection.Enabled = true;
+            this.rdpConnection.Location = new System.Drawing.Point(0, 0);
+            this.rdpConnection.Name = "rdpConnection";
+            this.rdpConnection.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("rdpConnection.OcxState")));
+            this.rdpConnection.Size = new System.Drawing.Size(680, 425);
+            this.rdpConnection.TabIndex = 0;
+            this.rdpConnection.OnConnected += new System.EventHandler(this.rdpConnection_OnConnected);
+            this.rdpConnection.OnDisconnected += new AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler(this.rdpConnection_OnDisconnected);
+            // 
             // rdpClientFrame1
             // 
             this.rdpClientFrame1.BackColor = System.Drawing.Color.Maroon;
@@ -504,7 +544,6 @@
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.rdpConnection)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.tabPageActiveXWrapper.ResumeLayout(false);
@@ -525,6 +564,7 @@
             this.toolStrip3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rdpConnection)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -543,7 +583,6 @@
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripButton toolStripButtonConnect2;
         private System.Windows.Forms.ToolStripButton toolStripButtonDisconnect2;
-        private System.Windows.Forms.ToolStripButton toolStripButtonRemoteProgram;
         private AwakeCoding.FreeRDPClient.RDPClientFrame rdpClientFrame1;
         private System.Windows.Forms.TabPage tabPageFreeRDP;
         private System.Windows.Forms.ToolStripContainer toolStripContainer3;
@@ -552,9 +591,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonDisconnect3;
         private AwakeCoding.FreeRDPClient.RDPClientFrame rdpClientFrame2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton toolStripButtonSmartSize1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton toolStripButtonSmartSize2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtUsername;
@@ -568,6 +605,12 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cbColorDepth;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox cxSmartSize;
+        private System.Windows.Forms.Button btForceSize;
+        private System.Windows.Forms.MaskedTextBox txtHeight;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.MaskedTextBox txtWidth;
+        private System.Windows.Forms.Label label7;
 
     }
 }

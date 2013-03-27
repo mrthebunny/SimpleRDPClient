@@ -51,5 +51,9 @@ namespace AwakeCoding.FreeRDPClient
         /// Return Type: int
         [DllImport("libwfreerdp-client")]
         public static extern int wf_free(IntPtr wfi);
+
+        /// Return Type: int
+        [DllImport("libwfreerdp-client")]
+        public static extern int wf_set_size(IntPtr wfi, int width, int height);
     }
 }
