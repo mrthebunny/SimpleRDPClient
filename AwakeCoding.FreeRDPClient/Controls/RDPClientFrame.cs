@@ -23,7 +23,7 @@ namespace AwakeCoding.FreeRDPClient
 #endif
 
         // Current instanciated version of IRdpClient
-        private IRDPClient rdpClientImpl = null;
+        private IRDPClient rdpClientImpl = new RDPClientStub();
 
         #endregion // Private members
 
@@ -41,6 +41,7 @@ namespace AwakeCoding.FreeRDPClient
 
         public RDPClientFrame()
         {
+            InitializeComponent();
             this.HandleCreated += RDPClientFrame_HandleCreated;
         }
 
@@ -214,13 +215,14 @@ namespace AwakeCoding.FreeRDPClient
 
         public void Connect()
         {
-            //this.MaximumSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
+            BackColor = System.Drawing.SystemColors.AppWorkspace;
             rdpClientImpl.Connect();
         }
 
         public void Disconnect()
         {
             rdpClientImpl.Disconnect();
+            BackColor = System.Drawing.Color.Transparent;
         }
 
 
@@ -266,7 +268,7 @@ namespace AwakeCoding.FreeRDPClient
             // 
             // RDPClientFrame
             // 
-            this.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ResumeLayout(false);
 
         }

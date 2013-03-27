@@ -241,7 +241,6 @@
             // 
             // toolStripContainer3.ContentPanel
             // 
-            this.toolStripContainer3.ContentPanel.BackColor = System.Drawing.Color.Maroon;
             this.toolStripContainer3.ContentPanel.Controls.Add(this.rdpClientFrame2);
             this.toolStripContainer3.ContentPanel.Size = new System.Drawing.Size(680, 425);
             this.toolStripContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -507,7 +506,6 @@
             // 
             // rdpClientFrame1
             // 
-            this.rdpClientFrame1.BackColor = System.Drawing.Color.Maroon;
             this.rdpClientFrame1.ClientVersion = AwakeCoding.Common.RDPClientVersion.MsRDPClient;
             this.rdpClientFrame1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rdpClientFrame1.Location = new System.Drawing.Point(0, 0);

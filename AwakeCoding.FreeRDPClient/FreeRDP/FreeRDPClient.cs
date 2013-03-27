@@ -34,10 +34,11 @@ namespace AwakeCoding.FreeRDPClient
             {
                 AdvancedSettings = new FreeRDPAdvancedSettings();
                 TransportSettings = new TransportSettingsStub();
+                SecuredSettings = new SecuredSettingsStub();
+
+                Visible = false;
 
                 ((FreeRDPAdvancedSettings)AdvancedSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
-
-                //this.SizeChanged += host_SizeChanged;
             }
             catch (Exception ex)
             {
@@ -117,10 +118,8 @@ namespace AwakeCoding.FreeRDPClient
 
         public ISecuredSettings SecuredSettings
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            private set;
         }
 
         public string Server

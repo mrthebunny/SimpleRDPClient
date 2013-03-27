@@ -216,6 +216,21 @@ namespace ActiveXClient
         private void cxSmartSize_CheckedChanged(object sender, EventArgs e)
         {
             smartSizing = cxSmartSize.Checked;
+
+            if (rdpConnection.Connected != 0)
+            {
+                rdpConnection.AdvancedSettings9.SmartSizing = smartSizing;
+            }
+
+            if (rdpClientFrame1.IsConnected)
+            {
+                rdpClientFrame1.AdvancedSettings.SmartSizing = smartSizing;
+            }
+
+            if (rdpClientFrame2.IsConnected)
+            {
+                rdpClientFrame2.AdvancedSettings.SmartSizing = smartSizing;
+            }
         }
 
         private void btForceSize_Click(object sender, EventArgs e)
