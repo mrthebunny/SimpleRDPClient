@@ -10,43 +10,42 @@ using System.Text;
 
 namespace AwakeCoding.FreeRDPClient
 {
-    class RDPClientLoader
-    {
+	class RDPClientLoader
+	{
+		public static IRDPClient NewRDPClient(RDPClientVersion clientType)
+		{
+			bool designMode = (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime);
 
-        public static IRDPClient NewRDPClient(RDPClientVersion clientType)
-        {
-            bool designMode = (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime);
+			if (!designMode)
+			{
+				using (var process = Process.GetCurrentProcess())
+				{
+					designMode = process.ProcessName.ToLowerInvariant().Contains("devenv");
+				}
+			}
 
-            if (!designMode)
-            {
-                using (var process = Process.GetCurrentProcess())
-                {
-                    designMode = process.ProcessName.ToLowerInvariant().Contains("devenv");
-                }
-            }
-
-            if (designMode)
-            {
-                clientType = RDPClientVersion.Stub;
-            }
+			if (designMode)
+			{
+				clientType = RDPClientVersion.Stub;
+			}
 
 #if __MONO
-            else
-            {
-                clientType = RDPClientVersion.FreeRDP;
-            }
+			else
+			{
+				clientType = RDPClientVersion.FreeRDP;
+			}
 #endif
 
-            IRDPClient client;
+			IRDPClient client;
 
-            if (clientType == RDPClientVersion.Stub)
-            {
-                client = new RDPClientStub();
-            }
-            else if (clientType == RDPClientVersion.FreeRDP)
-            {
-                client = new FreeRDPClient();
-            }
+			if (clientType == RDPClientVersion.Stub)
+			{
+				client = new RDPClientStub();
+			}
+			else if (clientType == RDPClientVersion.FreeRDP)
+			{
+				client = new FreeRDPClient();
+			}
 #if !__MONO
             else if (clientType == RDPClientVersion.MsRDPClient
                 || clientType == RDPClientVersion.MsRDPClient80  
@@ -61,12 +60,12 @@ namespace AwakeCoding.FreeRDPClient
                     client = msRdpClientAssembly.CreateInstance("AwakeCoding.MsRdpClient.MsRdpClientAdapter") as IRDPClient;
             }
 #endif
-            else
-            {
-                    throw new ArgumentException("Unsupported RDPClientVersion");
-            }
+			else
+			{
+				throw new ArgumentException("Unsupported RDPClientVersion");
+			}
 
-            return client;
-        }
-    }
+			return client;
+		}
+	}
 }

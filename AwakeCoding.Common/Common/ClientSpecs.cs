@@ -5,10 +5,10 @@ using System.Text;
 
 namespace AwakeCoding.Common
 {
-    public enum ClientSpec
-    {
-        FullMode = 0,
-        ThinClientMode = 1,
-        SmallCacheMode = 2,
-    }
+	public enum ClientSpec
+	{
+		FullMode = 0,
+		ThinClientMode = 1,
+		SmallCacheMode = 2,
+	}
 }

@@ -1,89 +1,89 @@
 namespace AwakeCoding.MsRdpClient
 {
-    using System;
-    using System.Drawing;
+	using System;
+	using System.Drawing;
 
-    using MSTSCLib;
+	using MSTSCLib;
 
-    using IMsTscAxEvents_OnDisconnectedEventHandler = AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler;
-    using IMsTscAxEvents_OnFatalErrorEventHandler = AxMSTSCLib.IMsTscAxEvents_OnFatalErrorEventHandler;
-    using IMsTscAxEvents_OnWarningEventHandler = AxMSTSCLib.IMsTscAxEvents_OnWarningEventHandler;
-    
-    public interface IMsRDPClient
-    {
-        event EventHandler OnConnected;
+	using IMsTscAxEvents_OnDisconnectedEventHandler = AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler;
+	using IMsTscAxEvents_OnFatalErrorEventHandler = AxMSTSCLib.IMsTscAxEvents_OnFatalErrorEventHandler;
+	using IMsTscAxEvents_OnWarningEventHandler = AxMSTSCLib.IMsTscAxEvents_OnWarningEventHandler;
 
-        event IMsTscAxEvents_OnDisconnectedEventHandler OnDisconnected;
+	public interface IMsRDPClient
+	{
+		event EventHandler OnConnected;
 
-        event IMsTscAxEvents_OnFatalErrorEventHandler OnFatalError;
+		event IMsTscAxEvents_OnDisconnectedEventHandler OnDisconnected;
 
-        event IMsTscAxEvents_OnWarningEventHandler OnWarning;
+		event IMsTscAxEvents_OnFatalErrorEventHandler OnFatalError;
 
-        IMsTscAdvancedSettings AdvancedSettings { get; }
+		event IMsTscAxEvents_OnWarningEventHandler OnWarning;
 
-        IMsRdpClientAdvancedSettings AdvancedSettings2 { get; }
+		IMsTscAdvancedSettings AdvancedSettings { get; }
 
-        IMsRdpClientAdvancedSettings2 AdvancedSettings3 { get; }
+		IMsRdpClientAdvancedSettings AdvancedSettings2 { get; }
 
-        IMsRdpClientAdvancedSettings4 AdvancedSettings5 { get; }
+		IMsRdpClientAdvancedSettings2 AdvancedSettings3 { get; }
 
-        IMsRdpClientAdvancedSettings5 AdvancedSettings6 { get; }
+		IMsRdpClientAdvancedSettings4 AdvancedSettings5 { get; }
 
-        IMsRdpClientAdvancedSettings6 AdvancedSettings7 { get; }
+		IMsRdpClientAdvancedSettings5 AdvancedSettings6 { get; }
 
-        IMsRdpClientAdvancedSettings7 AdvancedSettings8 { get; }
+		IMsRdpClientAdvancedSettings6 AdvancedSettings7 { get; }
 
-        IMsRdpClientAdvancedSettings8 AdvancedSettings9 { get; }
+		IMsRdpClientAdvancedSettings7 AdvancedSettings8 { get; }
 
-        int ColorDepth { get; set; }
+		IMsRdpClientAdvancedSettings8 AdvancedSettings9 { get; }
 
-        short Connected { get; }
+		int ColorDepth { get; set; }
 
-        string ConnectingText { get; set; }
+		short Connected { get; }
 
-        bool ContainsFocus { get; }
+		string ConnectingText { get; set; }
 
-        int DesktopHeight { get; set; }
+		bool ContainsFocus { get; }
 
-        int DesktopWidth { get; set; }
+		int DesktopHeight { get; set; }
 
-        string Domain { get; set; }
+		int DesktopWidth { get; set; }
 
-        ExtendedDisconnectReasonCode ExtendedDisconnectReason { get; }
+		string Domain { get; set; }
 
-        bool FullScreen { get; set; }
+		ExtendedDisconnectReasonCode ExtendedDisconnectReason { get; }
 
-        string FullScreenTitle { set; }
+		bool FullScreen { get; set; }
 
-        IMsTscSecuredSettings SecuredSettings { get; }
+		string FullScreenTitle { set; }
 
-        IMsRdpClientSecuredSettings SecuredSettings2 { get; }
+		IMsTscSecuredSettings SecuredSettings { get; }
 
-        string Server { get; set; }
+		IMsRdpClientSecuredSettings SecuredSettings2 { get; }
 
-        Size Size { get; }
+		string Server { get; set; }
 
-        IMsRdpClientTransportSettings2 TransportSettings2 { get; }
+		Size Size { get; }
 
-        string UserName { get; set; }
+		IMsRdpClientTransportSettings2 TransportSettings2 { get; }
 
-        void Connect();
+		string UserName { get; set; }
 
-        string ConnectedStatusText { get; set; }
+		void Connect();
 
-        void Disconnect();
+		string ConnectedStatusText { get; set; }
 
-        string DisconnectedText { get; set; }
+		void Disconnect();
 
-        bool Focus();
+		string DisconnectedText { get; set; }
 
-        string GetErrorDescription(uint discReason, uint extendedDisconnectReason);
+		bool Focus();
 
-        object GetOcx();
+		string GetErrorDescription(uint discReason, uint extendedDisconnectReason);
 
-        int HorizontalScrollBarVisible { get; }
-        int VerticalScrollBarVisible { get; }
+		object GetOcx();
 
-        
-    }
+		int HorizontalScrollBarVisible { get; }
+		int VerticalScrollBarVisible { get; }
+
+
+	}
 }
