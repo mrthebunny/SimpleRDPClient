@@ -224,7 +224,14 @@ namespace ActiveXClient
 
 		private void txtPort_Validated(object sender, EventArgs e)
 		{
-			port = Convert.ToInt32(txtPort.Text);
+			try
+			{
+				port = Convert.ToInt32(txtPort.Text);
+			}
+			catch
+			{
+				port = 0;
+			}
 		}
 
 		private void cbColorDepth_Validated(object sender, EventArgs e)

@@ -63,6 +63,39 @@ namespace AwakeCoding.FreeRDPClient
 			{
 				System.Diagnostics.Debug.WriteLine("FreeRDPClient Error on ctor: " + ex.ToString());
 			}
+
+			this.SetStyle(ControlStyles.Selectable, true);
+			this.TabStop = true;
+		}
+
+		protected override void WndProc(ref Message m)
+		{
+			switch (m.Msg)
+			{
+				case (int) WM.MOUSEACTIVATE:
+					Focus();
+					break;
+			}
+
+			base.WndProc(ref m);
+		}
+
+		protected override void OnEnter(EventArgs e)
+		{
+			base.OnEnter(e);
+			if (wfi != IntPtr.Zero)
+			{
+				NativeMethods.wf_set_focus(wfi);
+			}
+		}
+
+		protected override void OnLeave(EventArgs e)
+		{
+			base.OnLeave(e);
+			if (wfi != IntPtr.Zero)
+			{
+				NativeMethods.wf_kill_focus(wfi);
+			}
 		}
 
 		void FreeRDPClient_SettingsChanged(object sender, EventArgs e)
@@ -213,6 +246,8 @@ namespace AwakeCoding.FreeRDPClient
 			{
 				Connected(this, EventArgs.Empty);
 			}
+
+			Focus();
 		}
 
 		/// <summary>
@@ -358,7 +393,7 @@ namespace AwakeCoding.FreeRDPClient
 		// Temporary - test method
 		internal void ForceSize(int width, int height)
 		{
-			NativeMethods.wf_set_size(wfi, width, height);
+			NativeMethods.wf_set_window_size(wfi, width, height);
 		}
 
 		private void AdjustSizeAndPosition()
@@ -408,11 +443,11 @@ namespace AwakeCoding.FreeRDPClient
 				{
 					if (AdvancedSettings.SmartSizing)
 					{
-						NativeMethods.wf_set_size(wfi, Math.Min(DesktopWidth, Parent.Width), Math.Min(DesktopHeight, Parent.Height));
+						NativeMethods.wf_set_window_size(wfi, Math.Min(DesktopWidth, Parent.Width), Math.Min(DesktopHeight, Parent.Height));
 					}
 					else
 					{
-						NativeMethods.wf_set_size(wfi, DesktopWidth, DesktopHeight);
+						NativeMethods.wf_set_window_size(wfi, DesktopWidth, DesktopHeight);
 					}
 				}
 			}
