@@ -1,0 +1,23 @@
+This is a preliminary version of the FreeRDP embedded component for .NET applications.
+
+1. Install the following prerequisites:
+
+vcredist_x86.exe  	: Package redistribuable Microsoft Visual C++ 2008 (x86) (required for OpenSSL)
+source: http://www.microsoft.com/fr-ca/download/details.aspx?id=29
+
+
+vcredist_x86_2012.exe  	: Redistribuable Visual C++ pour Visual Studio 2012 Update 1 (x86) (Required for FreeRDP)
+source: http://www.microsoft.com/fr-ca/download/details.aspx?id=30679
+
+
+Win32OpenSSL-1_0_1e.exe	: OpenSLL for Win32
+source: http://slproweb.com/products/Win32OpenSSL.html
+
+(make sure the binaries are installed in the System folder)
+
+
+
+2. Unzip the file FreeRDP_Proto_Release.zip
+
+
+3. Launch the application with the file SimpleClient.exe
