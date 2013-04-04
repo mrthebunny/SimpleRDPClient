@@ -54,39 +54,42 @@ namespace ActiveXClient
 
 		private void ReadSettings(string path)
 		{
-			Dictionary<string, string> settings = new Dictionary<string, string>();
-			using (StreamReader reader = new StreamReader(path))
+			if (File.Exists(path))
 			{
-				string line = reader.ReadLine();
-				while (line != null)
+				Dictionary<string, string> settings = new Dictionary<string, string>();
+				using (StreamReader reader = new StreamReader(path))
 				{
-					if (!line.StartsWith("#")) // commented lines start with #. Ignore.
+					string line = reader.ReadLine();
+					while (line != null)
 					{
-						string[] tokens = line.Split(new char[] { '=' }, 2);
-						if (tokens.Length == 2)
+						if (!line.StartsWith("#")) // commented lines start with #. Ignore.
 						{
-							settings[tokens[0].Trim().ToLower()] = tokens[1].Trim();
+							string[] tokens = line.Split(new char[] { '=' }, 2);
+							if (tokens.Length == 2)
+							{
+								settings[tokens[0].Trim().ToLower()] = tokens[1].Trim();
+							}
 						}
+						line = reader.ReadLine();
 					}
-					line = reader.ReadLine();
 				}
+
+				settings.TryGetValue("domain", out domain);
+				settings.TryGetValue("domain", out domain);
+				settings.TryGetValue("domain", out domain);
+				server = settings["server"];
+				userName = settings["username"];
+				clearTextPassword = settings["password"];
+				settings.TryGetValue("domain", out domain);
+
+
+				txtDomain.Text = domain;
+				txtPassword.Text = clearTextPassword;
+				txtPort.Text = "";
+				txtServer.Text = server;
+				txtUsername.Text = userName;
+				cxSmartSize.Checked = smartSizing;
 			}
-
-			settings.TryGetValue("domain", out domain);
-			settings.TryGetValue("domain", out domain);
-			settings.TryGetValue("domain", out domain);
-			server = settings["server"];
-			userName = settings["username"];
-			clearTextPassword = settings["password"];
-			settings.TryGetValue("domain", out domain);
-
-
-			txtDomain.Text = domain;
-			txtPassword.Text = clearTextPassword;
-			txtPort.Text = "";
-			txtServer.Text = server;
-			txtUsername.Text = userName;
-			cxSmartSize.Checked = smartSizing;
 		}
 
 		private void toolStripButtonConnect_Click(object sender, EventArgs e)

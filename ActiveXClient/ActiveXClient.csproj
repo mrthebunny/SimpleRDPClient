@@ -136,9 +136,12 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-xcopy /Y /D  "$(ProjectDir)\..\..\FreeRDP\Debug\*.*" "$(TargetDir)"
-copy /y "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\Debug\AxInterop.MSTSCLib.dll" "$(TargetDir)"
-copy /y "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\Debug\Interop.MSTSCLib.dll" "$(TargetDir)"
+xcopy /Y /D  "$(ProjectDir)\..\..\FreeRDP\$(ConfigurationName)\*.*" "$(TargetDir)"
+
+copy /y "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\$(ConfigurationName)\AxInterop.MSTSCLib.dll" "$(TargetDir)"
+
+copy /y "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\$(ConfigurationName)\Interop.MSTSCLib.dll" "$(TargetDir)"
+
 copy /y "$(ProjectDir)\..\AwakeCoding.MsRdpClient\$(OutDir)AwakeCoding.MsRdpClient.*" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
