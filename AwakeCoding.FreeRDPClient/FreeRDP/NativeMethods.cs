@@ -47,6 +47,9 @@ namespace AwakeCoding.FreeRDPClient
 		public static extern int wf_set_window_size(IntPtr wfi, int width, int height);
 
 		[DllImport("libwfreerdp-client")]
+		public static extern int wf_set_setting(IntPtr wfi, int key, int value);
+
+		[DllImport("libwfreerdp-client")]
 		public static extern void wf_set_focus(IntPtr wfi);
 
 		[DllImport("libwfreerdp-client")]

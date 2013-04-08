@@ -32,6 +32,14 @@ namespace AwakeCoding.FreeRDPClient
 		private IntPtr wfi = IntPtr.Zero;
 		private static bool staticInitialized = false;
 
+		// desktop height & width specified by user
+		private int desktopWidth;
+		private int desktopHeight;
+
+		// default desktop height & width determined by client window size at connect.
+		private int defaultDesktopWidth;
+		private int defaultDesktopHeight;
+
 		private static void GlobalInit()
 		{
 			if (!staticInitialized)
@@ -58,6 +66,8 @@ namespace AwakeCoding.FreeRDPClient
 				Visible = false;
 
 				((FreeRDPAdvancedSettings)AdvancedSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
+
+				
 			}
 			catch (Exception ex)
 			{
@@ -98,31 +108,37 @@ namespace AwakeCoding.FreeRDPClient
 			}
 		}
 
-		void FreeRDPClient_SettingsChanged(object sender, EventArgs e)
+		void parentForm_Activated(object sender, EventArgs e)
 		{
-			//// Update smart sizing
-
-			//if (!AdvancedSettings.SmartSizing)
-			//{
-			//    host.Scale(new System.Drawing.SizeF(1.0F, 1.0F));
-			//}
-			//else
-			//{
-			//    UpdateRatio();
-			//}
+			if (this.Focused && wfi != IntPtr.Zero)
+			{
+				NativeMethods.wf_set_focus(wfi);
+			}
 		}
 
-		private void UpdateRatio()
+		void parentForm_Deactivate(object sender, EventArgs e)
 		{
-			//host.Scale(new System.Drawing.SizeF(0.5F, 0.5F));
+			if (this.Focused && wfi != IntPtr.Zero)
+			{
+				NativeMethods.wf_kill_focus(wfi);
+			}
+		}
 
-			//if (DesktopWidth > 0 && DesktopHeight > 0)
-			//{
-			//    float xRatio = Math.Min(1.0F, (float)host.Width / (float)DesktopWidth);
-			//    float yRatio = Math.Min(1.0F, (float)host.Height / (float)DesktopHeight);
+		void FreeRDPClient_SettingsChanged(object sender, EventArgs e)
+		{
+			// Update smart sizing
+			if (IsConnected)
+			{
+				// TEMP
+				NativeMethods.wf_set_setting(wfi, 0, AdvancedSettings.SmartSizing ? 1 : 0);
+				AdjustSizeAndPosition(false);
 
-			//    host.Scale(new System.Drawing.SizeF(xRatio, yRatio));
-			//}
+				// TODO: tell FreeRDP to adjust size if SmartSizing has changed 
+				//if (!AdvancedSettings.SmartSizing)
+				//{
+				//	NativeMethods.wf_set_window_size(wfi, DesktopWidth, DesktopHeight);
+				//}
+			}
 		}
 
 		protected void FreeWfi()
@@ -193,14 +209,33 @@ namespace AwakeCoding.FreeRDPClient
 
 		public int DesktopWidth
 		{
-			get;
-			set;
+			get
+			{
+				if (desktopWidth > 0)
+					return desktopWidth;
+
+				return defaultDesktopWidth;
+			}
+			set
+			{
+				desktopWidth = value / 4 * 4;
+			}
 		}
 
 		public int DesktopHeight
 		{
-			get;
-			set;
+			get
+			{
+				if (desktopHeight > 0)
+					return desktopHeight;
+
+				return defaultDesktopHeight;
+			}
+
+			set
+			{
+				desktopHeight = value / 4 * 4;
+			}
 		}
 
 		public int ColorDepth
@@ -212,18 +247,7 @@ namespace AwakeCoding.FreeRDPClient
 		public void Connect()
 		{
 			GlobalInit();
-
-			if (AdvancedSettings.SmartSizing)
-			{
-				this.AutoScroll = false;
-			}
-			else
-			{
-				this.AutoScroll = true;
-				this.AutoScrollMinSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
-			}
-
-			AdjustSizeAndPosition();
+			AdjustSizeAndPosition(true);
 
 			string[] argv = GetCommandLine();
 
@@ -237,6 +261,25 @@ namespace AwakeCoding.FreeRDPClient
 
 			FreeWfi();
 			wfi = NativeMethods.wf_new(IntPtr.Zero, /*parent.Handle*/ Handle, argv.Length, argv);
+
+
+			Control current = Parent;
+			Form parentForm = null;
+			while (current != null)
+			{
+				parentForm = current as Form;
+				if (parentForm != null)
+					break;
+				current = current.Parent;
+			}
+
+			if (parentForm != null)
+			{
+				parentForm.ResizeEnd += parentForm_ResizeEnd;
+				parentForm.Deactivate += parentForm_Deactivate;
+				parentForm.Activated += parentForm_Activated;
+			}
+
 
 			NativeMethods.wf_start(wfi);
 			Visible = true;
@@ -262,12 +305,11 @@ namespace AwakeCoding.FreeRDPClient
 			argv.Add("SimpleClient.exe");
 			argv.Add("-decorations");
 			argv.Add("/cert-ignore");
+			argv.Add("/h:" + DesktopHeight);
+			argv.Add("/w:" + DesktopWidth);
 
-			if (DesktopHeight > 0)
-			{ argv.Add("/h:" + DesktopHeight); }
-
-			if (DesktopWidth > 0)
-			{ argv.Add("/w:" + DesktopWidth); }
+			if (AdvancedSettings.SmartSizing)
+			{ argv.Add("+smart-sizing"); }
 
 			if (!String.IsNullOrEmpty(Domain))
 			{ argv.Add("/d:" + Domain); }
@@ -279,27 +321,41 @@ namespace AwakeCoding.FreeRDPClient
 			{ argv.Add("/u:" + UserName); }
 
 			if (ColorDepth > 0)
-			{
-				argv.Add("/bpp:" + ColorDepth);
-			}
+			{ argv.Add("/bpp:" + ColorDepth); }
 
 			// Secured settings
+
+			// Advanced settings
 			FreeRDPAdvancedSettings advanced = (FreeRDPAdvancedSettings)AdvancedSettings;
+
 			if (!String.IsNullOrEmpty(advanced.ClearTextPassword))
 			{ argv.Add("/p:" + advanced.ClearTextPassword); }
 
-			// Advanced settings
-
-			if (AdvancedSettings.RDPPort > 0)
-			{
-				argv.Add("/port:" + AdvancedSettings.RDPPort);
-			}
+			if (advanced.RDPPort > 0)
+			{ argv.Add("/port:" + AdvancedSettings.RDPPort); }
 
 			return argv.ToArray();
 		}
 
 		public void Disconnect()
 		{
+			Control current = Parent;
+			Form parentForm = null;
+			while (current != null)
+			{
+				parentForm = current as Form;
+				if (parentForm != null)
+					break;
+				current = current.Parent;
+			}
+
+			if (parentForm != null)
+			{
+				parentForm.ResizeEnd -= parentForm_ResizeEnd;
+				parentForm.Deactivate -= parentForm_Deactivate;
+				parentForm.Activated -= parentForm_Activated;
+			}
+
 			Visible = false;
 			NativeMethods.wf_stop(wfi);
 
@@ -312,16 +368,27 @@ namespace AwakeCoding.FreeRDPClient
 
 		public void Attach(Control parent)
 		{
-			parent.Controls.Add(this);
-			this.Width = parent.Width;
-			this.Height = parent.Height;
+			this.Parent = parent;
+			this.Width = parent.ClientRectangle.Width;
+			this.Height = parent.ClientRectangle.Height;
 
 			parent.SizeChanged += parent_SizeChanged;
 		}
 
+		void parentForm_ResizeEnd(object sender, EventArgs e)
+		{
+			if (IsConnected)
+			{
+				if (AdvancedSettings.SmartSizing)
+				{
+					NativeMethods.wf_set_window_size(wfi, ClientRectangle.Width, ClientRectangle.Height);
+				}
+			}
+		}
+
 		void parent_SizeChanged(object sender, EventArgs e)
 		{
-			AdjustSizeAndPosition();
+			AdjustSizeAndPosition(false);
 		}
 
 		public event EventHandler Connected;
@@ -396,59 +463,84 @@ namespace AwakeCoding.FreeRDPClient
 			NativeMethods.wf_set_window_size(wfi, width, height);
 		}
 
-		private void AdjustSizeAndPosition()
+
+		// SmartSizing OFF: Adjust client size to parent size, up to DesktopHeight*DesktopWidth. AutoScroll if size < DesktopSize 
+		// SmartSizing ON: Adjust client size to parent size, up to DesktopHeight*DesktopWidth.  
+		// 
+		// if PARENT size is greater than DesktopHeight*DesktopWidth, center panel in parent container
+		private void AdjustSizeAndPosition(bool initial)
 		{
 			int x = Location.X;
 			int y = Location.Y;
-			int width = this.Width;
-			int height = this.Height;
+			int width;
+			int height;
 
-			if (DesktopHeight > 0 && Parent.Height > 0)
+			if (!IsConnected)
 			{
-				if (Parent.Height <= DesktopHeight)
-				{
-					y = 0;
-					height = Parent.Height;
-				}
-				else
-				{
-					y = (Parent.Height - DesktopHeight) / 2;
-					height = DesktopHeight;
-				}
+				defaultDesktopWidth = Parent.ClientRectangle.Width / 4 * 4;
+				defaultDesktopHeight = Parent.ClientRectangle.Height / 4 * 4;
 			}
 
-			if (DesktopWidth > 0 && Parent.Width > 0)
+			if (Parent.ClientRectangle.Height <= DesktopHeight)
 			{
-				if (Parent.Width <= DesktopWidth)
-				{
-					x = 0;
-					width = Parent.Width;
-				}
-				else
-				{
-					x = (Parent.Width - DesktopWidth) / 2;
-					width = DesktopWidth;
-				}
+				y = 0;
+				height = Parent.ClientRectangle.Height;
+			}
+			else
+			{
+				y = (Parent.ClientRectangle.Height - DesktopHeight) / 2;
+				height = DesktopHeight;
 			}
 
-			this.Location = new System.Drawing.Point(x, y);
+			if (Parent.ClientRectangle.Width <= DesktopWidth)
+			{
+				x = 0;
+				width = Parent.ClientRectangle.Width;
+			}
+			else
+			{
+				x = (Parent.ClientRectangle.Width - DesktopWidth) / 2;
+				width = DesktopWidth;
+			}
 
-			if (width != this.Width || height != this.Height)
+			if (this.Location.X != x || this.Location.Y != y)
+			{
+				this.Location = new System.Drawing.Point(x, y);
+			}
+
+			if (initial || width != this.Width || height != this.Height)
 			{
 				this.Height = height;
 				this.Width = width;
-				System.Diagnostics.Debug.WriteLine("width:" + this.Width + " height:" + this.Height);
+			//	System.Diagnostics.Debug.WriteLine("width:" + ClientRectangle.Width + " height:" + ClientRectangle.Height);
 
-				if (IsConnected)
+				//if (IsConnected)
+				//{
+				//	if (AdvancedSettings.SmartSizing)
+				//	{
+				//		NativeMethods.wf_set_window_size(wfi, width, height);
+				//	}
+				//	//else
+				//	//{
+				//	//	NativeMethods.wf_set_window_size(wfi, DesktopWidth, DesktopHeight);
+				//	//}
+				//}
+			}
+
+			//this.Width = width;
+			//this.Height = height;
+
+			if (AdvancedSettings.SmartSizing)
+			{
+				this.AutoScroll = false;
+			}
+			else
+			{
+				this.AutoScroll = true;
+
+				if (initial)
 				{
-					if (AdvancedSettings.SmartSizing)
-					{
-						NativeMethods.wf_set_window_size(wfi, Math.Min(DesktopWidth, Parent.Width), Math.Min(DesktopHeight, Parent.Height));
-					}
-					else
-					{
-						NativeMethods.wf_set_window_size(wfi, DesktopWidth, DesktopHeight);
-					}
+					this.AutoScrollMinSize = new System.Drawing.Size(width, height);
 				}
 			}
 		}

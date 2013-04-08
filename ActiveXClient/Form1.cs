@@ -94,8 +94,8 @@ namespace ActiveXClient
 
 		private void toolStripButtonConnect_Click(object sender, EventArgs e)
 		{
-			rdpConnection.DesktopWidth = rdpConnection.Width;
-			rdpConnection.DesktopHeight = rdpConnection.Height;
+			//rdpConnection.DesktopWidth = rdpConnection.Width;
+			//rdpConnection.DesktopHeight = rdpConnection.Height;
 
 			rdpConnection.Server = server;
 			rdpConnection.UserName = userName;
@@ -114,8 +114,8 @@ namespace ActiveXClient
 
 		private void DoConnect(AwakeCoding.FreeRDPClient.RDPClientFrame rdpClientFrame)
 		{
-			rdpClientFrame.DesktopWidth = rdpClientFrame.Width;
-			rdpClientFrame.DesktopHeight = rdpClientFrame.Height;
+			//rdpClientFrame.DesktopWidth = rdpClientFrame.Width;
+			//rdpClientFrame.DesktopHeight = rdpClientFrame.Height;
 
 			rdpClientFrame.Server = server;
 			rdpClientFrame.UserName = userName;
