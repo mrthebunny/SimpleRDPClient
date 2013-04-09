@@ -44,6 +44,10 @@ namespace AwakeCoding.FreeRDPClient
 		// Current instanciated version of IRdpClient
 		private IRDPClient rdpClientImpl = new RDPClientStub();
 
+		// desktop height & width specified by user
+		private int desktopWidth;
+		private int desktopHeight;
+
 		#endregion // Private members
 
 		#region Events
@@ -61,6 +65,7 @@ namespace AwakeCoding.FreeRDPClient
 		public RDPClientFrame()
 		{
 			InitializeComponent();
+			this.DoubleBuffered = true;
 			this.HandleCreated += RDPClientFrame_HandleCreated;
 		}
 
@@ -193,11 +198,18 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			get
 			{
-				return rdpClientImpl.DesktopWidth;
+				if (IsConnected)
+					return rdpClientImpl.DesktopWidth;
+
+				if (desktopWidth > 0)
+					return desktopWidth;
+
+				// default desktop height & width determined by client window size at connect.
+				return ClientRectangle.Width / 4 * 4;
 			}
 			set
 			{
-				rdpClientImpl.DesktopWidth = value;
+				desktopWidth = value / 4 * 4;
 			}
 		}
 
@@ -206,11 +218,19 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			get
 			{
-				return rdpClientImpl.DesktopHeight;
+				if (IsConnected)
+					return rdpClientImpl.DesktopHeight;
+
+				if (desktopHeight > 0)
+					return desktopHeight;
+
+				// default desktop height & width determined by client window size at connect.
+				return ClientRectangle.Height / 4 * 4;
 			}
+
 			set
 			{
-				rdpClientImpl.DesktopHeight = value;
+				desktopHeight = value / 4 * 4;
 			}
 		}
 
@@ -235,6 +255,9 @@ namespace AwakeCoding.FreeRDPClient
 		public void Connect()
 		{
 			BackColor = System.Drawing.SystemColors.AppWorkspace;
+
+			rdpClientImpl.DesktopWidth = DesktopWidth;
+			rdpClientImpl.DesktopHeight = DesktopHeight;
 			rdpClientImpl.Connect();
 		}
 

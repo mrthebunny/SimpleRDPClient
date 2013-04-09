@@ -176,6 +176,17 @@ namespace ActiveXClient
 			rdpClientFrame2.Disconnect();
 		}
 
+
+		private void toolStripButtonConnect4_Click(object sender, EventArgs e)
+		{
+			DoConnect(rdpClientFrame3);
+		}
+
+		private void toolStripButtonDisconnect4_Click(object sender, EventArgs e)
+		{
+			rdpClientFrame3.Disconnect();
+		}
+
 		private void rdpClientFrame2_Connected(object sender, EventArgs e)
 		{
 			SetConnected(3, true);
