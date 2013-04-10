@@ -57,6 +57,9 @@ namespace AwakeCoding.Common
 
 		void SetSize(int width, int height);
 
+		// Set to true to tell the frame to always scale this control to the client area.
+		bool HandleSizingInternally { get; }
+
 		#endregion // Settings
 
 		#region Methods

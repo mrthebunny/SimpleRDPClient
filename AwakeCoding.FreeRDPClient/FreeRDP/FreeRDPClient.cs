@@ -77,6 +77,11 @@ namespace AwakeCoding.FreeRDPClient
 			this.TabStop = true;
 		}
 
+		public bool HandleSizingInternally 
+		{ 
+			get { return false; } 
+		}
+
 		protected override void WndProc(ref Message m)
 		{
 			if (m.Msg == (int) WM.MOUSEACTIVATE)

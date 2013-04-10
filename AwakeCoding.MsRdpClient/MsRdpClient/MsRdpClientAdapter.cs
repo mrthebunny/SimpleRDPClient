@@ -72,6 +72,14 @@ namespace AwakeCoding.MsRdpClient
 			}
 		}
 
+		/// <summary>
+		/// Tell the parent container to let this control handle its size and position
+		/// </summary>
+		public bool HandleSizingInternally
+		{
+			get { return true; }
+		}
+
 		void MsRdpClientAdapter_HandleCreated(object sender, EventArgs e)
 		{
 			// Finish initialization - com object proxies
@@ -146,6 +154,10 @@ namespace AwakeCoding.MsRdpClient
 		public void Attach(Control parent)
 		{
 			parent.Controls.Add((Control)client);
+
+			((Control)client).Width = parent.ClientRectangle.Width;
+			((Control)client).Height = parent.ClientRectangle.Height;
+			((Control)client).Dock = DockStyle.Fill;
 		}
 
 		private void RegisterEvents()

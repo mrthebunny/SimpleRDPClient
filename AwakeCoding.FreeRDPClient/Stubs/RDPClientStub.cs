@@ -49,6 +49,11 @@ namespace AwakeCoding.FreeRDPClient
 			((AdvancedSettingsStub)AdvancedSettings).SettingsChanged += RDPClientStub_SettingsChanged;
 		}
 
+		public bool HandleSizingInternally
+		{
+			get { return false; }
+		}
+
 		void RDPClientStub_SettingsChanged(object sender, SettingsChangedEventArgs args)
 		{
 			if (SettingsChanged != null)

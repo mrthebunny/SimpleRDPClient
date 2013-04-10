@@ -44,9 +44,6 @@ namespace AwakeCoding.FreeRDPClient
 		// Current instanciated version of IRdpClient
 		private IRDPClient rdpClientImpl = new RDPClientStub();
 
-		private Container components = new Container();
-		private Timer resizeTimer;
-
 		// desktop height & width specified by user
 		private int desktopWidth;
 		private int desktopHeight;
@@ -69,27 +66,12 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			InitializeComponent();
 
-			this.DoubleBuffered = true;
 			this.HandleCreated += RDPClientFrame_HandleCreated;
-
-			resizeTimer = new Timer(components);
-			resizeTimer.Interval = 100;
-			resizeTimer.Tick += resizeTimer_Tick;	
 		}
 
 		protected override void OnResize(EventArgs eventargs)
 		{
 			base.OnResize(eventargs);
-			//resizeTimer.Stop();
-			//resizeTimer.Start();
-
-			AdjustSizeAndPosition(false);
-		}
-
-		void resizeTimer_Tick(object sender, EventArgs e)
-		{
-			System.Diagnostics.Debug.WriteLine("ResizeEnd");
-			resizeTimer.Stop();
 			AdjustSizeAndPosition(false);
 		}
 
@@ -119,8 +101,6 @@ namespace AwakeCoding.FreeRDPClient
 					disp.Dispose();
 					rdpClientImpl = null;
 				}
-
-				components.Dispose();
 			}
 
 			base.Dispose(disposing);
@@ -480,7 +460,7 @@ namespace AwakeCoding.FreeRDPClient
 		// if PARENT size is greater than DesktopHeight*DesktopWidth, center panel in parent container
 		private void AdjustSizeAndPosition(bool initial)
 		{
-			if (rdpClientImpl != null)
+			if (rdpClientImpl != null && !rdpClientImpl.HandleSizingInternally)
 			{
 				int x = Location.X;
 				int y = Location.Y;
