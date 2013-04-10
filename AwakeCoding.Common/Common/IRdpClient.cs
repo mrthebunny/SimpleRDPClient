@@ -51,6 +51,12 @@ namespace AwakeCoding.Common
 		string UserName { get; set; }
 		bool VerticalScrollBarVisible { get; }
 
+		int Width { get; }
+		int Height { get; }
+		System.Drawing.Point Location { get; set; }
+
+		void SetSize(int width, int height);
+
 		#endregion // Settings
 
 		#region Methods
@@ -66,9 +72,16 @@ namespace AwakeCoding.Common
 		event DisconnectedEventHandler Disconnected;
 		event FatalErrorEventHandler FatalErrorOccurred;
 		event WarningEventHandler WarningOccurred;
+		event SettingsChangedEventHandler SettingsChanged;
 
 		#endregion // Events
-
-
 	}
+
+	public class SettingsChangedEventArgs : EventArgs
+	{
+		public string PropertyName { get; set; }
+	}
+
+	public delegate void SettingsChangedEventHandler(object sender, SettingsChangedEventArgs args);
+
 }

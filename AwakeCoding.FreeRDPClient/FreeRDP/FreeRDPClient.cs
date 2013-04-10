@@ -35,6 +35,11 @@ namespace AwakeCoding.FreeRDPClient
 		private IntPtr wfi = IntPtr.Zero;
 		private static bool staticInitialized = false;
 
+		private int internalHeight = 0;
+		private int internalWidth = 0;
+
+		private bool smartSizing;
+
 		private static void GlobalInit()
 		{
 			if (!staticInitialized)
@@ -116,17 +121,19 @@ namespace AwakeCoding.FreeRDPClient
 			}
 		}
 
-		void FreeRDPClient_SettingsChanged(object sender, EventArgs e)
+		void FreeRDPClient_SettingsChanged(object sender, SettingsChangedEventArgs e)
 		{
-			// Update smart sizing
-			if (IsConnected)
+			if (SettingsChanged != null)
 			{
-				// TEMP
-				AdjustSizeAndPosition(false);
-				NativeMethods.wf_set_setting(wfi, 0, AdvancedSettings.SmartSizing ? 1 : 0);
+				if (e.PropertyName == "SmartSizing")
+				{
+					if (IsConnected)
+					{
+						NativeMethods.wf_set_setting(wfi, 0, AdvancedSettings.SmartSizing ? 1 : 0);
+					}
+				}
 
-				// TODO: tell FreeRDP to adjust size if SmartSizing has changed 
-				parentForm_ResizeEnd(this, EventArgs.Empty);
+				SettingsChanged(this, e);
 			}
 		}
 
@@ -217,7 +224,6 @@ namespace AwakeCoding.FreeRDPClient
 		public void Connect()
 		{
 			GlobalInit();
-			AdjustSizeAndPosition(true);
 
 			string[] argv = GetCommandLine();
 
@@ -322,7 +328,6 @@ namespace AwakeCoding.FreeRDPClient
 
 			if (parentForm != null)
 			{
-				//parentForm.ResizeEnd -= parentForm_ResizeEnd;
 				parentForm.Deactivate -= parentForm_Deactivate;
 				parentForm.Activated -= parentForm_Activated;
 			}
@@ -342,43 +347,6 @@ namespace AwakeCoding.FreeRDPClient
 			this.Parent = parent;
 			this.Width = parent.ClientRectangle.Width;
 			this.Height = parent.ClientRectangle.Height;
-
-			resizeTimer = new Timer(components);
-			resizeTimer.Interval = 1000;
-			resizeTimer.Tick += parentForm_ResizeEnd;
-			parent.SizeChanged += parent_SizeChanged;
-		}
-
-		void parentForm_ResizeEnd(object sender, EventArgs e)
-		{
-			System.Diagnostics.Debug.WriteLine("ResizeEnd");
-			resizeTimer.Stop();
-			AdjustSizeAndPosition(false);
-			if (IsConnected)
-			{
-				if (AdvancedSettings.SmartSizing)
-				{
-					NativeMethods.wf_set_window_size(wfi, ClientRectangle.Width, ClientRectangle.Height);
-				}
-				//else
-				//{
-				//	NativeMethods.wf_set_window_size(wfi, DesktopWidth, DesktopHeight);
-				//}
-			}
-		}
-
-		void parent_SizeChanged(object sender, EventArgs e)
-		{
-			if (AdvancedSettings.SmartSizing)
-			{
-				resizeTimer.Stop();
-				resizeTimer.Start();
-			}
-			else
-			{
-				AdjustSizeAndPosition(false);
-				//parentForm_ResizeEnd(this, EventArgs.Empty);
-			}
 		}
 
 		public event EventHandler Connected;
@@ -453,70 +421,22 @@ namespace AwakeCoding.FreeRDPClient
 			NativeMethods.wf_set_window_size(wfi, width, height);
 		}
 
-
-		// SmartSizing OFF: Adjust client size to parent size, up to DesktopHeight*DesktopWidth. AutoScroll if size < DesktopSize 
-		// SmartSizing ON: Adjust client size to parent size, up to DesktopHeight*DesktopWidth.  
-		// 
-		// if PARENT size is greater than DesktopHeight*DesktopWidth, center panel in parent container
-		private void AdjustSizeAndPosition(bool initial)
+		public void SetSize(int width, int height)
 		{
-			int x = Location.X;
-			int y = Location.Y;
-			int width;
-			int height;
+			Width = width;
+			Height = height;
 
-			if (Parent.ClientRectangle.Height <= DesktopHeight)
+			if (internalHeight != Height || internalWidth != Width)
 			{
-				y = 0;
-				height = Parent.ClientRectangle.Height;
-			}
-			else
-			{
-				y = (Parent.ClientRectangle.Height - DesktopHeight) / 2;
-				height = DesktopHeight;
-			}
-
-			if (Parent.ClientRectangle.Width <= DesktopWidth)
-			{
-				x = 0;
-				width = Parent.ClientRectangle.Width;
-			}
-			else
-			{
-				x = (Parent.ClientRectangle.Width - DesktopWidth) / 2;
-				width = DesktopWidth;
-			}
-
-			if (this.Location.X != x || this.Location.Y != y)
-			{
-				this.Location = new System.Drawing.Point(x, y);
-			}
-
-			if (initial || width != this.Width || height != this.Height)
-			{
-				this.Height = height;
-				this.Width = width;
-			}
-
-			if (AdvancedSettings.SmartSizing)
-			{
-				if (AutoScroll)
+				internalHeight = Height;
+				internalWidth = Width;
+				if (IsConnected)
 				{
-					this.AutoScroll = false;
-				}
-			}
-			else
-			{
-				if (!AutoScroll)
-				{
-					this.AutoScroll = true;
-				}
-
-				if (initial)
-				{
-					this.AutoScrollMinSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
+					NativeMethods.wf_set_window_size(wfi, ClientRectangle.Width, ClientRectangle.Height);
 				}
 			}
 		}
+
+		public event SettingsChangedEventHandler SettingsChanged;
 	}
 }

@@ -101,48 +101,6 @@ namespace AwakeCoding.MsRdpClient
 			TransportSettings = transportSettingsProxy.GetStrongTypedProxy();
 
 			host.Visible = false;
-
-			host.Parent.SizeChanged += Parent_SizeChanged;
-		}
-
-		void Parent_SizeChanged(object sender, EventArgs e)
-		{
-			int x = host.Location.X;
-			int y = host.Location.Y;
-			int width = host.Width;
-			int height = host.Height;
-
-			if (DesktopHeight > 0 && host.Parent.Height > 0)
-			{
-				if (host.Parent.Height <= DesktopHeight)
-				{
-					y = 0;
-					height = host.Parent.Height;
-				}
-				else
-				{
-					y = (host.Parent.Height - DesktopHeight) / 2;
-					height = DesktopHeight;
-				}
-			}
-
-			if (DesktopWidth > 0 && host.Parent.Width > 0)
-			{
-				if (host.Parent.Width <= DesktopWidth)
-				{
-					x = 0;
-					width = host.Parent.Width;
-				}
-				else
-				{
-					x = (host.Parent.Width - DesktopWidth) / 2;
-					width = DesktopWidth;
-				}
-			}
-
-			host.Location = new System.Drawing.Point(x, y);
-			host.Height = height;
-			host.Width = width;
 		}
 
 		private void TrySetAdvancedSettings(object targetInstance, Type targetType)
@@ -153,9 +111,18 @@ namespace AwakeCoding.MsRdpClient
 				advancedSettingsProxy.TargetInstance = targetInstance;
 				advancedSettingsProxy.TargetType = targetType;
 				AdvancedSettings = advancedSettingsProxy.GetStrongTypedProxy();
+
+				advancedSettingsProxy.SettingsChanged += advancedSettingsProxy_SettingsChanged;
 			}
 		}
 
+		void advancedSettingsProxy_SettingsChanged(object sender, SettingsChangedEventArgs args)
+		{
+			if (SettingsChanged != null)
+			{
+				SettingsChanged(this, args);
+			}
+		}
 
 		private void TrySetSecuredSettings(object targetInstance, Type targetType)
 		{
@@ -403,7 +370,6 @@ namespace AwakeCoding.MsRdpClient
 
 			client.Connect();
 			host.Visible = true;
-			Parent_SizeChanged(this, EventArgs.Empty);
 		}
 
 		public void Disconnect()
@@ -510,5 +476,39 @@ namespace AwakeCoding.MsRdpClient
 		{
 			return client.GetErrorDescription(discReason, extendedDisconnectReason);
 		}
+
+		public int Width
+		{
+			get { return host.Width; }
+		}
+
+		public int Height
+		{
+			get { return host.Height; }
+		}
+
+		public System.Drawing.Point Location
+		{
+			get
+			{
+				return host.Location;
+			}
+			set
+			{
+				host.Location = value;
+			}
+		}
+
+		public void SetSize(int width, int height)
+		{
+			if (host != null)
+			{
+				host.Height = height;
+				host.Width = width;
+			}
+		}
+
+
+		public event SettingsChangedEventHandler SettingsChanged;
 	}
 }

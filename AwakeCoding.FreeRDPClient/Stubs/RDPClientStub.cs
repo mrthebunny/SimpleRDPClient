@@ -28,9 +28,9 @@ namespace AwakeCoding.FreeRDPClient
 {
 	public class RDPClientStub : IRDPClient
 	{
-		private bool isConnected = false;
 		private Panel panel = new Panel();
 		private TextBox textBox = new TextBox();
+		private bool smartSizing = false;
 
 		public RDPClientStub()
 		{
@@ -45,6 +45,17 @@ namespace AwakeCoding.FreeRDPClient
 			panel.Controls.Add(textBox);
 
 			panel.HandleCreated += panel_HandleCreated;
+
+			((AdvancedSettingsStub)AdvancedSettings).SettingsChanged += RDPClientStub_SettingsChanged;
+		}
+
+		void RDPClientStub_SettingsChanged(object sender, SettingsChangedEventArgs args)
+		{
+			if (SettingsChanged != null)
+			{
+				UpdateDisplay();
+				SettingsChanged(this, args);
+			}
 		}
 
 		void panel_HandleCreated(object sender, EventArgs e)
@@ -115,7 +126,7 @@ namespace AwakeCoding.FreeRDPClient
 
 		public void Connect()
 		{
-			isConnected = true;
+			IsConnected = true;
 			UpdateDisplay();
 
 			if (Connected != null)
@@ -126,7 +137,7 @@ namespace AwakeCoding.FreeRDPClient
 
 		public void Disconnect()
 		{
-			isConnected = false;
+			IsConnected = false;
 			UpdateDisplay();
 
 			if (Disconnected != null)
@@ -148,18 +159,21 @@ namespace AwakeCoding.FreeRDPClient
 
 		public event WarningEventHandler WarningOccurred;
 
+		public event SettingsChangedEventHandler SettingsChanged;
 
 		private void UpdateDisplay()
 		{
 			textBox.Text = String.Format(
 			    "Dummy remote control" + Environment.NewLine +
+				Environment.NewLine +
 			    "Connection: {0}" + Environment.NewLine +
 			    "DesktopWidth: {1}" + Environment.NewLine +
-			    "DesktopHeight: {2}",
-
-			    isConnected ? Server + " as " + UserName : "(disconnected)",
+			    "DesktopHeight: {2}" + Environment.NewLine +
+				"SmartSizing: {3}",
+			    IsConnected ? Server + " as " + UserName : "(disconnected)",
 			    DesktopWidth,
-			    DesktopHeight);
+			    DesktopHeight,
+				AdvancedSettings.SmartSizing);
 		}
 
 
@@ -223,5 +237,35 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			return "";
 		}
+
+
+		public int Width
+		{
+			get { return panel.Width; }
+		}
+
+		public int Height
+		{
+			get { return panel.Height; }
+		}
+
+		public System.Drawing.Point Location
+		{
+			get
+			{
+				return panel.Location;
+			}
+			set
+			{
+				panel.Location = value;
+			}
+		}
+
+		public void SetSize(int width, int height)
+		{
+			panel.Width = width;
+			panel.Height = height;
+		}
+
 	}
 }

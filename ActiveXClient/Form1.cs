@@ -197,6 +197,16 @@ namespace ActiveXClient
 			SetConnected(3, false);
 		}
 
+		private void rdpClientFrame3_Connected(object sender, EventArgs e)
+		{
+			SetConnected(4, true);
+		}
+
+		private void rdpClientFrame3_Disconnected(object sender, AwakeCoding.Common.DisconnectedEventArgs e)
+		{
+			SetConnected(4, false);
+		}
+
 		private void SetConnected(int tabIndex, bool connected)
 		{
 			switch (tabIndex)
@@ -212,6 +222,10 @@ namespace ActiveXClient
 				case 3:
 					toolStripButtonConnect3.Enabled = !connected;
 					toolStripButtonDisconnect3.Enabled = connected;
+					break;
+				case 4:
+					toolStripButtonConnect4.Enabled = !connected;
+					toolStripButtonDisconnect4.Enabled = connected;
 					break;
 			}
 		}
@@ -270,6 +284,11 @@ namespace ActiveXClient
 			if (rdpClientFrame2.IsConnected)
 			{
 				rdpClientFrame2.AdvancedSettings.SmartSizing = smartSizing;
+			}
+
+			if (rdpClientFrame3.IsConnected)
+			{
+				rdpClientFrame3.AdvancedSettings.SmartSizing = smartSizing;
 			}
 		}
 

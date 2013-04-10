@@ -29,7 +29,7 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 	{
 		private bool smartSizing = false;
 
-		public event EventHandler SettingsChanged;
+		public event SettingsChangedEventHandler SettingsChanged;
 
 		public int AcceleratorPassthrough
 		{
@@ -1100,7 +1100,7 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 
 					if (SettingsChanged != null)
 					{
-						SettingsChanged(this, EventArgs.Empty);
+						SettingsChanged(this, new SettingsChangedEventArgs() { PropertyName = "SmartSizing" });
 					}
 				}
 			}

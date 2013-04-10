@@ -29,7 +29,7 @@ using AwakeCoding.Common;
 
 namespace AwakeCoding.FreeRDPClient
 {
-	public partial class RDPClientFrame : Panel, IRDPClient
+	public partial class RDPClientFrame : Panel
 	{
 
 		#region Private members
@@ -43,6 +43,9 @@ namespace AwakeCoding.FreeRDPClient
 
 		// Current instanciated version of IRdpClient
 		private IRDPClient rdpClientImpl = new RDPClientStub();
+
+		private Container components = new Container();
+		private Timer resizeTimer;
 
 		// desktop height & width specified by user
 		private int desktopWidth;
@@ -65,8 +68,29 @@ namespace AwakeCoding.FreeRDPClient
 		public RDPClientFrame()
 		{
 			InitializeComponent();
+
 			this.DoubleBuffered = true;
 			this.HandleCreated += RDPClientFrame_HandleCreated;
+
+			resizeTimer = new Timer(components);
+			resizeTimer.Interval = 100;
+			resizeTimer.Tick += resizeTimer_Tick;	
+		}
+
+		protected override void OnResize(EventArgs eventargs)
+		{
+			base.OnResize(eventargs);
+			//resizeTimer.Stop();
+			//resizeTimer.Start();
+
+			AdjustSizeAndPosition(false);
+		}
+
+		void resizeTimer_Tick(object sender, EventArgs e)
+		{
+			System.Diagnostics.Debug.WriteLine("ResizeEnd");
+			resizeTimer.Stop();
+			AdjustSizeAndPosition(false);
 		}
 
 		void RDPClientFrame_HandleCreated(object sender, EventArgs e)
@@ -95,6 +119,8 @@ namespace AwakeCoding.FreeRDPClient
 					disp.Dispose();
 					rdpClientImpl = null;
 				}
+
+				components.Dispose();
 			}
 
 			base.Dispose(disposing);
@@ -113,6 +139,15 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			rdpClientImpl = RDPClientLoader.NewRDPClient(ClientVersion);
 			rdpClientImpl.Attach(this);
+			rdpClientImpl.SettingsChanged += rdpClientImpl_SettingsChanged;
+		}
+
+		void rdpClientImpl_SettingsChanged(object sender, SettingsChangedEventArgs args)
+		{
+			if (args.PropertyName == "SmartSizing")
+			{
+				AdjustSizeAndPosition(false);
+			}
 		}
 
 		[Browsable(false)]
@@ -259,6 +294,7 @@ namespace AwakeCoding.FreeRDPClient
 			rdpClientImpl.DesktopWidth = DesktopWidth;
 			rdpClientImpl.DesktopHeight = DesktopHeight;
 			rdpClientImpl.Connect();
+			AdjustSizeAndPosition(true);
 		}
 
 		public void Disconnect()
@@ -425,6 +461,91 @@ namespace AwakeCoding.FreeRDPClient
 			{
 				client.ForceSize(width, height);
 			}
+		}
+
+
+		protected override void OnSizeChanged(EventArgs e)
+		{
+			base.OnSizeChanged(e);
+
+			if (rdpClientImpl != null)
+			{
+
+			}
+		}
+
+		// SmartSizing OFF: Adjust client size to parent size, up to DesktopHeight*DesktopWidth. AutoScroll if size < DesktopSize 
+		// SmartSizing ON: Adjust client size to parent size, up to DesktopHeight*DesktopWidth.  
+		// 
+		// if PARENT size is greater than DesktopHeight*DesktopWidth, center panel in parent container
+		private void AdjustSizeAndPosition(bool initial)
+		{
+			if (rdpClientImpl != null)
+			{
+				int x = Location.X;
+				int y = Location.Y;
+				int width;
+				int height;
+
+				if (ClientRectangle.Height <= DesktopHeight)
+				{
+					y = 0;
+					height = AdvancedSettings.SmartSizing ? ClientRectangle.Height : DesktopHeight;
+				}
+				else
+				{
+					y = (ClientRectangle.Height - DesktopHeight) / 2;
+					height = DesktopHeight;
+				}
+
+				if (ClientRectangle.Width <= DesktopWidth)
+				{
+					x = 0;
+					width = AdvancedSettings.SmartSizing ? ClientRectangle.Width : DesktopWidth;
+				}
+				else
+				{
+					x = (ClientRectangle.Width - DesktopWidth) / 2;
+					width = DesktopWidth;
+				}
+
+				if (rdpClientImpl.Location.X != x || rdpClientImpl.Location.Y != y)
+				{
+					rdpClientImpl.Location = new System.Drawing.Point(x, y);
+				}
+
+				if (initial || width != rdpClientImpl.Width || height != rdpClientImpl.Height)
+				{
+					rdpClientImpl.SetSize(width, height);
+				}
+
+				if (AdvancedSettings.SmartSizing)
+				{
+					if (AutoScroll)
+					{
+						this.AutoScroll = false;
+					}
+				}
+				else
+				{
+					if (!AutoScroll)
+					{
+						this.AutoScroll = true;
+					}
+
+					if (initial)
+					{
+						this.AutoScrollMinSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
+					}
+				}
+			}
+		}
+
+		public void SetSize(int width, int height)
+		{
+			this.Width = width;
+			this.Height = height;
+			AdjustSizeAndPosition(false);
 		}
 	}
 

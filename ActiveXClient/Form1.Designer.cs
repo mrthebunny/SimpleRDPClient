@@ -32,17 +32,14 @@
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageActiveX = new System.Windows.Forms.TabPage();
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-			this.rdpConnection = new AxMSTSCLib.AxMsRdpClient8NotSafeForScripting();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButtonConnect = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonDisconnect = new System.Windows.Forms.ToolStripButton();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tabPageActiveXWrapper = new System.Windows.Forms.TabPage();
 			this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
-			this.rdpClientFrame1 = new AwakeCoding.FreeRDPClient.RDPClientFrame();
 			this.tabPageFreeRDP = new System.Windows.Forms.TabPage();
 			this.toolStripContainer3 = new System.Windows.Forms.ToolStripContainer();
-			this.rdpClientFrame2 = new AwakeCoding.FreeRDPClient.RDPClientFrame();
 			this.toolStrip3 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButtonConnect3 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonDisconnect3 = new System.Windows.Forms.ToolStripButton();
@@ -75,13 +72,15 @@
 			this.toolStripButtonConnect4 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonDisconnect4 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.rdpConnection = new AxMSTSCLib.AxMsRdpClient8NotSafeForScripting();
 			this.rdpClientFrame3 = new AwakeCoding.FreeRDPClient.RDPClientFrame();
+			this.rdpClientFrame1 = new AwakeCoding.FreeRDPClient.RDPClientFrame();
+			this.rdpClientFrame2 = new AwakeCoding.FreeRDPClient.RDPClientFrame();
 			this.tabControl1.SuspendLayout();
 			this.tabPageActiveX.SuspendLayout();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.rdpConnection)).BeginInit();
 			this.toolStrip1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabPageActiveXWrapper.SuspendLayout();
@@ -99,6 +98,7 @@
 			this.toolStripContainer4.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer4.SuspendLayout();
 			this.toolStrip4.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.rdpConnection)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabControl1
@@ -148,19 +148,6 @@
 			// toolStripContainer1.TopToolStripPanel
 			// 
 			this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
-			// 
-			// rdpConnection
-			// 
-			this.rdpConnection.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.rdpConnection.Enabled = true;
-			this.rdpConnection.Location = new System.Drawing.Point(0, 0);
-			this.rdpConnection.Margin = new System.Windows.Forms.Padding(4);
-			this.rdpConnection.Name = "rdpConnection";
-			this.rdpConnection.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("rdpConnection.OcxState")));
-			this.rdpConnection.Size = new System.Drawing.Size(909, 529);
-			this.rdpConnection.TabIndex = 0;
-			this.rdpConnection.OnConnected += new System.EventHandler(this.rdpConnection_OnConnected);
-			this.rdpConnection.OnDisconnected += new AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler(this.rdpConnection_OnDisconnected);
 			// 
 			// toolStrip1
 			// 
@@ -234,19 +221,6 @@
 			// 
 			this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStrip2);
 			// 
-			// rdpClientFrame1
-			// 
-			this.rdpClientFrame1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.rdpClientFrame1.ClientVersion = AwakeCoding.Common.RDPClientVersion.MsRDPClient;
-			this.rdpClientFrame1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.rdpClientFrame1.Location = new System.Drawing.Point(0, 0);
-			this.rdpClientFrame1.Margin = new System.Windows.Forms.Padding(4);
-			this.rdpClientFrame1.Name = "rdpClientFrame1";
-			this.rdpClientFrame1.Size = new System.Drawing.Size(909, 529);
-			this.rdpClientFrame1.TabIndex = 0;
-			this.rdpClientFrame1.Connected += new System.EventHandler(this.rdpClientFrame_Connected);
-			this.rdpClientFrame1.Disconnected += new AwakeCoding.Common.DisconnectedEventHandler(this.rdpClientFrame_Disconnected);
-			// 
 			// tabPageFreeRDP
 			// 
 			this.tabPageFreeRDP.Controls.Add(this.toolStripContainer3);
@@ -278,19 +252,6 @@
 			// toolStripContainer3.TopToolStripPanel
 			// 
 			this.toolStripContainer3.TopToolStripPanel.Controls.Add(this.toolStrip3);
-			// 
-			// rdpClientFrame2
-			// 
-			this.rdpClientFrame2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.rdpClientFrame2.ClientVersion = AwakeCoding.Common.RDPClientVersion.FreeRDP;
-			this.rdpClientFrame2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.rdpClientFrame2.Location = new System.Drawing.Point(0, 0);
-			this.rdpClientFrame2.Margin = new System.Windows.Forms.Padding(4);
-			this.rdpClientFrame2.Name = "rdpClientFrame2";
-			this.rdpClientFrame2.Size = new System.Drawing.Size(909, 529);
-			this.rdpClientFrame2.TabIndex = 1;
-			this.rdpClientFrame2.Connected += new System.EventHandler(this.rdpClientFrame2_Connected);
-			this.rdpClientFrame2.Disconnected += new AwakeCoding.Common.DisconnectedEventHandler(this.rdpClientFrame2_Disconnected);
 			// 
 			// toolStrip3
 			// 
@@ -605,12 +566,12 @@
 			// 
 			// toolStrip4
 			// 
-			this.toolStrip4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.toolStrip4.Dock = System.Windows.Forms.DockStyle.None;
 			this.toolStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonConnect4,
             this.toolStripButtonDisconnect4,
             this.toolStripSeparator3});
-			this.toolStrip4.Location = new System.Drawing.Point(3, 0);
+			this.toolStrip4.Location = new System.Drawing.Point(6, 0);
 			this.toolStrip4.Name = "toolStrip4";
 			this.toolStrip4.Size = new System.Drawing.Size(203, 27);
 			this.toolStrip4.TabIndex = 4;
@@ -638,8 +599,22 @@
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
 			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 27);
 			// 
+			// rdpConnection
+			// 
+			this.rdpConnection.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.rdpConnection.Enabled = true;
+			this.rdpConnection.Location = new System.Drawing.Point(0, 0);
+			this.rdpConnection.Margin = new System.Windows.Forms.Padding(4);
+			this.rdpConnection.Name = "rdpConnection";
+			this.rdpConnection.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("rdpConnection.OcxState")));
+			this.rdpConnection.Size = new System.Drawing.Size(909, 529);
+			this.rdpConnection.TabIndex = 0;
+			this.rdpConnection.OnConnected += new System.EventHandler(this.rdpConnection_OnConnected);
+			this.rdpConnection.OnDisconnected += new AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler(this.rdpConnection_OnDisconnected);
+			// 
 			// rdpClientFrame3
 			// 
+			this.rdpClientFrame3.AutoScroll = true;
 			this.rdpClientFrame3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.rdpClientFrame3.ClientVersion = AwakeCoding.Common.RDPClientVersion.Stub;
 			this.rdpClientFrame3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -648,6 +623,36 @@
 			this.rdpClientFrame3.Name = "rdpClientFrame3";
 			this.rdpClientFrame3.Size = new System.Drawing.Size(911, 531);
 			this.rdpClientFrame3.TabIndex = 2;
+			this.rdpClientFrame3.Connected += new System.EventHandler(this.rdpClientFrame3_Connected);
+			this.rdpClientFrame3.Disconnected += new AwakeCoding.Common.DisconnectedEventHandler(this.rdpClientFrame3_Disconnected);
+			// 
+			// rdpClientFrame1
+			// 
+			this.rdpClientFrame1.AutoScroll = true;
+			this.rdpClientFrame1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.rdpClientFrame1.ClientVersion = AwakeCoding.Common.RDPClientVersion.MsRDPClient;
+			this.rdpClientFrame1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.rdpClientFrame1.Location = new System.Drawing.Point(0, 0);
+			this.rdpClientFrame1.Margin = new System.Windows.Forms.Padding(4);
+			this.rdpClientFrame1.Name = "rdpClientFrame1";
+			this.rdpClientFrame1.Size = new System.Drawing.Size(909, 529);
+			this.rdpClientFrame1.TabIndex = 0;
+			this.rdpClientFrame1.Connected += new System.EventHandler(this.rdpClientFrame_Connected);
+			this.rdpClientFrame1.Disconnected += new AwakeCoding.Common.DisconnectedEventHandler(this.rdpClientFrame_Disconnected);
+			// 
+			// rdpClientFrame2
+			// 
+			this.rdpClientFrame2.AutoScroll = true;
+			this.rdpClientFrame2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.rdpClientFrame2.ClientVersion = AwakeCoding.Common.RDPClientVersion.FreeRDP;
+			this.rdpClientFrame2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.rdpClientFrame2.Location = new System.Drawing.Point(0, 0);
+			this.rdpClientFrame2.Margin = new System.Windows.Forms.Padding(4);
+			this.rdpClientFrame2.Name = "rdpClientFrame2";
+			this.rdpClientFrame2.Size = new System.Drawing.Size(909, 529);
+			this.rdpClientFrame2.TabIndex = 1;
+			this.rdpClientFrame2.Connected += new System.EventHandler(this.rdpClientFrame2_Connected);
+			this.rdpClientFrame2.Disconnected += new AwakeCoding.Common.DisconnectedEventHandler(this.rdpClientFrame2_Disconnected);
 			// 
 			// Form1
 			// 
@@ -666,7 +671,6 @@
 			this.toolStripContainer1.TopToolStripPanel.PerformLayout();
 			this.toolStripContainer1.ResumeLayout(false);
 			this.toolStripContainer1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.rdpConnection)).EndInit();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
 			this.tabPage1.ResumeLayout(false);
@@ -695,6 +699,7 @@
 			this.toolStripContainer4.PerformLayout();
 			this.toolStrip4.ResumeLayout(false);
 			this.toolStrip4.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.rdpConnection)).EndInit();
 			this.ResumeLayout(false);
 
         }

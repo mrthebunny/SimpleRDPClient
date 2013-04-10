@@ -27,6 +27,8 @@ namespace AwakeCoding.FreeRDPClient
 {
 	public class AdvancedSettingsStub : IAdvancedSettings
 	{
+		public event SettingsChangedEventHandler SettingsChanged;
+
 		public int AcceleratorPassthrough
 		{
 			get;
@@ -598,10 +600,21 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
+		private bool smartSizing;
 		public bool SmartSizing
 		{
-			get;
-			set;
+			get
+			{
+				return smartSizing;
+			}
+			set
+			{
+				smartSizing = value;
+				if (SettingsChanged != null)
+				{
+					SettingsChanged(this, new SettingsChangedEventArgs() {  PropertyName = "SmartSizing" });
+				}
+			}
 		}
 
 		public int SmoothScroll

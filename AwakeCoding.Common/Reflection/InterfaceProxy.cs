@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+using AwakeCoding.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,6 +37,8 @@ namespace AwakeCoding.Reflection
 	/// <typeparam name="T"></typeparam>
 	public class InterfaceProxy<T> : RealProxy
 	{
+		public event SettingsChangedEventHandler SettingsChanged;
+
 		public InterfaceProxy()
 			: base(typeof(T))
 		{
@@ -52,18 +55,19 @@ namespace AwakeCoding.Reflection
 		}
 
 		[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
-		[DebuggerStepThrough]
+		// [DebuggerStepThrough]
 		public override IMessage Invoke(IMessage msg)
 		{
 			Debug.Assert(msg != null, "No message has been provided");
 
+			string methodName = "";
 			ReturnMessage responseMessage;
 			Object response = null;
 			Exception caughtException = null;
 
 			try
 			{
-				String methodName = (String)msg.Properties["__MethodName"];
+				methodName = (string)msg.Properties["__MethodName"];
 				Type[] parameterTypes = (Type[])msg.Properties["__MethodSignature"];
 
 				MethodBase method = typeof(T).GetMethod(methodName, parameterTypes);
@@ -119,6 +123,15 @@ namespace AwakeCoding.Reflection
 			// Check if there is an exception
 			if (caughtException == null)
 			{
+				// Trigger the event
+				if (methodName.StartsWith("set_"))
+				{
+					if (SettingsChanged != null)
+					{
+						SettingsChanged(this, new SettingsChangedEventArgs { PropertyName = methodName.Substring(4) });
+					}
+				}
+
 				// Return the response from the service
 				responseMessage = new ReturnMessage(response, null, 0, null, message);
 			}
