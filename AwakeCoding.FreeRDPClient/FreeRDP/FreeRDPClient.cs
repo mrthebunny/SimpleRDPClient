@@ -44,7 +44,7 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			if (!staticInitialized)
 			{
-				NativeMethods.wf_global_init();
+				NativeMethods.freerdp_client_global_init();
 				staticInitialized = true;
 				AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
 			}
@@ -52,7 +52,7 @@ namespace AwakeCoding.FreeRDPClient
 
 		static void CurrentDomain_ProcessExit(object sender, EventArgs e)
 		{
-			NativeMethods.wf_global_uninit();
+			NativeMethods.freerdp_client_global_uninit();
 		}
 
 		public FreeRDPClient()
@@ -97,7 +97,7 @@ namespace AwakeCoding.FreeRDPClient
 			base.OnEnter(e);
 			if (wfi != IntPtr.Zero)
 			{
-				NativeMethods.wf_set_focus(wfi);
+				NativeMethods.freerdp_client_set_focus(wfi);
 			}
 		}
 
@@ -106,7 +106,7 @@ namespace AwakeCoding.FreeRDPClient
 			base.OnLeave(e);
 			if (wfi != IntPtr.Zero)
 			{
-				NativeMethods.wf_kill_focus(wfi);
+				NativeMethods.freerdp_client_kill_focus(wfi);
 			}
 		}
 
@@ -114,7 +114,7 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			if (this.Focused && wfi != IntPtr.Zero)
 			{
-				NativeMethods.wf_set_focus(wfi);
+				NativeMethods.freerdp_client_set_focus(wfi);
 			}
 		}
 
@@ -122,7 +122,7 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			if (this.Focused && wfi != IntPtr.Zero)
 			{
-				NativeMethods.wf_kill_focus(wfi);
+				NativeMethods.freerdp_client_kill_focus(wfi);
 			}
 		}
 
@@ -134,7 +134,7 @@ namespace AwakeCoding.FreeRDPClient
 				{
 					if (IsConnected)
 					{
-						NativeMethods.wf_set_setting(wfi, 0, AdvancedSettings.SmartSizing ? 1 : 0);
+						NativeMethods.freerdp_client_set_param(wfi, 0, AdvancedSettings.SmartSizing ? 1 : 0);
 					}
 				}
 
@@ -146,7 +146,7 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			if (wfi != IntPtr.Zero)
 			{
-				NativeMethods.wf_free(wfi);
+				NativeMethods.freerdp_client_free(wfi);
 				wfi = IntPtr.Zero;
 			}
 		}
@@ -241,7 +241,7 @@ namespace AwakeCoding.FreeRDPClient
 			System.Diagnostics.Debug.WriteLine(cmdline.ToString());
 
 			FreeWfi();
-			wfi = NativeMethods.wf_new(IntPtr.Zero, /*parent.Handle*/ Handle, argv.Length, argv);
+			wfi = NativeMethods.freerdp_client_new(Handle, argv.Length, argv);
 
 
 			Control current = Parent;
@@ -263,7 +263,7 @@ namespace AwakeCoding.FreeRDPClient
 			}
 
 
-			NativeMethods.wf_start(wfi);
+			NativeMethods.freerdp_client_start(wfi);
 			Visible = true;
 			IsConnected = true;
 
@@ -338,7 +338,7 @@ namespace AwakeCoding.FreeRDPClient
 			}
 
 			Visible = false;
-			NativeMethods.wf_stop(wfi);
+			NativeMethods.freerdp_client_stop(wfi);
 
 			IsConnected = false;
 			if (Disconnected != null)
@@ -423,7 +423,7 @@ namespace AwakeCoding.FreeRDPClient
 		// Temporary - test method
 		internal void ForceSize(int width, int height)
 		{
-			NativeMethods.wf_set_window_size(wfi, width, height);
+			NativeMethods.freerdp_client_set_window_size(wfi, width, height);
 		}
 
 		public void SetSize(int width, int height)
@@ -437,7 +437,7 @@ namespace AwakeCoding.FreeRDPClient
 				internalWidth = Width;
 				if (IsConnected)
 				{
-					NativeMethods.wf_set_window_size(wfi, ClientRectangle.Width, ClientRectangle.Height);
+					NativeMethods.freerdp_client_set_window_size(wfi, ClientRectangle.Width, ClientRectangle.Height);
 				}
 			}
 		}

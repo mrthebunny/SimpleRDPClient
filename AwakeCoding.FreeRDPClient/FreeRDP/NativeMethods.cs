@@ -26,33 +26,33 @@ namespace AwakeCoding.FreeRDPClient
 	public partial class NativeMethods
 	{
 		[DllImport("libwfreerdp-client")]
-		public static extern int wf_global_init();
+		public static extern int freerdp_client_global_init();
 
 		[DllImport("libwfreerdp-client")]
-		public static extern int wf_global_uninit();
+		public static extern int freerdp_client_global_uninit();
 
 		[DllImport("libwfreerdp-client")]
-		public static extern int wf_start(IntPtr wfi);
+		public static extern int freerdp_client_start(IntPtr wfi);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern int wf_stop(IntPtr wfi);
+		public static extern int freerdp_client_stop(IntPtr wfi);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern IntPtr wf_new(IntPtr hInstance, IntPtr hWndParent, int argc, string[] argv);
+		public static extern IntPtr freerdp_client_new(IntPtr hWndParent, int argc, string[] argv);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern int wf_free(IntPtr wfi);
+		public static extern int freerdp_client_free(IntPtr wfi);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern int wf_set_window_size(IntPtr wfi, int width, int height);
+		public static extern int freerdp_client_set_window_size(IntPtr wfi, int width, int height);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern int wf_set_setting(IntPtr wfi, int key, int value);
+		public static extern int freerdp_client_set_param(IntPtr wfi, int key, int value);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern void wf_set_focus(IntPtr wfi);
+		public static extern void freerdp_client_set_focus(IntPtr wfi);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern void wf_kill_focus(IntPtr wfi);
+		public static extern void freerdp_client_kill_focus(IntPtr wfi);
 	}
 }
