@@ -108,6 +108,10 @@ namespace AwakeCoding.MsRdpClient
 			transportSettingsProxy.TargetType = typeof(IMsRdpClientTransportSettings2);
 			TransportSettings = transportSettingsProxy.GetStrongTypedProxy();
 
+			host.Width = host.Parent.ClientRectangle.Width;
+			host.Height = host.Parent.ClientRectangle.Height;
+			host.Dock = DockStyle.Fill;
+
 			host.Visible = false;
 		}
 
@@ -154,10 +158,6 @@ namespace AwakeCoding.MsRdpClient
 		public void Attach(Control parent)
 		{
 			parent.Controls.Add((Control)client);
-
-			((Control)client).Width = parent.ClientRectangle.Width;
-			((Control)client).Height = parent.ClientRectangle.Height;
-			((Control)client).Dock = DockStyle.Fill;
 		}
 
 		private void RegisterEvents()
