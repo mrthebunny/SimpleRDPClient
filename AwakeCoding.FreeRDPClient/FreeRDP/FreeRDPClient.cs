@@ -30,15 +30,14 @@ namespace AwakeCoding.FreeRDPClient
 {
 	public class FreeRDPClient : Panel, IRDPClient
 	{
-		private Container components = new Container();
-		private Timer resizeTimer;
-		private IntPtr wfi = IntPtr.Zero;
 		private static bool staticInitialized = false;
+
+		private Container components = new Container();
+		private IntPtr wfi = IntPtr.Zero;
+		private FreeRDPSettings freeRDPsettings;
 
 		private int internalHeight = 0;
 		private int internalWidth = 0;
-
-		private bool smartSizing;
 
 		private static void GlobalInit()
 		{
@@ -97,7 +96,7 @@ namespace AwakeCoding.FreeRDPClient
 			base.OnEnter(e);
 			if (wfi != IntPtr.Zero)
 			{
-				NativeMethods.freerdp_client_set_focus(wfi);
+				NativeMethods.freerdp_client_focus_in(wfi);
 			}
 		}
 
@@ -106,7 +105,7 @@ namespace AwakeCoding.FreeRDPClient
 			base.OnLeave(e);
 			if (wfi != IntPtr.Zero)
 			{
-				NativeMethods.freerdp_client_kill_focus(wfi);
+				NativeMethods.freerdp_client_focus_out(wfi);
 			}
 		}
 
@@ -114,7 +113,7 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			if (this.Focused && wfi != IntPtr.Zero)
 			{
-				NativeMethods.freerdp_client_set_focus(wfi);
+				NativeMethods.freerdp_client_focus_in(wfi);
 			}
 		}
 
@@ -122,7 +121,7 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			if (this.Focused && wfi != IntPtr.Zero)
 			{
-				NativeMethods.freerdp_client_kill_focus(wfi);
+				NativeMethods.freerdp_client_focus_out(wfi);
 			}
 		}
 
@@ -241,8 +240,13 @@ namespace AwakeCoding.FreeRDPClient
 			System.Diagnostics.Debug.WriteLine(cmdline.ToString());
 
 			FreeWfi();
-			wfi = NativeMethods.freerdp_client_new(Handle, argv.Length, argv);
+			wfi = NativeMethods.freerdp_client_new(argv.Length, argv);
+			freeRDPsettings = new FreeRDPSettings(wfi);
 
+			// TODO: 
+			// set_param hwndParent
+
+			freeRDPsettings.ParentWindowId = (ulong) Parent.Handle.ToInt64();
 
 			Control current = Parent;
 			Form parentForm = null;

@@ -80,6 +80,7 @@
     <Compile Include="FreeRDP\FreeRDPClient.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="FreeRDP\FreeRDPSettings.cs" />
     <Compile Include="FreeRDP\NativeMethods.cs" />
     <Compile Include="FreeRDP\WindowMessages.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -111,6 +112,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FreeRDP\settings.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FreeRDP\settings.pl" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

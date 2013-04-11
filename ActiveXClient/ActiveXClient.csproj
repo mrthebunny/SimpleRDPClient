@@ -135,8 +135,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-xcopy /Y /D  "$(ProjectDir)\..\..\FreeRDP\$(ConfigurationName)\*.*" "$(TargetDir)"
+    <PostBuildEvent>xcopy /Y /D  C:\OpenSSL-Win32\bin\*.dll "$(TargetDir)"
+xcopy /Y /D  "$(ProjectDir)\..\..\FreeRDP\Build\$(ConfigurationName)\*.dll" "$(TargetDir)"
 
 copy /y "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\$(ConfigurationName)\AxInterop.MSTSCLib.dll" "$(TargetDir)"
 

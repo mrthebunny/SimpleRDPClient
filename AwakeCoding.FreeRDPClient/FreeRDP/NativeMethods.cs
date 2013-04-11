@@ -38,7 +38,7 @@ namespace AwakeCoding.FreeRDPClient
 		public static extern int freerdp_client_stop(IntPtr wfi);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern IntPtr freerdp_client_new(IntPtr hWndParent, int argc, string[] argv);
+		public static extern IntPtr freerdp_client_new(int argc, string[] argv);
 
 		[DllImport("libwfreerdp-client")]
 		public static extern int freerdp_client_free(IntPtr wfi);
@@ -50,9 +50,37 @@ namespace AwakeCoding.FreeRDPClient
 		public static extern int freerdp_client_set_param(IntPtr wfi, int key, int value);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern void freerdp_client_set_focus(IntPtr wfi);
+		public static extern void freerdp_client_focus_in(IntPtr wfi);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern void freerdp_client_kill_focus(IntPtr wfi);
+		public static extern void freerdp_client_focus_out(IntPtr wfi);
+
+		[DllImport("libwfreerdp-client")]
+		public static extern IntPtr freerdp_client_get_settings(IntPtr wfi);
+
+		[DllImport("libwfreerdp-client")]
+		public static extern bool freerdp_get_param_bool(IntPtr settings, int id);
+
+		[DllImport("libwfreerdp-client")]
+		public static extern int freerdp_set_param_bool(IntPtr settings, int id, bool param);
+
+		[DllImport("libwfreerdp-client")]
+		public static extern uint freerdp_get_param_uint32(IntPtr settings, int id);
+		
+		[DllImport("libwfreerdp-client")]
+		public static extern int freerdp_set_param_uint32(IntPtr settings, int id, uint param);
+
+		[DllImport("libwfreerdp-client")]
+		public static extern ulong freerdp_get_param_uint64(IntPtr settings, int id);
+
+		[DllImport("libwfreerdp-client")]
+		public static extern int freerdp_set_param_uint64(IntPtr settings, int id, ulong param);
+
+		[DllImport("libwfreerdp-client")]
+		public static extern string freerdp_get_param_string(IntPtr settings, int id);
+		
+		[DllImport("libwfreerdp-client")]
+		public static extern int freerdp_set_param_string(IntPtr settings, int id, string param);
+
 	}
 }
