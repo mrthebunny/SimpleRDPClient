@@ -27,9 +27,14 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 {
 	public class FreeRDPAdvancedSettings : IAdvancedSettings
 	{
-		private bool smartSizing = false;
+		private FreeRDPSettings settings;
 
 		public event SettingsChangedEventHandler SettingsChanged;
+
+		public FreeRDPAdvancedSettings(FreeRDPSettings settings)
+		{
+			this.settings = settings;
+		}
 
 		public int AcceleratorPassthrough
 		{
@@ -1090,18 +1095,15 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return smartSizing;
+				return settings.SmartSizing;
 			}
 			set
 			{
-				if (smartSizing != value)
-				{
-					smartSizing = value;
+				settings.SmartSizing = value;
 
-					if (SettingsChanged != null)
-					{
-						SettingsChanged(this, new SettingsChangedEventArgs() { PropertyName = "SmartSizing" });
-					}
+				if (SettingsChanged != null)
+				{
+					SettingsChanged(this, new SettingsChangedEventArgs() { PropertyName = "SmartSizing" });
 				}
 			}
 		}

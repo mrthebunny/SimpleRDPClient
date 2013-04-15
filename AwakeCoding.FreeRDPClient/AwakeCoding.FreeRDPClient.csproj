@@ -80,7 +80,9 @@
     <Compile Include="FreeRDP\FreeRDPClient.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="FreeRDP\FreeRDPSecuredSettings.cs" />
     <Compile Include="FreeRDP\FreeRDPSettings.cs" />
+    <Compile Include="FreeRDP\FreeRDPTransportSettings.cs" />
     <Compile Include="FreeRDP\NativeMethods.cs" />
     <Compile Include="FreeRDP\WindowMessages.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

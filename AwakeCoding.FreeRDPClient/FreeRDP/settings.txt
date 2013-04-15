@@ -18,8 +18,8 @@
  * limitations under the License.
  */
 
-#ifndef FREERDP_SETTINGS_H
-#define FREERDP_SETTINGS_H
+#ifndef freerdp_client_setTINGS_H
+#define freerdp_client_setTINGS_H
 
 #include <freerdp/api.h>
 #include <freerdp/types.h>
@@ -1274,8 +1274,8 @@ typedef struct rdp_settings rdpSettings;
 extern "C" {
 #endif
 
-FREERDP_API rdpSettings* freerdp_settings_new(void* instance);
-FREERDP_API void freerdp_settings_free(rdpSettings* settings);
+FREERDP_API rdpSettings* freerdp_client_settings_new(void* instance);
+FREERDP_API void freerdp_client_settings_free(rdpSettings* settings);
 
 FREERDP_API int freerdp_addin_set_argument(ADDIN_ARGV* args, char* argument);
 FREERDP_API int freerdp_addin_replace_argument(ADDIN_ARGV* args, char* previous, char* argument);
@@ -1294,20 +1294,20 @@ FREERDP_API void freerdp_dynamic_channel_collection_add(rdpSettings* settings, A
 FREERDP_API ADDIN_ARGV* freerdp_dynamic_channel_collection_find(rdpSettings* settings, const char* name);
 FREERDP_API void freerdp_dynamic_channel_collection_free(rdpSettings* settings);
 
-FREERDP_API BOOL freerdp_get_param_bool(rdpSettings* settings, int id);
-FREERDP_API int freerdp_set_param_bool(rdpSettings* settings, int id, BOOL param);
+FREERDP_API BOOL freerdp_client_get_param_bool(rdpSettings* settings, int id);
+FREERDP_API int freerdp_client_set_param_bool(rdpSettings* settings, int id, BOOL param);
 
-FREERDP_API UINT32 freerdp_get_param_uint32(rdpSettings* settings, int id);
-FREERDP_API int freerdp_set_param_uint32(rdpSettings* settings, int id, UINT32 param);
+FREERDP_API UINT32 freerdp_client_get_param_uint32(rdpSettings* settings, int id);
+FREERDP_API int freerdp_client_set_param_uint32(rdpSettings* settings, int id, UINT32 param);
 
-FREERDP_API UINT64 freerdp_get_param_uint64(rdpSettings* settings, int id);
-FREERDP_API int freerdp_set_param_uint64(rdpSettings* settings, int id, UINT64 param);
+FREERDP_API UINT64 freerdp_client_get_param_uint64(rdpSettings* settings, int id);
+FREERDP_API int freerdp_client_set_param_uint64(rdpSettings* settings, int id, UINT64 param);
 
-FREERDP_API char* freerdp_get_param_string(rdpSettings* settings, int id);
-FREERDP_API int freerdp_set_param_string(rdpSettings* settings, int id, char* param);
+FREERDP_API char* freerdp_client_get_param_string(rdpSettings* settings, int id);
+FREERDP_API int freerdp_client_set_param_string(rdpSettings* settings, int id, char* param);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* FREERDP_SETTINGS_H */
+#endif /* freerdp_client_setTINGS_H */

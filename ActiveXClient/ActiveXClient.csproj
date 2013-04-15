@@ -136,13 +136,15 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y /D  C:\OpenSSL-Win32\bin\*.dll "$(TargetDir)"
-xcopy /Y /D  "$(ProjectDir)\..\..\FreeRDP\Build\$(ConfigurationName)\*.dll" "$(TargetDir)"
 
-copy /y "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\$(ConfigurationName)\AxInterop.MSTSCLib.dll" "$(TargetDir)"
+xcopy /Y /D  "$(ProjectDir)\..\..\FreeRDP\build\$(ConfigurationName)\*.dll" "$(TargetDir)"
+xcopy /Y /D  "$(ProjectDir)\..\..\FreeRDP\build\$(ConfigurationName)\*.pdb" "$(TargetDir)"
 
-copy /y "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\$(ConfigurationName)\Interop.MSTSCLib.dll" "$(TargetDir)"
+xcopy /Y /D  "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\$(ConfigurationName)\AxInterop.MSTSCLib.dll" "$(TargetDir)"
 
-copy /y "$(ProjectDir)\..\AwakeCoding.MsRdpClient\$(OutDir)AwakeCoding.MsRdpClient.*" "$(TargetDir)"</PostBuildEvent>
+xcopy /Y /D  "$(ProjectDir)\..\AwakeCoding.MsRdpClient\bin\$(ConfigurationName)\Interop.MSTSCLib.dll" "$(TargetDir)"
+
+xcopy /Y /D  "$(ProjectDir)\..\AwakeCoding.MsRdpClient\$(OutDir)AwakeCoding.MsRdpClient.*" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -72,7 +72,7 @@ namespace AwakeCoding.FreeRDPClient
 		protected override void OnResize(EventArgs eventargs)
 		{
 			base.OnResize(eventargs);
-			AdjustSizeAndPosition(false);
+			AdjustSizeAndPosition();
 		}
 
 		void RDPClientFrame_HandleCreated(object sender, EventArgs e)
@@ -126,7 +126,7 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			if (args.PropertyName == "SmartSizing")
 			{
-				AdjustSizeAndPosition(false);
+				AdjustSizeAndPosition();
 			}
 		}
 
@@ -273,8 +273,10 @@ namespace AwakeCoding.FreeRDPClient
 
 			rdpClientImpl.DesktopWidth = DesktopWidth;
 			rdpClientImpl.DesktopHeight = DesktopHeight;
+			this.AutoScrollMinSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
+
 			rdpClientImpl.Connect();
-			AdjustSizeAndPosition(true);
+			AdjustSizeAndPosition();
 		}
 
 		public void Disconnect()
@@ -458,7 +460,7 @@ namespace AwakeCoding.FreeRDPClient
 		// SmartSizing ON: Adjust client size to parent size, up to DesktopHeight*DesktopWidth.  
 		// 
 		// if PARENT size is greater than DesktopHeight*DesktopWidth, center panel in parent container
-		private void AdjustSizeAndPosition(bool initial)
+		private void AdjustSizeAndPosition()
 		{
 			if (rdpClientImpl != null && !rdpClientImpl.HandleSizingInternally)
 			{
@@ -494,30 +496,13 @@ namespace AwakeCoding.FreeRDPClient
 					rdpClientImpl.Location = new System.Drawing.Point(x, y);
 				}
 
-				if (initial || width != rdpClientImpl.Width || height != rdpClientImpl.Height)
+				// Resize internal component
+				if (width != rdpClientImpl.Width || height != rdpClientImpl.Height)
 				{
 					rdpClientImpl.SetSize(width, height);
 				}
 
-				if (AdvancedSettings.SmartSizing)
-				{
-					if (AutoScroll)
-					{
-						this.AutoScroll = false;
-					}
-				}
-				else
-				{
-					if (!AutoScroll)
-					{
-						this.AutoScroll = true;
-					}
-
-					if (initial)
-					{
-						this.AutoScrollMinSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
-					}
-				}
+				AutoScroll = !AdvancedSettings.SmartSizing;
 			}
 		}
 
@@ -525,7 +510,7 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			this.Width = width;
 			this.Height = height;
-			AdjustSizeAndPosition(false);
+			AdjustSizeAndPosition();
 		}
 	}
 

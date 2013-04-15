@@ -13,7 +13,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See he License for the specific language governing permissions and
  * limitations under the License.
  */
 
@@ -59,28 +59,27 @@ namespace AwakeCoding.FreeRDPClient
 		public static extern IntPtr freerdp_client_get_settings(IntPtr wfi);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern bool freerdp_get_param_bool(IntPtr settings, int id);
+		public static extern bool freerdp_client_get_param_bool(IntPtr settings, int id);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern int freerdp_set_param_bool(IntPtr settings, int id, bool param);
+		public static extern int freerdp_client_set_param_bool(IntPtr settings, int id, bool param);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern uint freerdp_get_param_uint32(IntPtr settings, int id);
-		
-		[DllImport("libwfreerdp-client")]
-		public static extern int freerdp_set_param_uint32(IntPtr settings, int id, uint param);
+		public static extern uint freerdp_client_get_param_uint32(IntPtr settings, int id);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern ulong freerdp_get_param_uint64(IntPtr settings, int id);
+		public static extern int freerdp_client_set_param_uint32(IntPtr settings, int id, uint param);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern int freerdp_set_param_uint64(IntPtr settings, int id, ulong param);
+		public static extern ulong freerdp_client_get_param_uint64(IntPtr settings, int id);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern string freerdp_get_param_string(IntPtr settings, int id);
-		
-		[DllImport("libwfreerdp-client")]
-		public static extern int freerdp_set_param_string(IntPtr settings, int id, string param);
+		public static extern int freerdp_client_set_param_uint64(IntPtr settings, int id, ulong param);
 
+		[DllImport("libwfreerdp-client")]
+		public static extern string freerdp_client_get_param_string(IntPtr settings, int id);
+
+		[DllImport("libwfreerdp-client")]
+		public static extern int freerdp_client_set_param_string(IntPtr settings, int id, string param);
 	}
 }

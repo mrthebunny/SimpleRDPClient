@@ -58,17 +58,35 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			try
 			{
-				AdvancedSettings = new FreeRDPAdvancedSettings();
-				TransportSettings = new TransportSettingsStub();
-				SecuredSettings = new SecuredSettingsStub();
+				GlobalInit();
+
+				string[] argv = new string[] { System.IO.Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly().Location) };
+
+				StringBuilder cmdline = new StringBuilder();
+				for (int i = 0; i < argv.Length; i++)
+				{
+					cmdline.Append(argv[i] + " ");
+				}
+
+				System.Diagnostics.Debug.WriteLine(cmdline.ToString());
+
+				wfi = NativeMethods.freerdp_client_new(argv.Length, argv);
+				freeRDPsettings = new FreeRDPSettings(wfi);
+
+				AdvancedSettings = new FreeRDPAdvancedSettings(freeRDPsettings);
+				TransportSettings = new FreeRDPTransportSettings(freeRDPsettings);
+				SecuredSettings = new FreeRDPSecuredSettings(freeRDPsettings);
 
 				Visible = false;
 
 				((FreeRDPAdvancedSettings)AdvancedSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
+				((FreeRDPTransportSettings)TransportSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
+				((FreeRDPSecuredSettings)SecuredSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
 			}
 			catch (Exception ex)
 			{
 				System.Diagnostics.Debug.WriteLine("FreeRDPClient Error on ctor: " + ex.ToString());
+				throw;
 			}
 
 			this.SetStyle(ControlStyles.Selectable, true);
@@ -133,7 +151,7 @@ namespace AwakeCoding.FreeRDPClient
 				{
 					if (IsConnected)
 					{
-						NativeMethods.freerdp_client_set_param(wfi, 0, AdvancedSettings.SmartSizing ? 1 : 0);
+						NativeMethods.freerdp_client_set_window_size(wfi, ClientRectangle.Width, ClientRectangle.Height);
 					}
 				}
 
@@ -227,26 +245,7 @@ namespace AwakeCoding.FreeRDPClient
 
 		public void Connect()
 		{
-			GlobalInit();
-
-			string[] argv = GetCommandLine();
-
-			StringBuilder cmdline = new StringBuilder();
-			for (int i = 0; i < argv.Length; i++)
-			{
-				cmdline.Append(argv[i] + " ");
-			}
-
-			System.Diagnostics.Debug.WriteLine(cmdline.ToString());
-
-			FreeWfi();
-			wfi = NativeMethods.freerdp_client_new(argv.Length, argv);
-			freeRDPsettings = new FreeRDPSettings(wfi);
-
-			// TODO: 
-			// set_param hwndParent
-
-			freeRDPsettings.ParentWindowId = (ulong) Parent.Handle.ToInt64();
+			ApplySettings();
 
 			Control current = Parent;
 			Form parentForm = null;
@@ -279,48 +278,30 @@ namespace AwakeCoding.FreeRDPClient
 			Focus();
 		}
 
-		/// <summary>
-		/// Build the commandline array for FreeRDP with the current settings.
-		/// </summary>
-		/// <returns></returns>
-		private string[] GetCommandLine()
+		private void ApplySettings()
 		{
-			List<string> argv = new List<string>();
+			freeRDPsettings.ParentWindowId = (ulong)this.Handle.ToInt64();
+			freeRDPsettings.Domain = this.Domain;
+			freeRDPsettings.ServerHostname = this.Server;
+			freeRDPsettings.Username = this.UserName;
+			freeRDPsettings.Password = ((FreeRDPAdvancedSettings) this.AdvancedSettings).ClearTextPassword;
+			freeRDPsettings.DesktopHeight = (uint) DesktopHeight;
+			freeRDPsettings.DesktopWidth = (uint) DesktopWidth;
+			freeRDPsettings.Decorations = false;
+			freeRDPsettings.IgnoreCertificate = true;
+			freeRDPsettings.SmartSizing = AdvancedSettings.SmartSizing;
 
-			// Mandatory arguments
-			argv.Add("SimpleClient.exe");
-			argv.Add("-decorations");
-			argv.Add("/cert-ignore");
-			argv.Add("/h:" + DesktopHeight);
-			argv.Add("/w:" + DesktopWidth);
-
-			if (AdvancedSettings.SmartSizing)
-			{ argv.Add("+smart-sizing"); }
-
-			if (!String.IsNullOrEmpty(Domain))
-			{ argv.Add("/d:" + Domain); }
-
-			if (!String.IsNullOrEmpty(Server))
-			{ argv.Add("/v:" + Server); }
-
-			if (!String.IsNullOrEmpty(UserName))
-			{ argv.Add("/u:" + UserName); }
+			if (AdvancedSettings.RDPPort > 0)
+			{
+				freeRDPsettings.ServerPort = (uint) AdvancedSettings.RDPPort;
+			}
 
 			if (ColorDepth > 0)
-			{ argv.Add("/bpp:" + ColorDepth); }
+			{
+				freeRDPsettings.ColorDepth = (uint) ColorDepth;
+			}
 
-			// Secured settings
-
-			// Advanced settings
-			FreeRDPAdvancedSettings advanced = (FreeRDPAdvancedSettings)AdvancedSettings;
-
-			if (!String.IsNullOrEmpty(advanced.ClearTextPassword))
-			{ argv.Add("/p:" + advanced.ClearTextPassword); }
-
-			if (advanced.RDPPort > 0)
-			{ argv.Add("/port:" + AdvancedSettings.RDPPort); }
-
-			return argv.ToArray();
+			// gateway ?
 		}
 
 		public void Disconnect()
