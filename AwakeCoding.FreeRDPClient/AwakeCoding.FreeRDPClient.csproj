@@ -116,10 +116,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="FreeRDP\settings.txt" />
+    <None Include="FreeRDP\settings.pl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FreeRDP\settings.pl" />
+    <Content Include="FreeRDP\settings.h" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

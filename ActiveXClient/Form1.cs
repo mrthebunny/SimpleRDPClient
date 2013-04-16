@@ -39,6 +39,7 @@ namespace ActiveXClient
 		private int port = 0;
 		private int bpp = 0;
 		private bool smartSizing = false;
+		private int backgroundInput = 0;
 
 		public Form1()
 		{
@@ -75,13 +76,9 @@ namespace ActiveXClient
 				}
 
 				settings.TryGetValue("domain", out domain);
-				settings.TryGetValue("domain", out domain);
-				settings.TryGetValue("domain", out domain);
-				server = settings["server"];
-				userName = settings["username"];
-				clearTextPassword = settings["password"];
-				settings.TryGetValue("domain", out domain);
-
+				settings.TryGetValue("server", out server);
+				settings.TryGetValue("username", out userName);
+				settings.TryGetValue("password", out clearTextPassword);
 
 				txtDomain.Text = domain;
 				txtPassword.Text = clearTextPassword;
@@ -89,6 +86,7 @@ namespace ActiveXClient
 				txtServer.Text = server;
 				txtUsername.Text = userName;
 				cxSmartSize.Checked = smartSizing;
+				cxBackgroundInput.Checked = backgroundInput == 0 ? false : true;
 			}
 		}
 
@@ -106,8 +104,9 @@ namespace ActiveXClient
 				rdpConnection.ColorDepth = bpp;
 			}
 
-			rdpConnection.AdvancedSettings9.ClearTextPassword = clearTextPassword;
-			rdpConnection.AdvancedSettings9.SmartSizing = smartSizing;
+			rdpConnection.AdvancedSettings2.ClearTextPassword = clearTextPassword;
+			rdpConnection.AdvancedSettings2.SmartSizing = smartSizing;
+			rdpConnection.AdvancedSettings.allowBackgroundInput = backgroundInput;
 			rdpConnection.Connect();
 		}
 
@@ -117,10 +116,18 @@ namespace ActiveXClient
 			//rdpClientFrame.DesktopWidth = rdpClientFrame.Width;
 			//rdpClientFrame.DesktopHeight = rdpClientFrame.Height;
 
-			rdpClientFrame.Server = server;
-			rdpClientFrame.UserName = userName;
-			rdpClientFrame.Domain = domain;
-			rdpClientFrame.AdvancedSettings.ClearTextPassword = clearTextPassword;
+			if (!String.IsNullOrEmpty(server))
+				rdpClientFrame.Server = server;
+
+			if (!String.IsNullOrEmpty(userName))
+				rdpClientFrame.UserName = userName;
+
+			if (!String.IsNullOrEmpty(domain))
+				rdpClientFrame.Domain = domain;
+
+			if (!String.IsNullOrEmpty(clearTextPassword))
+				rdpClientFrame.AdvancedSettings.ClearTextPassword = clearTextPassword;
+
 			rdpClientFrame.AdvancedSettings.SmartSizing = smartSizing;
 
 			if (bpp > 0)
@@ -291,6 +298,32 @@ namespace ActiveXClient
 				rdpClientFrame3.AdvancedSettings.SmartSizing = smartSizing;
 			}
 		}
+
+		private void cxBackgroundInput_CheckedChanged(object sender, EventArgs e)
+		{
+			backgroundInput = cxBackgroundInput.Checked ? 1 : 0;
+
+			//if (rdpConnection.Connected != 0)
+			//{
+			//	rdpConnection.AdvancedSettings.allowBackgroundInput = backgroundInput;
+			//}
+
+			//if (rdpClientFrame1.IsConnected)
+			//{
+			//	rdpClientFrame1.AdvancedSettings.allowBackgroundInput = backgroundInput;
+			//}
+
+			//if (rdpClientFrame2.IsConnected)
+			//{
+			//	rdpClientFrame2.AdvancedSettings.allowBackgroundInput = backgroundInput;
+			//}
+
+			//if (rdpClientFrame3.IsConnected)
+			//{
+			//	rdpClientFrame3.AdvancedSettings.allowBackgroundInput = backgroundInput;
+			//}
+		}
+
 
 		private void btForceSize_Click(object sender, EventArgs e)
 		{

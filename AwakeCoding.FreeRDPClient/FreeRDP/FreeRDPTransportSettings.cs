@@ -41,11 +41,13 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			get
 			{
-				throw new NotImplementedException();
+				// TODO: convert value
+				return settings.GatewayCredentialsSource;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				// TODO: convert value
+				settings.GatewayCredentialsSource = value;
 			}
 		}
 
@@ -53,11 +55,12 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.GatewayUsageMethod ?
+					RDPConstants.TSC_PROXY_PROFILE_MODE_EXPLICIT : RDPConstants.TSC_PROXY_PROFILE_MODE_EXPLICIT;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.GatewayUsageMethod = (value == RDPConstants.TSC_PROXY_PROFILE_MODE_EXPLICIT) ? true : false;
 			}
 		}
 
@@ -65,11 +68,11 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.GatewayHostname;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.GatewayHostname = value;
 			}
 		}
 
@@ -77,11 +80,12 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.GatewayUsername;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.GatewayUsername = value;
+				// TODO: set GatewayUsageMethod (in backend)
 			}
 		}
 
@@ -89,28 +93,48 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.GatewayDomain;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.GatewayDomain = value;
 			}
 		}
 
 		public string GatewayPassword
 		{
-			set { throw new NotImplementedException(); }
+			get
+			{
+				return settings.GatewayPassword;
+			}
+			set 
+			{
+				settings.GatewayPassword = value;
+			}
 		}
 
 		public uint GatewayUsageMethod
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.GatewayUsageMethod ? 
+					RDPConstants.TSC_PROXY_MODE_DIRECT : RDPConstants.TSC_PROXY_PROFILE_MODE_DEFAULT;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				// TODO: Validate if correct values
+				switch (value)
+				{
+					case RDPConstants.TSC_PROXY_MODE_NONE_DIRECT:
+					case RDPConstants.TSC_PROXY_MODE_DIRECT:
+					case RDPConstants.TSC_PROXY_MODE_DEFAULT:
+						settings.GatewayUsageMethod = false;
+						break;
+					case RDPConstants.TSC_PROXY_MODE_DETECT:
+					case RDPConstants.TSC_PROXY_MODE_NONE_DETECT:
+						settings.GatewayUsageMethod = true; 
+						break;
+				}
 			}
 		}
 
@@ -118,17 +142,18 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.GatewayUseSameCredentials ? 1U : 0U;
+
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.GatewayUseSameCredentials = (value == 1U ? true : false);
 			}
 		}
 
 		public uint GatewayDefaultUsageMethod
 		{
-			get { throw new NotImplementedException(); }
+			get { return RDPConstants.TSC_PROXY_MODE_DETECT; }
 		}
 
 		public string GatewayEncryptedOtpCookie

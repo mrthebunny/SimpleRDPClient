@@ -29,6 +29,14 @@ namespace AwakeCoding.FreeRDPClient
 	{
 		public event SettingsChangedEventHandler SettingsChanged;
 
+		protected virtual void OnSettingsChanged(string propertyName)
+		{
+			if (SettingsChanged != null)
+			{
+				SettingsChanged(this, new SettingsChangedEventArgs() { PropertyName = propertyName });
+			}
+		}
+
 		public int AcceleratorPassthrough
 		{
 			get;
@@ -610,10 +618,7 @@ namespace AwakeCoding.FreeRDPClient
 			set
 			{
 				smartSizing = value;
-				if (SettingsChanged != null)
-				{
-					SettingsChanged(this, new SettingsChangedEventArgs() {  PropertyName = "SmartSizing" });
-				}
+				OnSettingsChanged("SmartSizing");
 			}
 		}
 

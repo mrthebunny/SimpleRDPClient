@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ClientSpecs.cs" />
+    <Compile Include="Common\RDPConstants.cs" />
     <Compile Include="Common\EventHandling.cs" />
     <Compile Include="Common\RdpClientVersion.cs" />
     <Compile Include="Common\IRdpClient.cs" />

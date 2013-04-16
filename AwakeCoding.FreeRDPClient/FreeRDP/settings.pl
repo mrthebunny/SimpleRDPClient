@@ -1,23 +1,11 @@
 #!/usr/bin/perl
 
-open(FILE, 'settings.txt');
+open(FILE, 'settings.h');
 
-print "using System;\n";
-print "using System.Collections.Generic;\n";
-print "using System.Linq;\n";
-print "using System.Text;\n";
-print "\n";
-print "namespace AwakeCoding.FreeRDPClient.FreeRDP\n";
-print "{\n";
-print "\tpublic sealed class FreeRDPSettings\n";
-print "\t{\n";
-print "\t\tprivate IntPtr wfi;\n";
-print "\n";
-print "\t\tpublic FreeRDPSettings(IntPtr wfi)\n";
-print "\t\t{\n";
-print "\t\t\tthis.wfi = wfi;\n";
-print "\t\t}\n";
-print "\n";
+$keys = "";
+$properties = "";
+$first = 1;
+
 while (<FILE>)
 {
      $line = $_;
@@ -51,29 +39,83 @@ while (<FILE>)
 			$cstype = "string";
 			$fcttype = "string";
 		}
-		
+
 		if ($cstype ne "")
 		{
-print "\t\tpublic $cstype $name\n";
-print "\t\t{\n";
-print "\t\t\tget\n";
-print "\t\t\t{\n";
-print "\t\t\t\treturn NativeMethods.freerdp_client_get_param_$fcttype(wfi, $number);\n";
-print "\t\t\t}\n";
-print "\t\t\tset\n";
-print "\t\t\t{\n";
-print "\t\t\t\tNativeMethods.freerdp_client_set_param_$fcttype(wfi, $number, value);\n";
-print "\t\t\t}\n";
-print "\t\t}\n";
-print "\n";
-		}
+			# Enum declarations
+			if ($first == 1)
+			{
+				$keys = $keys . "\t\t\t" . $name . " = " . $number;
+				$first = 0;
+			}
+			else
+			{
+				$keys = $keys . ",\n\t\t\t" . $name . " = " . $number;
+			}
 
+			# Property declarations		
+
+			$properties = $properties . "\t\tpublic $cstype $name\n";
+			$properties = $properties . "\t\t{\n";
+			$properties = $properties . "\t\t\tget\n";
+			$properties = $properties . "\t\t\t{\n";
+			$properties = $properties . "\t\t\t\treturn NativeMethods.freerdp_client_get_param_$fcttype(wfi, (int) Keys.$name);\n";
+			$properties = $properties . "\t\t\t}\n";
+			$properties = $properties . "\t\t\tset\n";
+			$properties = $properties . "\t\t\t{\n";
+			$properties = $properties . "\t\t\t\tNativeMethods.freerdp_client_set_param_$fcttype(wfi, (int) Keys.$name, value);\n";
+			$properties = $properties . "\t\t\t\tOnSettingsChanged(Keys.$name);\n";
+			$properties = $properties . "\t\t\t}\n";
+			$properties = $properties . "\t\t}\n";
+			$properties = $properties . "\n";
+		}
      }
 }
 
-print "\t}\n";
-print "}\n";
+print "using System;\n";
+print "using System.Collections.Generic;\n";
+print "using System.Linq;\n";
+print "using System.Text;\n";
+print "\n";
+print "namespace AwakeCoding.FreeRDPClient.FreeRDP\n";
+print "{\n";
+print "\tpublic sealed class FreeRDPSettings\n";
+print "\t{\n";
+print "\t\tpublic event FreeRDPSettingsChangedEventHandler SettingsChanged;\n\n";
+print "\t\tpublic enum Keys\n";
+print "\t\t{\n";
+print $keys . "\n";
+print "\t\t}\n";
 
+print "\t\n";
+print "\t\tprivate IntPtr wfi;\n";
+print "\n";
+print "\t\tpublic FreeRDPSettings(IntPtr wfi)\n";
+print "\t\t{\n";
+print "\t\t\tthis.wfi = wfi;\n";
+print "\t\t}\n";
+print "\n";
+
+print "\t\tprivate void OnSettingsChanged(Keys key)\n";
+print "\t\t{\n";
+print "\t\t\tif (SettingsChanged != null)\n";
+print "\t\t\t{\n";
+print "\t\t\t\tSettingsChanged(this, new FreeRDPSettingsChangedEventArgs() { Property = key });\n";
+print "\t\t\t}\n";
+print "\t\t}\n";
+print "\n";
+
+print $properties;
+
+print "\t}\n";
+print "\n";
+print "\tpublic delegate void FreeRDPSettingsChangedEventHandler(object sender, FreeRDPSettingsChangedEventArgs e);\n";
+print "\tpublic class FreeRDPSettingsChangedEventArgs : EventArgs\n";
+print "\t{\n";
+print "\t\tpublic FreeRDPSettings.Keys Property  {get;set;}\n";
+print "\t}\n";
+print "\n";
+print "}\n";
 
 close(FILE);
 exit;

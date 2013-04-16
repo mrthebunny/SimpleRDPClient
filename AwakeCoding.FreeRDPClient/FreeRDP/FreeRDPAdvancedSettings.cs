@@ -27,36 +27,48 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 {
 	public class FreeRDPAdvancedSettings : IAdvancedSettings
 	{
-		private FreeRDPSettings settings;
-
 		public event SettingsChangedEventHandler SettingsChanged;
+
+		private FreeRDPSettings settings;
 
 		public FreeRDPAdvancedSettings(FreeRDPSettings settings)
 		{
 			this.settings = settings;
 		}
 
+		private void OnSettingsChanged(string property)
+		{
+			if (SettingsChanged != null)
+			{
+				SettingsChanged(this, new SettingsChangedEventArgs() { PropertyName = property });
+			}
+		}
+
+		private int _acceleratorPassthrough;
 		public int AcceleratorPassthrough
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return _acceleratorPassthrough;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				_acceleratorPassthrough = value;
+				OnSettingsChanged("AcceleratorPassthrough");
 			}
 		}
 
+		private int _allowBackgroundInput;
 		public int allowBackgroundInput
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return _allowBackgroundInput;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				_allowBackgroundInput = value;
+				OnSettingsChanged("allowBackgroundInput");
 			}
 		}
 
@@ -64,11 +76,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.AudioCapture;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.AudioCapture = value;
 			}
 		}
 
@@ -88,14 +100,39 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				if (settings.AudioPlayback)
+					return RDPConstants.AUDIO_MODE_REDIRECT;
+
+				if (settings.RemoteConsoleAudio)
+					return RDPConstants.AUDIO_MODE_PLAY_ON_SERVER;
+
+				return RDPConstants.AUDIO_MODE_NONE;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				bool audioPlayback = false;
+				bool remoteConsoleAudio = false;
+
+				if (value == RDPConstants.AUDIO_MODE_REDIRECT)
+				{
+					audioPlayback = true;
+				}
+				else if (value == RDPConstants.AUDIO_MODE_PLAY_ON_SERVER)
+				{
+					remoteConsoleAudio = true;
+				}
+
+				settings.AudioPlayback = audioPlayback;
+				settings.RemoteConsoleAudio = remoteConsoleAudio;
 			}
 		}
 
+		/// <summary>
+		/// TODO
+		/// 0 No authentication of the server.
+		/// 1 Server authentication is required and must complete successfully for the connection to proceed.
+		/// 2 Attempt authentication of the server. If authentication fails, the user will be prompted with the option to cancel the connection or to proceed without server authentication.
+		/// </summary>
 		public uint AuthenticationLevel
 		{
 			get
@@ -120,6 +157,10 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 			}
 		}
 
+		//0 No authentication is used.
+		//1 Certificate authentication is used.
+		//2 Kerberos authentication is used.
+		//3 Both certificate and Kerberos authentication are used.
 		public uint AuthenticationType
 		{
 			get { throw new NotImplementedException(); }
@@ -153,11 +194,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.BitmapCachePersistEnabled ? 1 : 0;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.BitmapCachePersistEnabled = (value == 0 ? false : true);
 			}
 		}
 
@@ -165,11 +206,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.BitmapCachePersistEnabled ? 1 : 0;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.BitmapCachePersistEnabled = (value == 0 ? false : true);
 			}
 		}
 
@@ -225,11 +266,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return (int) settings.BrushSupportLevel;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.BrushSupportLevel = (uint) value;
 			}
 		}
 
@@ -247,13 +288,19 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 
 		public bool CanAutoReconnect
 		{
-			get { throw new NotImplementedException(); }
+			get { return settings.AutoReconnectionEnabled; }
 		}
 
 		public string ClearTextPassword
 		{
-			get;
-			set;
+			get
+			{
+				return settings.Password;
+			}
+			set
+			{
+				settings.Password = value;
+			}
 		}
 
 		public ClientSpec ClientProtocolSpec
@@ -272,11 +319,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.CompressionEnabled ? 1 : 0;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.CompressionEnabled = (value == 0 ? false : true);
 			}
 		}
 
@@ -332,11 +379,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.ConsoleSession;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.ConsoleSession = value;
 			}
 		}
 
@@ -356,11 +403,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				// NOT SUPPORTED as of WinXP SP2
+				return 0;
 			}
 			set
 			{
-				throw new NotImplementedException();
 			}
 		}
 
@@ -368,11 +415,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.DisableCtrlAltDel ? 1 : 0;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.DisableCtrlAltDel = (value == 0 ? false : true);
 			}
 		}
 
@@ -380,11 +427,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.RedirectClipboard ? 0 : 1;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.RedirectClipboard = value == 0 ? true : false;
 			}
 		}
 
@@ -416,11 +463,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.AutoReconnectionEnabled;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.AutoReconnectionEnabled = value;
 			}
 		}
 
@@ -440,11 +487,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.MouseAttached ? 1 : 0;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.MouseAttached = value == 0 ? false : true;
 			}
 		}
 
@@ -1100,11 +1147,7 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 			set
 			{
 				settings.SmartSizing = value;
-
-				if (SettingsChanged != null)
-				{
-					SettingsChanged(this, new SettingsChangedEventArgs() { PropertyName = "SmartSizing" });
-				}
+				OnSettingsChanged("SmartSizing");
 			}
 		}
 
