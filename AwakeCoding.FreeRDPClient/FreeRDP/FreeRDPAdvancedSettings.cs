@@ -367,18 +367,6 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
-
-		public bool ConnectToServerConsole
-		{
-			get
-			{
 				return settings.ConsoleSession;
 			}
 			set
@@ -386,6 +374,18 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 				settings.ConsoleSession = value;
 			}
 		}
+
+		//public bool ConnectToServerConsole
+		//{
+		//	get
+		//	{
+		//		return settings.ConsoleSession;
+		//	}
+		//	set
+		//	{
+		//		settings.ConsoleSession = value;
+		//	}
+		//}
 
 		public int ContainerHandledFullScreen
 		{
@@ -399,17 +399,17 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 			}
 		}
 
-		public int DedicatedTerminal
-		{
-			get
-			{
-				// NOT SUPPORTED as of WinXP SP2
-				return 0;
-			}
-			set
-			{
-			}
-		}
+		//public int DedicatedTerminal
+		//{
+		//	get
+		//	{
+		//		// NOT SUPPORTED as of WinXP SP2
+		//		return 0;
+		//	}
+		//	set
+		//	{
+		//	}
+		//}
 
 		public int DisableCtrlAltDel
 		{
@@ -475,25 +475,25 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.NlaSecurity;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.NlaSecurity = value;
 			}
 		}
 
-		public int EnableMouse
-		{
-			get
-			{
-				return settings.MouseAttached ? 1 : 0;
-			}
-			set
-			{
-				settings.MouseAttached = value == 0 ? false : true;
-			}
-		}
+		//public int EnableMouse
+		//{
+		//	get
+		//	{
+		//		return settings.MouseAttached ? 1 : 0;
+		//	}
+		//	set
+		//	{
+		//		settings.MouseAttached = value == 0 ? false : true;
+		//	}
+		//}
 
 		public bool EnableSuperPan
 		{
@@ -519,17 +519,17 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 			}
 		}
 
-		public int EncryptionEnabled
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public int EncryptionEnabled
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
 		public bool GrabFocusOnConnect
 		{
@@ -661,17 +661,17 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 			set { throw new NotImplementedException(); }
 		}
 
-		public int InputEventsAtOnce
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public int InputEventsAtOnce
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
 		public int keepAliveInterval
 		{
@@ -685,46 +685,46 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 			}
 		}
 
-		public int KeyboardFunctionKey
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public int KeyboardFunctionKey
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
 		public string KeyBoardLayoutStr
 		{
 			set { throw new NotImplementedException(); }
 		}
 
-		public int KeyboardSubType
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public int KeyboardSubType
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
-		public int KeyboardType
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public int KeyboardType
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
 		public string LoadBalanceInfo
 		{
@@ -738,17 +738,17 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 			}
 		}
 
-		public int maxEventCount
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public int maxEventCount
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
 		public int MaximizeShell
 		{
@@ -802,11 +802,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.NegotiateSecurityLayer;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.NegotiateSecurityLayer = value;
 			}
 		}
 
@@ -814,49 +814,49 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.ConnectionType;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.ConnectionType = value;
 			}
 		}
 
-		public bool NotifyTSPublicKey
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public bool NotifyTSPublicKey
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
-		public int NumBitmapCaches
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public int NumBitmapCaches
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
-		public int orderDrawThreshold
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public int orderDrawThreshold
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
 		public int overallConnectionTimeout
 		{
@@ -886,17 +886,49 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				// TS_PERF_ENABLE_ENHANCED_GRAPHICS ?
+
+  				int flags = RDPConstants.TS_PERF_DISABLE_NOTHING;
+
+				if (settings.DisableWallpaper)
+					flags |= RDPConstants.TS_PERF_DISABLE_WALLPAPER;
+
+				if (settings.DisableFullWindowDrag)
+					flags |= RDPConstants.TS_PERF_DISABLE_FULLWINDOWDRAG;
+
+				if (settings.DisableMenuAnims)
+					flags |= RDPConstants.TS_PERF_DISABLE_MENUANIMATIONS;
+
+				if (settings.DisableThemes)
+					flags |= RDPConstants.TS_PERF_DISABLE_THEMING;
+
+				if (settings.DisableCursorShadow)
+					flags |= RDPConstants.TS_PERF_DISABLE_CURSOR_SHADOW;
+
+				if (settings.DisableCursorBlinking)
+					flags |= RDPConstants.TS_PERF_DISABLE_CURSORSETTINGS;
+
+				if (settings.AllowFontSmoothing)
+					flags |= RDPConstants.TS_PERF_ENABLE_FONT_SMOOTHING;
+
+				if (settings.AllowDesktopComposition)
+					flags |= RDPConstants.TS_PERF_ENABLE_DESKTOP_COMPOSITION;
+
+				return flags;
 			}
 			set
 			{
-				throw new NotImplementedException();
-			}
-		}
+				// TS_PERF_ENABLE_ENHANCED_GRAPHICS ?
 
-		public string PersistCacheDirectory
-		{
-			set { throw new NotImplementedException(); }
+				settings.DisableWallpaper = (RDPConstants.TS_PERF_DISABLE_NOTHING != (value & RDPConstants.TS_PERF_DISABLE_WALLPAPER));
+				settings.DisableFullWindowDrag = (RDPConstants.TS_PERF_DISABLE_NOTHING != (value & RDPConstants.TS_PERF_DISABLE_FULLWINDOWDRAG));
+				settings.DisableMenuAnims = (RDPConstants.TS_PERF_DISABLE_NOTHING != (value & RDPConstants.TS_PERF_DISABLE_MENUANIMATIONS));
+				settings.DisableThemes = (RDPConstants.TS_PERF_DISABLE_NOTHING != (value & RDPConstants.TS_PERF_DISABLE_THEMING));
+				settings.DisableCursorShadow = (RDPConstants.TS_PERF_DISABLE_NOTHING != (value & RDPConstants.TS_PERF_DISABLE_CURSOR_SHADOW));
+				settings.DisableCursorBlinking = (RDPConstants.TS_PERF_DISABLE_NOTHING != (value & RDPConstants.TS_PERF_DISABLE_CURSORSETTINGS));
+				settings.AllowFontSmoothing = (RDPConstants.TS_PERF_DISABLE_NOTHING != (value & RDPConstants.TS_PERF_ENABLE_FONT_SMOOTHING));
+				settings.AllowDesktopComposition = (RDPConstants.TS_PERF_DISABLE_NOTHING != (value & RDPConstants.TS_PERF_ENABLE_DESKTOP_COMPOSITION));
+			}
 		}
 
 		public bool PinConnectionBar
@@ -928,57 +960,63 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 			}
 		}
 
-		public string RdpdrClipCleanTempDirString
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public string RdpdrClipCleanTempDirString
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
-		public string RdpdrClipPasteInfoString
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public string RdpdrClipPasteInfoString
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
-		public string RdpdrLocalPrintingDocName
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public string RdpdrLocalPrintingDocName
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
 		public int RDPPort
 		{
-			get;
-			set;
+			get
+			{
+				return (int) settings.ServerPort;
+			}
+			set
+			{
+				settings.ServerPort = (uint)value;
+			}
 		}
 
 		public bool RedirectClipboard
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.RedirectClipboard;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.RedirectClipboard = value;
 			}
 		}
 
@@ -994,6 +1032,9 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 			}
 		}
 
+		/// <summary>
+		///  Not used
+		/// </summary>
 		public bool RedirectDirectX
 		{
 			get
@@ -1010,11 +1051,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.RedirectDrives;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.RedirectDrives = value;
 			}
 		}
 
@@ -1090,29 +1131,29 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 			}
 		}
 
-		public int ScaleBitmapCachesByBPP
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public int ScaleBitmapCachesByBPP
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
-		public int ShadowBitmap
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public int ShadowBitmap
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
 		public int shutdownTimeout
 		{
@@ -1151,17 +1192,17 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 			}
 		}
 
-		public int SmoothScroll
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public int SmoothScroll
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
 		public uint SuperPanAccelerationFactor
 		{
@@ -1199,16 +1240,16 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 			}
 		}
 
-		public int WinceFixedPalette
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		//public int WinceFixedPalette
+		//{
+		//	get
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 	}
 }

@@ -52,19 +52,19 @@ namespace AwakeCoding.Common
 		bool ConnectionBarShowPinButton { get; set; }
 		bool ConnectionBarShowRestoreButton { get; set; }
 		bool ConnectToAdministerServer { get; set; }
-		bool ConnectToServerConsole { get; set; }
+		// Not supported // bool ConnectToServerConsole { get; set; }
 		int ContainerHandledFullScreen { get; set; }
-		int DedicatedTerminal { get; set; }
+		// Not supported // int DedicatedTerminal { get; set; }
 		int DisableCtrlAltDel { get; set; }
 		int DisableRdpdr { get; set; }
 		bool DisplayConnectionBar { get; set; }
 		int DoubleClickDetect { get; set; }
 		bool EnableAutoReconnect { get; set; }
 		bool EnableCredSspSupport { get; set; }
-		int EnableMouse { get; set; }
+		// not supported // int EnableMouse { get; set; }
 		bool EnableSuperPan { get; set; }
 		int EnableWindowsKey { get; set; }
-		int EncryptionEnabled { get; set; }
+		// not supported // int EncryptionEnabled { get; set; }
 		bool GrabFocusOnConnect { get; set; }
 		int HotKeyAltEsc { get; set; }
 		int HotKeyAltShiftTab { get; set; }
@@ -77,33 +77,33 @@ namespace AwakeCoding.Common
 		int HotKeyFullScreen { get; set; }
 		string IconFile { set; }
 		int IconIndex { set; }
-		int InputEventsAtOnce { get; set; }
+		// not supported // int InputEventsAtOnce { get; set; }
 		int keepAliveInterval { get; set; }
-		int KeyboardFunctionKey { get; set; }
+		// not supported // int KeyboardFunctionKey { get; set; }
 		string KeyBoardLayoutStr { set; }
-		int KeyboardSubType { get; set; }
-		int KeyboardType { get; set; }
+		// not supported // int KeyboardSubType { get; set; }
+		// not supported // int KeyboardType { get; set; }
 		string LoadBalanceInfo { get; set; }
-		int maxEventCount { get; set; }
+		// not supported // int maxEventCount { get; set; }
 		int MaximizeShell { get; set; }
 		int MaxReconnectAttempts { get; set; }
 		int minInputSendInterval { get; set; }
 		int MinutesToIdleTimeout { get; set; }
 		bool NegotiateSecurityLayer { get; set; }
 		uint NetworkConnectionType { get; set; }
-		bool NotifyTSPublicKey { get; set; }
-		int NumBitmapCaches { get; set; }
-		int orderDrawThreshold { get; set; }
+		// not supported // bool NotifyTSPublicKey { get; set; }
+		// not supported // int NumBitmapCaches { get; set; }
+		// not supported // int orderDrawThreshold { get; set; }
 		int overallConnectionTimeout { get; set; }
 		string PCB { get; set; }
 		int PerformanceFlags { get; set; }
-		string PersistCacheDirectory { set; }
+		// Not supported // string PersistCacheDirectory { set; }
 		bool PinConnectionBar { get; set; }
 		string PluginDlls { set; }
 		bool PublicMode { get; set; }
-		string RdpdrClipCleanTempDirString { get; set; }
-		string RdpdrClipPasteInfoString { get; set; }
-		string RdpdrLocalPrintingDocName { get; set; }
+		// not supported // string RdpdrClipCleanTempDirString { get; set; }
+		// not supported // string RdpdrClipPasteInfoString { get; set; }
+		// not supported // string RdpdrLocalPrintingDocName { get; set; }
 		int RDPPort { get; set; }
 		bool RedirectClipboard { get; set; }
 		bool RedirectDevices { get; set; }
@@ -115,15 +115,15 @@ namespace AwakeCoding.Common
 		bool RedirectSmartCards { get; set; }
 		bool RelativeMouseMode { get; set; }
 		int SasSequence { get; set; }
-		int ScaleBitmapCachesByBPP { get; set; }
-		int ShadowBitmap { get; set; }
+		// not supported // int ScaleBitmapCachesByBPP { get; set; }
+		// not supported // int ShadowBitmap { get; set; }
 		int shutdownTimeout { get; set; }
 		int singleConnectionTimeout { get; set; }
 		bool SmartSizing { get; set; }
-		int SmoothScroll { get; set; }
+		// not supported // int SmoothScroll { get; set; }
 		uint SuperPanAccelerationFactor { get; set; }
 		int TransportType { get; set; }
 		uint VideoPlaybackMode { get; set; }
-		int WinceFixedPalette { get; set; }
+		// WinCE only // int WinceFixedPalette { get; set; }
 	}
 }

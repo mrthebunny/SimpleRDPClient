@@ -187,7 +187,7 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			get
 			{
-				return RDPClientVersion.Stub;
+				return RDPClientVersion.FreeRDP;
 			}
 		}
 
@@ -211,36 +211,73 @@ namespace AwakeCoding.FreeRDPClient
 
 		public string Server
 		{
-			get;
-			set;
+			get
+			{
+				return freeRDPsettings.ServerHostname;
+			}
+			set
+			{
+				freeRDPsettings.ServerHostname = value;
+			}
 		}
 
 		public string UserName
 		{
-			get;
-			set;
+			get
+			{
+				return freeRDPsettings.Username;
+			}
+			set
+			{
+				freeRDPsettings.Username = value;
+			}
 		}
 		public string Domain
 		{
-			get;
-			set;
+			get
+			{
+				return freeRDPsettings.Domain;
+			}
+			set
+			{
+				freeRDPsettings.Domain = value;
+			}
 		}
 
 		public int DesktopWidth
 		{
-			get;set;
+			get
+			{
+				return (int)freeRDPsettings.DesktopWidth;
+			}
+			set
+			{
+				freeRDPsettings.DesktopWidth = (uint)value;
+			}
 		}
 
 		public int DesktopHeight
 		{
-			get;
-			set;
+			get
+			{
+				return (int) freeRDPsettings.DesktopHeight;
+			}
+			set
+			{
+				freeRDPsettings.DesktopHeight = (uint)value;
+			}
 		}
 
 		public int ColorDepth
 		{
-			get;
-			set;
+			get
+			{
+				return (int) freeRDPsettings.ColorDepth;
+			}
+			set
+			{
+				freeRDPsettings.ColorDepth = (uint) value;
+			}
 		}
 
 		public void Connect()
@@ -368,8 +405,14 @@ namespace AwakeCoding.FreeRDPClient
 
 		public bool FullScreen
 		{
-			get;
-			set;
+			get
+			{
+				return freeRDPsettings.Fullscreen;
+			}
+			set
+			{
+				freeRDPsettings.Fullscreen = value;
+			}
 		}
 
 		public string FullScreenTitle

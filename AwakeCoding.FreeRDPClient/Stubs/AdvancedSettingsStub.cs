@@ -206,11 +206,11 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
-		public bool ConnectToServerConsole
-		{
-			get;
-			set;
-		}
+		//public bool ConnectToServerConsole
+		//{
+		//	get;
+		//	set;
+		//}
 
 		public int ContainerHandledFullScreen
 		{
@@ -218,11 +218,11 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
-		public int DedicatedTerminal
-		{
-			get;
-			set;
-		}
+		//public int DedicatedTerminal
+		//{
+		//	get;
+		//	set;
+		//}
 
 		public int DisableCtrlAltDel
 		{
@@ -260,11 +260,11 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
-		public int EnableMouse
-		{
-			get;
-			set;
-		}
+		//public int EnableMouse
+		//{
+		//	get;
+		//	set;
+		//}
 
 		public bool EnableSuperPan
 		{
@@ -278,11 +278,11 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
-		public int EncryptionEnabled
-		{
-			get;
-			set;
-		}
+		//public int EncryptionEnabled
+		//{
+		//	get;
+		//	set;
+		//}
 
 		public bool GrabFocusOnConnect
 		{
@@ -348,7 +348,7 @@ namespace AwakeCoding.FreeRDPClient
 		{
 			get;
 			set;
-		}
+  		}
 
 		public int IconIndex
 		{
@@ -356,11 +356,11 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
-		public int InputEventsAtOnce
-		{
-			get;
-			set;
-		}
+		//public int InputEventsAtOnce
+		//{
+		//	get;
+		//	set;
+		//}
 
 		public int keepAliveInterval
 		{
@@ -368,11 +368,11 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
-		public int KeyboardFunctionKey
-		{
-			get;
-			set;
-		}
+		//public int KeyboardFunctionKey
+		//{
+		//	get;
+		//	set;
+		//}
 
 		public string KeyBoardLayoutStr
 		{
@@ -380,17 +380,17 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
-		public int KeyboardSubType
-		{
-			get;
-			set;
-		}
+		//public int KeyboardSubType
+		//{
+		//	get;
+		//	set;
+		//}
 
-		public int KeyboardType
-		{
-			get;
-			set;
-		}
+		//public int KeyboardType
+		//{
+		//	get;
+		//	set;
+		//}
 
 		public string LoadBalanceInfo
 		{
@@ -398,11 +398,11 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
-		public int maxEventCount
-		{
-			get;
-			set;
-		}
+		//public int maxEventCount
+		//{
+		//	get;
+		//	set;
+		//}
 
 		public int MaximizeShell
 		{
@@ -440,23 +440,23 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
-		public bool NotifyTSPublicKey
-		{
-			get;
-			set;
-		}
+		//public bool NotifyTSPublicKey
+		//{
+		//	get;
+		//	set;
+		//}
 
-		public int NumBitmapCaches
-		{
-			get;
-			set;
-		}
+		//public int NumBitmapCaches
+		//{
+		//	get;
+		//	set;
+		//}
 
-		public int orderDrawThreshold
-		{
-			get;
-			set;
-		}
+		//public int orderDrawThreshold
+		//{
+		//	get;
+		//	set;
+		//}
 
 		public int overallConnectionTimeout
 		{
@@ -476,11 +476,11 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
-		public string PersistCacheDirectory
-		{
-			get;
-			set;
-		}
+		//public string PersistCacheDirectory
+		//{
+		//	get;
+		//	set;
+		//}
 
 		public bool PinConnectionBar
 		{
@@ -500,23 +500,23 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
-		public string RdpdrClipCleanTempDirString
-		{
-			get;
-			set;
-		}
+		//public string RdpdrClipCleanTempDirString
+		//{
+		//	get;
+		//	set;
+		//}
 
-		public string RdpdrClipPasteInfoString
-		{
-			get;
-			set;
-		}
+		//public string RdpdrClipPasteInfoString
+		//{
+		//	get;
+		//	set;
+		//}
 
-		public string RdpdrLocalPrintingDocName
-		{
-			get;
-			set;
-		}
+		//public string RdpdrLocalPrintingDocName
+		//{
+		//	get;
+		//	set;
+		//}
 
 		public int RDPPort
 		{
@@ -584,17 +584,17 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
-		public int ScaleBitmapCachesByBPP
-		{
-			get;
-			set;
-		}
+		//public int ScaleBitmapCachesByBPP
+		//{
+		//	get;
+		//	set;
+		//}
 
-		public int ShadowBitmap
-		{
-			get;
-			set;
-		}
+		//public int ShadowBitmap
+		//{
+		//	get;
+		//	set;
+		//}
 
 		public int shutdownTimeout
 		{
@@ -622,11 +622,11 @@ namespace AwakeCoding.FreeRDPClient
 			}
 		}
 
-		public int SmoothScroll
-		{
-			get;
-			set;
-		}
+		//public int SmoothScroll
+		//{
+		//	get;
+		//	set;
+		//}
 
 		public uint SuperPanAccelerationFactor
 		{
@@ -646,10 +646,10 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
-		public int WinceFixedPalette
-		{
-			get;
-			set;
-		}
+		//public int WinceFixedPalette
+		//{
+		//	get;
+		//	set;
+		//}
 	}
 }
