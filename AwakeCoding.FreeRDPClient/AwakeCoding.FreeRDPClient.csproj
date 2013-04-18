@@ -76,6 +76,15 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ClientSpecs.cs" />
+    <Compile Include="Common\EventHandling.cs" />
+    <Compile Include="Common\IAdvancedSettings.cs" />
+    <Compile Include="Common\InterfaceProxy.cs" />
+    <Compile Include="Common\IRdpClient.cs" />
+    <Compile Include="Common\ISecuredSettings.cs" />
+    <Compile Include="Common\ITransportSettings.cs" />
+    <Compile Include="Common\RdpClientVersion.cs" />
+    <Compile Include="Common\RDPConstants.cs" />
     <Compile Include="FreeRDP\FreeRDPAdvancedSettings.cs" />
     <Compile Include="FreeRDP\FreeRDPClient.cs">
       <SubType>Component</SubType>
@@ -99,12 +108,6 @@
     <Compile Include="Stubs\RDPClientStub.cs" />
     <Compile Include="Stubs\SecuredSettingsStub.cs" />
     <Compile Include="Stubs\TransportSettingsStub.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AwakeCoding.Common\AwakeCoding.Common.csproj">
-      <Project>{133E9473-8A64-45AF-AEA4-B1A8614F44D8}</Project>
-      <Name>AwakeCoding.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\RDPClientFrame.resx">

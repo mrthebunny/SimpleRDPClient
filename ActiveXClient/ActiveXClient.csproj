@@ -120,10 +120,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AwakeCoding.Common\AwakeCoding.Common.csproj">
-      <Project>{133e9473-8a64-45af-aea4-b1a8614f44d8}</Project>
-      <Name>AwakeCoding.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AwakeCoding.FreeRDPClient\AwakeCoding.FreeRDPClient.csproj">
       <Project>{F0AEB698-0338-4E04-949B-60E4448D1597}</Project>
       <Name>AwakeCoding.FreeRDPClient</Name>

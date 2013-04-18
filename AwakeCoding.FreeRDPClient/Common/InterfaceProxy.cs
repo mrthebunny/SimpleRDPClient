@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 
-using AwakeCoding.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,7 +27,7 @@ using System.Runtime.Remoting.Proxies;
 using System.Security.Permissions;
 using System.Text;
 
-namespace AwakeCoding.Reflection
+namespace AwakeCoding.Common
 {
 	/// <summary>
 	/// Based on original code by Rory Primrose
