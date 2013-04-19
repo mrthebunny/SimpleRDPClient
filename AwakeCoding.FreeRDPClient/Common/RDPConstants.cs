@@ -39,6 +39,11 @@ namespace AwakeCoding.Common
 		public const int TS_PERF_ENABLE_DESKTOP_COMPOSITION = 0x00000100; // Enable desktop composition.
 		public const int TS_PERF_DEFAULT_NONPERFCLIENT_SETTING = 0x40000000; // Set internally for clients not aware of this setting.
 		public const uint TS_PERF_RESERVED1 = 0x80000000; // Reserved and used internally by the client.
+
+		// FreeRDP callback type
+		public const int FREERDP_CALLBACK_TYPE_PARAM_CHANGE		= 0x01;
+		public const int FREERDP_CALLBACK_TYPE_CONNECTED		= 0x02;
+		public const int FREERDP_CALLBACK_TYPE_DISCONNECTED		= 0x03;
 	}
 
 

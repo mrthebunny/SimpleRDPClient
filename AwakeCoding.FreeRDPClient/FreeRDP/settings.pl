@@ -64,7 +64,7 @@ while (<FILE>)
 			$properties = $properties . "\t\t\tset\n";
 			$properties = $properties . "\t\t\t{\n";
 			$properties = $properties . "\t\t\t\tNativeMethods.freerdp_client_set_param_$fcttype(wfi, (int) Keys.$name, value);\n";
-			$properties = $properties . "\t\t\t\tOnSettingsChanged(Keys.$name);\n";
+# 			$properties = $properties . "\t\t\t\tOnSettingsChanged(Keys.$name);\n";
 			$properties = $properties . "\t\t\t}\n";
 			$properties = $properties . "\t\t}\n";
 			$properties = $properties . "\n";
@@ -81,7 +81,7 @@ print "namespace AwakeCoding.FreeRDPClient.FreeRDP\n";
 print "{\n";
 print "\tpublic sealed class FreeRDPSettings\n";
 print "\t{\n";
-print "\t\tpublic event FreeRDPSettingsChangedEventHandler SettingsChanged;\n\n";
+# print "\t\tpublic event FreeRDPSettingsChangedEventHandler SettingsChanged;\n\n";
 print "\t\tpublic enum Keys\n";
 print "\t\t{\n";
 print $keys . "\n";
@@ -96,14 +96,14 @@ print "\t\t\tthis.wfi = wfi;\n";
 print "\t\t}\n";
 print "\n";
 
-print "\t\tprivate void OnSettingsChanged(Keys key)\n";
-print "\t\t{\n";
-print "\t\t\tif (SettingsChanged != null)\n";
-print "\t\t\t{\n";
-print "\t\t\t\tSettingsChanged(this, new FreeRDPSettingsChangedEventArgs() { Property = key });\n";
-print "\t\t\t}\n";
-print "\t\t}\n";
-print "\n";
+# print "\t\tprivate void OnSettingsChanged(Keys key)\n";
+# print "\t\t{\n";
+# print "\t\t\tif (SettingsChanged != null)\n";
+# print "\t\t\t{\n";
+# print "\t\t\t\tSettingsChanged(this, new FreeRDPSettingsChangedEventArgs() { Property = key });\n";
+# print "\t\t\t}\n";
+# print "\t\t}\n";
+# print "\n";
 
 print $properties;
 

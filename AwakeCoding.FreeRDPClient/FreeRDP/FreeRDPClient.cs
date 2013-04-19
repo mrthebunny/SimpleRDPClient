@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -30,6 +31,8 @@ namespace AwakeCoding.FreeRDPClient
 {
 	public class FreeRDPClient : Panel, IRDPClient
 	{
+		private FreeRDPCallbackDelegate callbackDelegate;
+
 		private static bool staticInitialized = false;
 
 		private Container components = new Container();
@@ -82,6 +85,10 @@ namespace AwakeCoding.FreeRDPClient
 				((FreeRDPAdvancedSettings)AdvancedSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
 				((FreeRDPTransportSettings)TransportSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
 				((FreeRDPSecuredSettings)SecuredSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
+
+				callbackDelegate = new FreeRDPCallbackDelegate(FreeRDP_Callback);
+				IntPtr callbackPtr = Marshal.GetFunctionPointerForDelegate(callbackDelegate);
+				NativeMethods.freerdp_client_set_callback_function(wfi, callbackPtr);
 			}
 			catch (Exception ex)
 			{
@@ -92,6 +99,60 @@ namespace AwakeCoding.FreeRDPClient
 			this.SetStyle(ControlStyles.Selectable, true);
 
 			this.TabStop = true;
+		}
+
+		private void FreeRDP_Callback(IntPtr wfi, int id, uint param1, uint param2)
+		{
+			System.Diagnostics.Debug.WriteLine(String.Format("FreeRDPClient Callback id={0} param1={1} param2={2}", id, param1, param2));
+
+			switch(id)
+			{
+				case RDPConstants.FREERDP_CALLBACK_TYPE_PARAM_CHANGE:
+					System.Diagnostics.Debug.WriteLine(String.Format("Param changed: {0}", ((FreeRDPSettings.Keys) param1).ToString()));
+					break;
+
+				case RDPConstants.FREERDP_CALLBACK_TYPE_CONNECTED:
+					System.Diagnostics.Debug.WriteLine("Connected invoke? " + InvokeRequired);
+					if (InvokeRequired)
+					{
+						Invoke(new MethodInvoker(() =>
+							{
+								if (Connected != null)
+								{
+									Connected(this, EventArgs.Empty);
+								}
+							}));
+					}
+					else
+					{
+						if (Connected != null)
+						{
+							Connected(this, EventArgs.Empty);
+						}
+					}
+					break;
+
+				case RDPConstants.FREERDP_CALLBACK_TYPE_DISCONNECTED:
+					System.Diagnostics.Debug.WriteLine("Disconnected invoke? " + InvokeRequired);
+					if (InvokeRequired)
+					{
+						Invoke(new MethodInvoker(() =>
+							{
+								if (Disconnected != null)
+								{
+									Disconnected(this, new DisconnectedEventArgs((int) param1));
+								}
+							}));
+					}
+					else
+					{
+						if (Disconnected != null)
+						{
+							Disconnected(this, new DisconnectedEventArgs((int)param1));
+						}
+					}
+					break;
+			}
 		}
 
 		public bool HandleSizingInternally 
@@ -177,6 +238,10 @@ namespace AwakeCoding.FreeRDPClient
 			if (disposing)
 			{
 				components.Dispose();
+
+				NativeMethods.freerdp_client_set_callback_function(wfi, IntPtr.Zero);
+				callbackDelegate = null;
+
 				FreeWfi();
 			}
 
@@ -307,10 +372,10 @@ namespace AwakeCoding.FreeRDPClient
 			Visible = true;
 			IsConnected = true;
 
-			if (Connected != null)
-			{
-				Connected(this, EventArgs.Empty);
-			}
+			//if (Connected != null)
+			//{
+			//	Connected(this, EventArgs.Empty);
+			//}
 
 			Focus();
 		}
@@ -363,10 +428,10 @@ namespace AwakeCoding.FreeRDPClient
 			NativeMethods.freerdp_client_stop(wfi);
 
 			IsConnected = false;
-			if (Disconnected != null)
-			{
-				Disconnected(this, new DisconnectedEventArgs(0));
-			}
+			//if (Disconnected != null)
+			//{
+			//	Disconnected(this, new DisconnectedEventArgs(0));
+			//}
 		}
 
 		public void Attach(Control parent)
