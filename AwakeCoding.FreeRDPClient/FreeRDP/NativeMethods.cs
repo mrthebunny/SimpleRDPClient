@@ -84,6 +84,13 @@ namespace AwakeCoding.FreeRDPClient
 		[DllImport("libwfreerdp-client")]
 		public static extern int freerdp_client_set_callback_function(IntPtr wfi, IntPtr callbackFunc);
 
+
+		[DllImport("libwfreerdp-client")]
+		public static extern int freerdp_client_load_settings_from_rdp_file(IntPtr cfi, string filename);
+
+		[DllImport("libwfreerdp-client")]
+		public static extern int freerdp_client_save_settings_to_rdp_file(IntPtr cfi, string filename);
+
 		public static string freerdp_client_get_param_string(IntPtr wfi, int id)
 		{
 			// Native function returns a null-terminated ansi char array. 

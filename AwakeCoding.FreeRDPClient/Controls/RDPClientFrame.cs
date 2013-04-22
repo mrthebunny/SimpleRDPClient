@@ -512,6 +512,17 @@ namespace AwakeCoding.FreeRDPClient
 			this.Height = height;
 			AdjustSizeAndPosition();
 		}
+
+
+		public void LoadSettings(string filename)
+		{
+			rdpClientImpl.LoadSettings(filename);
+		}
+
+		public void SaveSettings(string filename)
+		{
+			rdpClientImpl.SaveSettings(filename);
+		}
 	}
 
 }

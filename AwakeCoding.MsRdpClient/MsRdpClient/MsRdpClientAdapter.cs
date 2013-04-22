@@ -519,6 +519,15 @@ namespace AwakeCoding.MsRdpClient
 			}
 		}
 
+		public void LoadSettings(string filename)
+		{
+			// ? 
+		}
+
+		public void SaveSettings(string filename)
+		{
+			// ? 
+		}
 
 		public event SettingsChangedEventHandler SettingsChanged;
 	}

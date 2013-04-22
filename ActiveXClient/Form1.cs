@@ -329,5 +329,43 @@ namespace ActiveXClient
 		{
 			rdpClientFrame2.ForceSize(Convert.ToInt32(txtWidth.Text), Convert.ToInt32(txtHeight.Text));
 		}
+
+		private void toolStripButtonOpenRDP_Click(object sender, EventArgs e)
+		{
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "Remote Desktop Connection files (*.RDP)|*.rdp|All files (*.*)|*.*";
+			if (dlg.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+			{
+				rdpClientFrame2.LoadSettings(dlg.FileName);
+
+				txtDomain.Text = rdpClientFrame2.Domain;
+				txtPassword.Text = rdpClientFrame2.AdvancedSettings.ClearTextPassword;
+				txtPort.Text = rdpClientFrame2.AdvancedSettings.RDPPort.ToString();
+				txtServer.Text = rdpClientFrame2.Server;
+				txtUsername.Text = rdpClientFrame2.UserName;
+				cxSmartSize.Checked = rdpClientFrame2.AdvancedSettings.SmartSizing;
+			}
+		}
+
+		private void toolStripButtonSaveRDP_Click(object sender, EventArgs e)
+		{
+			rdpClientFrame2.Domain = txtDomain.Text;
+			rdpClientFrame2.AdvancedSettings.ClearTextPassword = txtPassword.Text;
+			try
+			{
+				rdpClientFrame2.AdvancedSettings.RDPPort = Convert.ToInt32(txtPort.Text);
+			}
+			catch { }
+
+			rdpClientFrame2.Server = txtServer.Text;
+			rdpClientFrame2.UserName = txtUsername.Text;
+
+			SaveFileDialog dlg = new SaveFileDialog();
+			dlg.Filter = "Remote Desktop Connection files (*.RDP)|*.rdp|All files (*.*)|*.*";
+			if (dlg.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+			{
+				rdpClientFrame2.SaveSettings(dlg.FileName);
+			}
+		}
 	}
 }

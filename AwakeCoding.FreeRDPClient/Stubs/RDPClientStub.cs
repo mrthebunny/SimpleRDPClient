@@ -272,5 +272,12 @@ namespace AwakeCoding.FreeRDPClient
 			panel.Height = height;
 		}
 
+		public void LoadSettings(string filename)
+		{
+		}
+
+		public void SaveSettings(string filename)
+		{
+		}
 	}
 }

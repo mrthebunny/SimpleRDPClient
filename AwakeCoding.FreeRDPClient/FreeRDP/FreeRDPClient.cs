@@ -535,6 +535,21 @@ namespace AwakeCoding.FreeRDPClient
 			}
 		}
 
+		public void LoadSettings(string filename)
+		{
+			if (!System.IO.File.Exists(filename))
+			{
+				throw new System.IO.FileNotFoundException();
+			}
+
+			NativeMethods.freerdp_client_load_settings_from_rdp_file(wfi, filename);
+		}
+
+		public void SaveSettings(string filename)
+		{
+			NativeMethods.freerdp_client_save_settings_to_rdp_file(wfi, filename);
+		}
+
 		public event SettingsChangedEventHandler SettingsChanged;
 	}
 }

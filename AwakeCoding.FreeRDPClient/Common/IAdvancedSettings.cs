@@ -45,7 +45,7 @@ namespace AwakeCoding.Common
 		int brushSupportLevel { get; set; }
 		int CachePersistenceActive { get; set; }
 		bool CanAutoReconnect { get; }
-		string ClearTextPassword { set; }
+		string ClearTextPassword { get; set; }
 		ClientSpec ClientProtocolSpec { get; set; }
 		int Compress { get; set; }
 		bool ConnectionBarShowMinimizeButton { get; set; }

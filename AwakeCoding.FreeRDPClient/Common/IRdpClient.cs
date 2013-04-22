@@ -67,6 +67,10 @@ namespace AwakeCoding.Common
 		void Disconnect();
 		void Attach(Control parent);
 		string GetErrorDescription(uint discReason, uint extendedDisconnectReason);
+
+		void LoadSettings(string filename);
+
+		void SaveSettings(string filename);
 		#endregion // Methods
 
 		#region Events
