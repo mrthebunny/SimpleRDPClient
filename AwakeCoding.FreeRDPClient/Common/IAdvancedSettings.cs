@@ -107,7 +107,7 @@ namespace AwakeCoding.Common
 		int RDPPort { get; set; }
 		bool RedirectClipboard { get; set; }
 		bool RedirectDevices { get; set; }
-		bool RedirectDirectX { get; set; }
+		// not used // bool RedirectDirectX { get; set; }
 		bool RedirectDrives { get; set; }
 		bool RedirectPorts { get; set; }
 		bool RedirectPOSDevices { get; set; }

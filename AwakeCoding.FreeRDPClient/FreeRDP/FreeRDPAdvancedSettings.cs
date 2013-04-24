@@ -1024,28 +1024,28 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return settings.DeviceRedirection;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				settings.DeviceRedirection = value;
 			}
 		}
 
-		/// <summary>
-		///  Not used
-		/// </summary>
-		public bool RedirectDirectX
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
-		}
+		///// <summary>
+		/////  Not used
+		///// </summary>
+		//public bool RedirectDirectX
+		//{
+		//	get
+		//	{
+		//		throw new NotSupportedException();
+		//	}
+		//	set
+		//	{
+		//		throw new NotSupportedException();
+		//	}
+		//}
 
 		public bool RedirectDrives
 		{

@@ -235,22 +235,22 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 			DynamicChannelArraySize = 5057
 		}
 	
-		private IntPtr wfi;
+		private IntPtr settings;
 
 		public FreeRDPSettings(IntPtr wfi)
 		{
-			this.wfi = wfi;
+			this.settings = NativeMethods.freerdp_client_get_settings(wfi);
 		}
 
 		public bool ServerMode
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.ServerMode);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.ServerMode);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.ServerMode, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.ServerMode, value);
 			}
 		}
 
@@ -258,11 +258,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.ShareId);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.ShareId);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.ShareId, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.ShareId, value);
 			}
 		}
 
@@ -270,11 +270,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.PduSource);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.PduSource);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.PduSource, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.PduSource, value);
 			}
 		}
 
@@ -282,11 +282,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.ServerPort);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.ServerPort);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.ServerPort, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.ServerPort, value);
 			}
 		}
 
@@ -294,11 +294,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.ServerHostname);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.ServerHostname);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.ServerHostname, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.ServerHostname, value);
 			}
 		}
 
@@ -306,11 +306,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.Username);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.Username);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.Username, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.Username, value);
 			}
 		}
 
@@ -318,11 +318,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.Password);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.Password);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.Password, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.Password, value);
 			}
 		}
 
@@ -330,11 +330,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.Domain);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.Domain);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.Domain, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.Domain, value);
 			}
 		}
 
@@ -342,11 +342,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RdpVersion);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RdpVersion);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RdpVersion, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RdpVersion, value);
 			}
 		}
 
@@ -354,11 +354,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.DesktopWidth);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.DesktopWidth);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.DesktopWidth, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.DesktopWidth, value);
 			}
 		}
 
@@ -366,11 +366,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.DesktopHeight);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.DesktopHeight);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.DesktopHeight, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.DesktopHeight, value);
 			}
 		}
 
@@ -378,11 +378,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.ColorDepth);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.ColorDepth);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.ColorDepth, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.ColorDepth, value);
 			}
 		}
 
@@ -390,11 +390,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.ConnectionType);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.ConnectionType);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.ConnectionType, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.ConnectionType, value);
 			}
 		}
 
@@ -402,11 +402,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.ClientBuild);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.ClientBuild);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.ClientBuild, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.ClientBuild, value);
 			}
 		}
 
@@ -414,11 +414,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.ClientHostname);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.ClientHostname);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.ClientHostname, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.ClientHostname, value);
 			}
 		}
 
@@ -426,11 +426,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.ClientProductId);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.ClientProductId);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.ClientProductId, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.ClientProductId, value);
 			}
 		}
 
@@ -438,11 +438,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.EarlyCapabilityFlags);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.EarlyCapabilityFlags);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.EarlyCapabilityFlags, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.EarlyCapabilityFlags, value);
 			}
 		}
 
@@ -450,11 +450,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.NetworkAutoDetect);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.NetworkAutoDetect);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.NetworkAutoDetect, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.NetworkAutoDetect, value);
 			}
 		}
 
@@ -462,11 +462,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.SupportAsymetricKeys);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.SupportAsymetricKeys);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.SupportAsymetricKeys, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.SupportAsymetricKeys, value);
 			}
 		}
 
@@ -474,11 +474,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.SupportErrorInfoPdu);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.SupportErrorInfoPdu);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.SupportErrorInfoPdu, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.SupportErrorInfoPdu, value);
 			}
 		}
 
@@ -486,11 +486,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.SupportStatusInfoPdu);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.SupportStatusInfoPdu);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.SupportStatusInfoPdu, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.SupportStatusInfoPdu, value);
 			}
 		}
 
@@ -498,11 +498,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.SupportMonitorLayoutPdu);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.SupportMonitorLayoutPdu);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.SupportMonitorLayoutPdu, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.SupportMonitorLayoutPdu, value);
 			}
 		}
 
@@ -510,11 +510,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.SupportGraphicsPipeline);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.SupportGraphicsPipeline);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.SupportGraphicsPipeline, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.SupportGraphicsPipeline, value);
 			}
 		}
 
@@ -522,11 +522,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.SupportDynamicTimeZone);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.SupportDynamicTimeZone);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.SupportDynamicTimeZone, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.SupportDynamicTimeZone, value);
 			}
 		}
 
@@ -534,11 +534,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DisableEncryption);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DisableEncryption);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DisableEncryption, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DisableEncryption, value);
 			}
 		}
 
@@ -546,11 +546,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.EncryptionMethods);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.EncryptionMethods);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.EncryptionMethods, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.EncryptionMethods, value);
 			}
 		}
 
@@ -558,11 +558,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.ExtEncryptionMethods);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.ExtEncryptionMethods);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.ExtEncryptionMethods, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.ExtEncryptionMethods, value);
 			}
 		}
 
@@ -570,11 +570,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.EncryptionLevel);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.EncryptionLevel);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.EncryptionLevel, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.EncryptionLevel, value);
 			}
 		}
 
@@ -582,11 +582,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.ChannelCount);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.ChannelCount);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.ChannelCount, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.ChannelCount, value);
 			}
 		}
 
@@ -594,11 +594,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.ChannelDefArraySize);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.ChannelDefArraySize);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.ChannelDefArraySize, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.ChannelDefArraySize, value);
 			}
 		}
 
@@ -606,11 +606,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.ClusterInfoFlags);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.ClusterInfoFlags);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.ClusterInfoFlags, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.ClusterInfoFlags, value);
 			}
 		}
 
@@ -618,11 +618,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RedirectedSessionId);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RedirectedSessionId);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RedirectedSessionId, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RedirectedSessionId, value);
 			}
 		}
 
@@ -630,11 +630,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.ConsoleSession);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.ConsoleSession);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.ConsoleSession, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.ConsoleSession, value);
 			}
 		}
 
@@ -642,11 +642,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.MonitorDefArraySize);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.MonitorDefArraySize);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.MonitorDefArraySize, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.MonitorDefArraySize, value);
 			}
 		}
 
@@ -654,11 +654,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.SpanMonitors);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.SpanMonitors);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.SpanMonitors, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.SpanMonitors, value);
 			}
 		}
 
@@ -666,11 +666,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.UseMultimon);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.UseMultimon);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.UseMultimon, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.UseMultimon, value);
 			}
 		}
 
@@ -678,11 +678,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.ForceMultimon);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.ForceMultimon);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.ForceMultimon, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.ForceMultimon, value);
 			}
 		}
 
@@ -690,11 +690,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.MultitransportFlags);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.MultitransportFlags);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.MultitransportFlags, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.MultitransportFlags, value);
 			}
 		}
 
@@ -702,11 +702,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.AlternateShell);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.AlternateShell);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.AlternateShell, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.AlternateShell, value);
 			}
 		}
 
@@ -714,11 +714,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.ShellWorkingDirectory);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.ShellWorkingDirectory);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.ShellWorkingDirectory, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.ShellWorkingDirectory, value);
 			}
 		}
 
@@ -726,11 +726,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.AutoLogonEnabled);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.AutoLogonEnabled);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.AutoLogonEnabled, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.AutoLogonEnabled, value);
 			}
 		}
 
@@ -738,11 +738,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.CompressionEnabled);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.CompressionEnabled);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.CompressionEnabled, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.CompressionEnabled, value);
 			}
 		}
 
@@ -750,11 +750,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DisableCtrlAltDel);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DisableCtrlAltDel);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DisableCtrlAltDel, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DisableCtrlAltDel, value);
 			}
 		}
 
@@ -762,11 +762,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.EnableWindowsKey);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.EnableWindowsKey);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.EnableWindowsKey, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.EnableWindowsKey, value);
 			}
 		}
 
@@ -774,11 +774,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.MaximizeShell);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.MaximizeShell);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.MaximizeShell, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.MaximizeShell, value);
 			}
 		}
 
@@ -786,11 +786,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.LogonNotify);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.LogonNotify);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.LogonNotify, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.LogonNotify, value);
 			}
 		}
 
@@ -798,11 +798,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.LogonErrors);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.LogonErrors);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.LogonErrors, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.LogonErrors, value);
 			}
 		}
 
@@ -810,11 +810,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.MouseAttached);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.MouseAttached);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.MouseAttached, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.MouseAttached, value);
 			}
 		}
 
@@ -822,11 +822,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.MouseHasWheel);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.MouseHasWheel);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.MouseHasWheel, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.MouseHasWheel, value);
 			}
 		}
 
@@ -834,11 +834,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RemoteConsoleAudio);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RemoteConsoleAudio);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RemoteConsoleAudio, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RemoteConsoleAudio, value);
 			}
 		}
 
@@ -846,11 +846,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.AudioPlayback);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.AudioPlayback);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.AudioPlayback, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.AudioPlayback, value);
 			}
 		}
 
@@ -858,11 +858,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.AudioCapture);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.AudioCapture);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.AudioCapture, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.AudioCapture, value);
 			}
 		}
 
@@ -870,11 +870,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.VideoDisable);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.VideoDisable);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.VideoDisable, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.VideoDisable, value);
 			}
 		}
 
@@ -882,11 +882,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.PasswordIsSmartcardPin);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.PasswordIsSmartcardPin);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.PasswordIsSmartcardPin, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.PasswordIsSmartcardPin, value);
 			}
 		}
 
@@ -894,11 +894,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.UsingSavedCredentials);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.UsingSavedCredentials);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.UsingSavedCredentials, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.UsingSavedCredentials, value);
 			}
 		}
 
@@ -906,11 +906,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.ForceEncryptedCsPdu);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.ForceEncryptedCsPdu);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.ForceEncryptedCsPdu, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.ForceEncryptedCsPdu, value);
 			}
 		}
 
@@ -918,11 +918,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.IPv6Enabled);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.IPv6Enabled);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.IPv6Enabled, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.IPv6Enabled, value);
 			}
 		}
 
@@ -930,11 +930,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.ClientAddress);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.ClientAddress);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.ClientAddress, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.ClientAddress, value);
 			}
 		}
 
@@ -942,11 +942,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.ClientDir);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.ClientDir);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.ClientDir, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.ClientDir, value);
 			}
 		}
 
@@ -954,11 +954,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.AutoReconnectionEnabled);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.AutoReconnectionEnabled);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.AutoReconnectionEnabled, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.AutoReconnectionEnabled, value);
 			}
 		}
 
@@ -966,11 +966,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.AutoReconnectMaxRetries);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.AutoReconnectMaxRetries);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.AutoReconnectMaxRetries, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.AutoReconnectMaxRetries, value);
 			}
 		}
 
@@ -978,11 +978,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.DynamicDSTTimeZoneKeyName);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.DynamicDSTTimeZoneKeyName);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.DynamicDSTTimeZoneKeyName, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.DynamicDSTTimeZoneKeyName, value);
 			}
 		}
 
@@ -990,11 +990,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DynamicDaylightTimeDisabled);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DynamicDaylightTimeDisabled);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DynamicDaylightTimeDisabled, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DynamicDaylightTimeDisabled, value);
 			}
 		}
 
@@ -1002,11 +1002,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.PerformanceFlags);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.PerformanceFlags);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.PerformanceFlags, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.PerformanceFlags, value);
 			}
 		}
 
@@ -1014,11 +1014,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.AllowFontSmoothing);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.AllowFontSmoothing);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.AllowFontSmoothing, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.AllowFontSmoothing, value);
 			}
 		}
 
@@ -1026,11 +1026,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DisableWallpaper);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DisableWallpaper);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DisableWallpaper, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DisableWallpaper, value);
 			}
 		}
 
@@ -1038,11 +1038,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DisableFullWindowDrag);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DisableFullWindowDrag);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DisableFullWindowDrag, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DisableFullWindowDrag, value);
 			}
 		}
 
@@ -1050,11 +1050,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DisableMenuAnims);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DisableMenuAnims);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DisableMenuAnims, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DisableMenuAnims, value);
 			}
 		}
 
@@ -1062,11 +1062,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DisableThemes);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DisableThemes);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DisableThemes, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DisableThemes, value);
 			}
 		}
 
@@ -1074,11 +1074,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DisableCursorShadow);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DisableCursorShadow);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DisableCursorShadow, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DisableCursorShadow, value);
 			}
 		}
 
@@ -1086,11 +1086,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DisableCursorBlinking);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DisableCursorBlinking);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DisableCursorBlinking, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DisableCursorBlinking, value);
 			}
 		}
 
@@ -1098,11 +1098,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.AllowDesktopComposition);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.AllowDesktopComposition);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.AllowDesktopComposition, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.AllowDesktopComposition, value);
 			}
 		}
 
@@ -1110,11 +1110,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.TlsSecurity);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.TlsSecurity);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.TlsSecurity, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.TlsSecurity, value);
 			}
 		}
 
@@ -1122,11 +1122,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.NlaSecurity);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.NlaSecurity);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.NlaSecurity, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.NlaSecurity, value);
 			}
 		}
 
@@ -1134,11 +1134,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RdpSecurity);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RdpSecurity);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RdpSecurity, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RdpSecurity, value);
 			}
 		}
 
@@ -1146,11 +1146,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.ExtSecurity);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.ExtSecurity);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.ExtSecurity, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.ExtSecurity, value);
 			}
 		}
 
@@ -1158,11 +1158,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.Authentication);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.Authentication);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.Authentication, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.Authentication, value);
 			}
 		}
 
@@ -1170,11 +1170,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RequestedProtocols);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RequestedProtocols);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RequestedProtocols, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RequestedProtocols, value);
 			}
 		}
 
@@ -1182,11 +1182,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.SelectedProtocol);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.SelectedProtocol);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.SelectedProtocol, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.SelectedProtocol, value);
 			}
 		}
 
@@ -1194,11 +1194,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.NegotiationFlags);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.NegotiationFlags);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.NegotiationFlags, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.NegotiationFlags, value);
 			}
 		}
 
@@ -1206,11 +1206,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.NegotiateSecurityLayer);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.NegotiateSecurityLayer);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.NegotiateSecurityLayer, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.NegotiateSecurityLayer, value);
 			}
 		}
 
@@ -1218,11 +1218,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.MstscCookieMode);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.MstscCookieMode);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.MstscCookieMode, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.MstscCookieMode, value);
 			}
 		}
 
@@ -1230,11 +1230,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.CookieMaxLength);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.CookieMaxLength);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.CookieMaxLength, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.CookieMaxLength, value);
 			}
 		}
 
@@ -1242,11 +1242,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.PreconnectionId);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.PreconnectionId);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.PreconnectionId, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.PreconnectionId, value);
 			}
 		}
 
@@ -1254,11 +1254,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.PreconnectionBlob);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.PreconnectionBlob);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.PreconnectionBlob, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.PreconnectionBlob, value);
 			}
 		}
 
@@ -1266,11 +1266,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.SendPreconnectionPdu);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.SendPreconnectionPdu);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.SendPreconnectionPdu, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.SendPreconnectionPdu, value);
 			}
 		}
 
@@ -1278,11 +1278,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RedirectionFlags);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RedirectionFlags);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RedirectionFlags, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RedirectionFlags, value);
 			}
 		}
 
@@ -1290,11 +1290,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.LoadBalanceInfoLength);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.LoadBalanceInfoLength);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.LoadBalanceInfoLength, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.LoadBalanceInfoLength, value);
 			}
 		}
 
@@ -1302,11 +1302,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RedirectionUsernameLength);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RedirectionUsernameLength);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RedirectionUsernameLength, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RedirectionUsernameLength, value);
 			}
 		}
 
@@ -1314,11 +1314,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RedirectionDomainLength);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RedirectionDomainLength);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RedirectionDomainLength, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RedirectionDomainLength, value);
 			}
 		}
 
@@ -1326,11 +1326,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RedirectionPasswordLength);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RedirectionPasswordLength);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RedirectionPasswordLength, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RedirectionPasswordLength, value);
 			}
 		}
 
@@ -1338,11 +1338,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RedirectionTargetFQDNLength);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RedirectionTargetFQDNLength);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RedirectionTargetFQDNLength, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RedirectionTargetFQDNLength, value);
 			}
 		}
 
@@ -1350,11 +1350,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RedirectionTargetNetBiosNameLength);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RedirectionTargetNetBiosNameLength);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RedirectionTargetNetBiosNameLength, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RedirectionTargetNetBiosNameLength, value);
 			}
 		}
 
@@ -1362,11 +1362,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RedirectionTsvUrlLength);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RedirectionTsvUrlLength);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RedirectionTsvUrlLength, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RedirectionTsvUrlLength, value);
 			}
 		}
 
@@ -1374,11 +1374,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.TargetNetAddressCount);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.TargetNetAddressCount);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.TargetNetAddressCount, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.TargetNetAddressCount, value);
 			}
 		}
 
@@ -1386,11 +1386,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.KerberosKdc);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.KerberosKdc);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.KerberosKdc, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.KerberosKdc, value);
 			}
 		}
 
@@ -1398,11 +1398,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.KerberosRealm);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.KerberosRealm);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.KerberosRealm, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.KerberosRealm, value);
 			}
 		}
 
@@ -1410,11 +1410,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.IgnoreCertificate);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.IgnoreCertificate);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.IgnoreCertificate, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.IgnoreCertificate, value);
 			}
 		}
 
@@ -1422,11 +1422,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.CertificateName);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.CertificateName);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.CertificateName, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.CertificateName, value);
 			}
 		}
 
@@ -1434,11 +1434,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.CertificateFile);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.CertificateFile);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.CertificateFile, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.CertificateFile, value);
 			}
 		}
 
@@ -1446,11 +1446,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.PrivateKeyFile);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.PrivateKeyFile);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.PrivateKeyFile, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.PrivateKeyFile, value);
 			}
 		}
 
@@ -1458,11 +1458,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.RdpKeyFile);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.RdpKeyFile);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.RdpKeyFile, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.RdpKeyFile, value);
 			}
 		}
 
@@ -1470,11 +1470,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.Workarea);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.Workarea);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.Workarea, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.Workarea, value);
 			}
 		}
 
@@ -1482,11 +1482,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.Fullscreen);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.Fullscreen);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.Fullscreen, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.Fullscreen, value);
 			}
 		}
 
@@ -1494,11 +1494,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.PercentScreen);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.PercentScreen);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.PercentScreen, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.PercentScreen, value);
 			}
 		}
 
@@ -1506,11 +1506,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.GrabKeyboard);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.GrabKeyboard);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.GrabKeyboard, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.GrabKeyboard, value);
 			}
 		}
 
@@ -1518,11 +1518,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.Decorations);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.Decorations);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.Decorations, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.Decorations, value);
 			}
 		}
 
@@ -1530,11 +1530,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.MouseMotion);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.MouseMotion);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.MouseMotion, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.MouseMotion, value);
 			}
 		}
 
@@ -1542,11 +1542,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.WindowTitle);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.WindowTitle);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.WindowTitle, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.WindowTitle, value);
 			}
 		}
 
@@ -1554,11 +1554,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint64(wfi, (int) Keys.ParentWindowId);
+				return NativeMethods.freerdp_get_param_uint64(settings, (int) Keys.ParentWindowId);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint64(wfi, (int) Keys.ParentWindowId, value);
+				NativeMethods.freerdp_set_param_uint64(settings, (int) Keys.ParentWindowId, value);
 			}
 		}
 
@@ -1566,11 +1566,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.AsyncInput);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.AsyncInput);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.AsyncInput, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.AsyncInput, value);
 			}
 		}
 
@@ -1578,11 +1578,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.AsyncUpdate);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.AsyncUpdate);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.AsyncUpdate, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.AsyncUpdate, value);
 			}
 		}
 
@@ -1590,11 +1590,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.AsyncChannels);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.AsyncChannels);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.AsyncChannels, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.AsyncChannels, value);
 			}
 		}
 
@@ -1602,11 +1602,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.AsyncTransport);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.AsyncTransport);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.AsyncTransport, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.AsyncTransport, value);
 			}
 		}
 
@@ -1614,11 +1614,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.ToggleFullscreen);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.ToggleFullscreen);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.ToggleFullscreen, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.ToggleFullscreen, value);
 			}
 		}
 
@@ -1626,11 +1626,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.WmClass);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.WmClass);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.WmClass, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.WmClass, value);
 			}
 		}
 
@@ -1638,11 +1638,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.EmbeddedWindow);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.EmbeddedWindow);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.EmbeddedWindow, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.EmbeddedWindow, value);
 			}
 		}
 
@@ -1650,11 +1650,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.SmartSizing);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.SmartSizing);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.SmartSizing, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.SmartSizing, value);
 			}
 		}
 
@@ -1662,11 +1662,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.SoftwareGdi);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.SoftwareGdi);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.SoftwareGdi, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.SoftwareGdi, value);
 			}
 		}
 
@@ -1674,11 +1674,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.LocalConnection);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.LocalConnection);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.LocalConnection, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.LocalConnection, value);
 			}
 		}
 
@@ -1686,11 +1686,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.AuthenticationOnly);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.AuthenticationOnly);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.AuthenticationOnly, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.AuthenticationOnly, value);
 			}
 		}
 
@@ -1698,11 +1698,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.CredentialsFromStdin);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.CredentialsFromStdin);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.CredentialsFromStdin, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.CredentialsFromStdin, value);
 			}
 		}
 
@@ -1710,11 +1710,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.ComputerName);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.ComputerName);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.ComputerName, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.ComputerName, value);
 			}
 		}
 
@@ -1722,11 +1722,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.ConnectionFile);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.ConnectionFile);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.ConnectionFile, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.ConnectionFile, value);
 			}
 		}
 
@@ -1734,11 +1734,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.HomePath);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.HomePath);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.HomePath, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.HomePath, value);
 			}
 		}
 
@@ -1746,11 +1746,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.ConfigPath);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.ConfigPath);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.ConfigPath, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.ConfigPath, value);
 			}
 		}
 
@@ -1758,11 +1758,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.CurrentPath);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.CurrentPath);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.CurrentPath, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.CurrentPath, value);
 			}
 		}
 
@@ -1770,11 +1770,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DumpRemoteFx);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DumpRemoteFx);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DumpRemoteFx, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DumpRemoteFx, value);
 			}
 		}
 
@@ -1782,11 +1782,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.PlayRemoteFx);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.PlayRemoteFx);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.PlayRemoteFx, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.PlayRemoteFx, value);
 			}
 		}
 
@@ -1794,11 +1794,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.DumpRemoteFxFile);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.DumpRemoteFxFile);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.DumpRemoteFxFile, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.DumpRemoteFxFile, value);
 			}
 		}
 
@@ -1806,11 +1806,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.PlayRemoteFxFile);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.PlayRemoteFxFile);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.PlayRemoteFxFile, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.PlayRemoteFxFile, value);
 			}
 		}
 
@@ -1818,11 +1818,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.GatewayUsageMethod);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.GatewayUsageMethod);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.GatewayUsageMethod, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.GatewayUsageMethod, value);
 			}
 		}
 
@@ -1830,11 +1830,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.GatewayPort);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.GatewayPort);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.GatewayPort, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.GatewayPort, value);
 			}
 		}
 
@@ -1842,11 +1842,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.GatewayHostname);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.GatewayHostname);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.GatewayHostname, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.GatewayHostname, value);
 			}
 		}
 
@@ -1854,11 +1854,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.GatewayUsername);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.GatewayUsername);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.GatewayUsername, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.GatewayUsername, value);
 			}
 		}
 
@@ -1866,11 +1866,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.GatewayPassword);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.GatewayPassword);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.GatewayPassword, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.GatewayPassword, value);
 			}
 		}
 
@@ -1878,11 +1878,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.GatewayDomain);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.GatewayDomain);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.GatewayDomain, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.GatewayDomain, value);
 			}
 		}
 
@@ -1890,11 +1890,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.GatewayCredentialsSource);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.GatewayCredentialsSource);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.GatewayCredentialsSource, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.GatewayCredentialsSource, value);
 			}
 		}
 
@@ -1902,11 +1902,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.GatewayUseSameCredentials);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.GatewayUseSameCredentials);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.GatewayUseSameCredentials, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.GatewayUseSameCredentials, value);
 			}
 		}
 
@@ -1914,11 +1914,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RemoteApplicationMode);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RemoteApplicationMode);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RemoteApplicationMode, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RemoteApplicationMode, value);
 			}
 		}
 
@@ -1926,11 +1926,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.RemoteApplicationName);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.RemoteApplicationName);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.RemoteApplicationName, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.RemoteApplicationName, value);
 			}
 		}
 
@@ -1938,11 +1938,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.RemoteApplicationIcon);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.RemoteApplicationIcon);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.RemoteApplicationIcon, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.RemoteApplicationIcon, value);
 			}
 		}
 
@@ -1950,11 +1950,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.RemoteApplicationProgram);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.RemoteApplicationProgram);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.RemoteApplicationProgram, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.RemoteApplicationProgram, value);
 			}
 		}
 
@@ -1962,11 +1962,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.RemoteApplicationFile);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.RemoteApplicationFile);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.RemoteApplicationFile, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.RemoteApplicationFile, value);
 			}
 		}
 
@@ -1974,11 +1974,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.RemoteApplicationGuid);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.RemoteApplicationGuid);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.RemoteApplicationGuid, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.RemoteApplicationGuid, value);
 			}
 		}
 
@@ -1986,11 +1986,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.RemoteApplicationCmdLine);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.RemoteApplicationCmdLine);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.RemoteApplicationCmdLine, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.RemoteApplicationCmdLine, value);
 			}
 		}
 
@@ -1998,11 +1998,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RemoteAppNumIconCaches);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RemoteAppNumIconCaches);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RemoteAppNumIconCaches, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RemoteAppNumIconCaches, value);
 			}
 		}
 
@@ -2010,11 +2010,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RemoteAppNumIconCacheEntries);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RemoteAppNumIconCacheEntries);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RemoteAppNumIconCacheEntries, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RemoteAppNumIconCacheEntries, value);
 			}
 		}
 
@@ -2022,11 +2022,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RemoteAppLanguageBarSupported);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RemoteAppLanguageBarSupported);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RemoteAppLanguageBarSupported, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RemoteAppLanguageBarSupported, value);
 			}
 		}
 
@@ -2034,11 +2034,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.ReceivedCapabilitiesSize);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.ReceivedCapabilitiesSize);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.ReceivedCapabilitiesSize, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.ReceivedCapabilitiesSize, value);
 			}
 		}
 
@@ -2046,11 +2046,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.OsMajorType);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.OsMajorType);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.OsMajorType, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.OsMajorType, value);
 			}
 		}
 
@@ -2058,11 +2058,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.OsMinorType);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.OsMinorType);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.OsMinorType, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.OsMinorType, value);
 			}
 		}
 
@@ -2070,11 +2070,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RefreshRect);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RefreshRect);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RefreshRect, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RefreshRect, value);
 			}
 		}
 
@@ -2082,11 +2082,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.SuppressOutput);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.SuppressOutput);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.SuppressOutput, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.SuppressOutput, value);
 			}
 		}
 
@@ -2094,11 +2094,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.FastPathOutput);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.FastPathOutput);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.FastPathOutput, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.FastPathOutput, value);
 			}
 		}
 
@@ -2106,11 +2106,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.SaltedChecksum);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.SaltedChecksum);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.SaltedChecksum, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.SaltedChecksum, value);
 			}
 		}
 
@@ -2118,11 +2118,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.LongCredentialsSupported);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.LongCredentialsSupported);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.LongCredentialsSupported, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.LongCredentialsSupported, value);
 			}
 		}
 
@@ -2130,11 +2130,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.NoBitmapCompressionHeader);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.NoBitmapCompressionHeader);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.NoBitmapCompressionHeader, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.NoBitmapCompressionHeader, value);
 			}
 		}
 
@@ -2142,11 +2142,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DesktopResize);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DesktopResize);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DesktopResize, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DesktopResize, value);
 			}
 		}
 
@@ -2154,11 +2154,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DrawAllowDynamicColorFidelity);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DrawAllowDynamicColorFidelity);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DrawAllowDynamicColorFidelity, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DrawAllowDynamicColorFidelity, value);
 			}
 		}
 
@@ -2166,11 +2166,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DrawAllowColorSubsampling);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DrawAllowColorSubsampling);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DrawAllowColorSubsampling, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DrawAllowColorSubsampling, value);
 			}
 		}
 
@@ -2178,11 +2178,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DrawAllowSkipAlpha);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DrawAllowSkipAlpha);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DrawAllowSkipAlpha, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DrawAllowSkipAlpha, value);
 			}
 		}
 
@@ -2190,11 +2190,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.BitmapCacheV3Enabled);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.BitmapCacheV3Enabled);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.BitmapCacheV3Enabled, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.BitmapCacheV3Enabled, value);
 			}
 		}
 
@@ -2202,11 +2202,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.AltSecFrameMarkerSupport);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.AltSecFrameMarkerSupport);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.AltSecFrameMarkerSupport, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.AltSecFrameMarkerSupport, value);
 			}
 		}
 
@@ -2214,11 +2214,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.BitmapCacheEnabled);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.BitmapCacheEnabled);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.BitmapCacheEnabled, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.BitmapCacheEnabled, value);
 			}
 		}
 
@@ -2226,11 +2226,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.BitmapCacheVersion);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.BitmapCacheVersion);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.BitmapCacheVersion, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.BitmapCacheVersion, value);
 			}
 		}
 
@@ -2238,11 +2238,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.AllowCacheWaitingList);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.AllowCacheWaitingList);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.AllowCacheWaitingList, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.AllowCacheWaitingList, value);
 			}
 		}
 
@@ -2250,11 +2250,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.BitmapCachePersistEnabled);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.BitmapCachePersistEnabled);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.BitmapCachePersistEnabled, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.BitmapCachePersistEnabled, value);
 			}
 		}
 
@@ -2262,11 +2262,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.BitmapCacheV2NumCells);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.BitmapCacheV2NumCells);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.BitmapCacheV2NumCells, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.BitmapCacheV2NumCells, value);
 			}
 		}
 
@@ -2274,11 +2274,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.ColorPointerFlag);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.ColorPointerFlag);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.ColorPointerFlag, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.ColorPointerFlag, value);
 			}
 		}
 
@@ -2286,11 +2286,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.PointerCacheSize);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.PointerCacheSize);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.PointerCacheSize, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.PointerCacheSize, value);
 			}
 		}
 
@@ -2298,11 +2298,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.KeyboardLayout);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.KeyboardLayout);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.KeyboardLayout, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.KeyboardLayout, value);
 			}
 		}
 
@@ -2310,11 +2310,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.KeyboardType);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.KeyboardType);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.KeyboardType, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.KeyboardType, value);
 			}
 		}
 
@@ -2322,11 +2322,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.KeyboardSubType);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.KeyboardSubType);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.KeyboardSubType, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.KeyboardSubType, value);
 			}
 		}
 
@@ -2334,11 +2334,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.KeyboardFunctionKey);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.KeyboardFunctionKey);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.KeyboardFunctionKey, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.KeyboardFunctionKey, value);
 			}
 		}
 
@@ -2346,11 +2346,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.ImeFileName);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.ImeFileName);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.ImeFileName, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.ImeFileName, value);
 			}
 		}
 
@@ -2358,11 +2358,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.UnicodeInput);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.UnicodeInput);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.UnicodeInput, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.UnicodeInput, value);
 			}
 		}
 
@@ -2370,11 +2370,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.FastPathInput);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.FastPathInput);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.FastPathInput, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.FastPathInput, value);
 			}
 		}
 
@@ -2382,11 +2382,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.BrushSupportLevel);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.BrushSupportLevel);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.BrushSupportLevel, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.BrushSupportLevel, value);
 			}
 		}
 
@@ -2394,11 +2394,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.GlyphSupportLevel);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.GlyphSupportLevel);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.GlyphSupportLevel, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.GlyphSupportLevel, value);
 			}
 		}
 
@@ -2406,11 +2406,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.OffscreenSupportLevel);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.OffscreenSupportLevel);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.OffscreenSupportLevel, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.OffscreenSupportLevel, value);
 			}
 		}
 
@@ -2418,11 +2418,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.OffscreenCacheSize);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.OffscreenCacheSize);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.OffscreenCacheSize, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.OffscreenCacheSize, value);
 			}
 		}
 
@@ -2430,11 +2430,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.OffscreenCacheEntries);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.OffscreenCacheEntries);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.OffscreenCacheEntries, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.OffscreenCacheEntries, value);
 			}
 		}
 
@@ -2442,11 +2442,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.VirtualChannelCompressionFlags);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.VirtualChannelCompressionFlags);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.VirtualChannelCompressionFlags, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.VirtualChannelCompressionFlags, value);
 			}
 		}
 
@@ -2454,11 +2454,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.VirtualChannelChunkSize);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.VirtualChannelChunkSize);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.VirtualChannelChunkSize, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.VirtualChannelChunkSize, value);
 			}
 		}
 
@@ -2466,11 +2466,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.SoundBeepsEnabled);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.SoundBeepsEnabled);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.SoundBeepsEnabled, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.SoundBeepsEnabled, value);
 			}
 		}
 
@@ -2478,11 +2478,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.MultifragMaxRequestSize);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.MultifragMaxRequestSize);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.MultifragMaxRequestSize, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.MultifragMaxRequestSize, value);
 			}
 		}
 
@@ -2490,11 +2490,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.LargePointerFlag);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.LargePointerFlag);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.LargePointerFlag, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.LargePointerFlag, value);
 			}
 		}
 
@@ -2502,11 +2502,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.CompDeskSupportLevel);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.CompDeskSupportLevel);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.CompDeskSupportLevel, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.CompDeskSupportLevel, value);
 			}
 		}
 
@@ -2514,11 +2514,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.SurfaceCommandsEnabled);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.SurfaceCommandsEnabled);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.SurfaceCommandsEnabled, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.SurfaceCommandsEnabled, value);
 			}
 		}
 
@@ -2526,11 +2526,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.FrameMarkerCommandEnabled);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.FrameMarkerCommandEnabled);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.FrameMarkerCommandEnabled, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.FrameMarkerCommandEnabled, value);
 			}
 		}
 
@@ -2538,11 +2538,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RemoteFxOnly);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RemoteFxOnly);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RemoteFxOnly, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RemoteFxOnly, value);
 			}
 		}
 
@@ -2550,11 +2550,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RemoteFxCodec);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RemoteFxCodec);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RemoteFxCodec, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RemoteFxCodec, value);
 			}
 		}
 
@@ -2562,11 +2562,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RemoteFxCodecId);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RemoteFxCodecId);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RemoteFxCodecId, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RemoteFxCodecId, value);
 			}
 		}
 
@@ -2574,11 +2574,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RemoteFxCodecMode);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RemoteFxCodecMode);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RemoteFxCodecMode, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RemoteFxCodecMode, value);
 			}
 		}
 
@@ -2586,11 +2586,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RemoteFxImageCodec);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RemoteFxImageCodec);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RemoteFxImageCodec, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RemoteFxImageCodec, value);
 			}
 		}
 
@@ -2598,11 +2598,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.RemoteFxCaptureFlags);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.RemoteFxCaptureFlags);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.RemoteFxCaptureFlags, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.RemoteFxCaptureFlags, value);
 			}
 		}
 
@@ -2610,11 +2610,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.NSCodec);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.NSCodec);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.NSCodec, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.NSCodec, value);
 			}
 		}
 
@@ -2622,11 +2622,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.NSCodecId);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.NSCodecId);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.NSCodecId, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.NSCodecId, value);
 			}
 		}
 
@@ -2634,11 +2634,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.FrameAcknowledge);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.FrameAcknowledge);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.FrameAcknowledge, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.FrameAcknowledge, value);
 			}
 		}
 
@@ -2646,11 +2646,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.JpegCodec);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.JpegCodec);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.JpegCodec, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.JpegCodec, value);
 			}
 		}
 
@@ -2658,11 +2658,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.JpegCodecId);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.JpegCodecId);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.JpegCodecId, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.JpegCodecId, value);
 			}
 		}
 
@@ -2670,11 +2670,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.JpegQuality);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.JpegQuality);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.JpegQuality, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.JpegQuality, value);
 			}
 		}
 
@@ -2682,11 +2682,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.BitmapCacheV3CodecId);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.BitmapCacheV3CodecId);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.BitmapCacheV3CodecId, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.BitmapCacheV3CodecId, value);
 			}
 		}
 
@@ -2694,11 +2694,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DrawNineGridEnabled);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DrawNineGridEnabled);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DrawNineGridEnabled, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DrawNineGridEnabled, value);
 			}
 		}
 
@@ -2706,11 +2706,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.DrawNineGridCacheSize);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.DrawNineGridCacheSize);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.DrawNineGridCacheSize, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.DrawNineGridCacheSize, value);
 			}
 		}
 
@@ -2718,11 +2718,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.DrawNineGridCacheEntries);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.DrawNineGridCacheEntries);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.DrawNineGridCacheEntries, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.DrawNineGridCacheEntries, value);
 			}
 		}
 
@@ -2730,11 +2730,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DrawGdiPlusEnabled);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DrawGdiPlusEnabled);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DrawGdiPlusEnabled, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DrawGdiPlusEnabled, value);
 			}
 		}
 
@@ -2742,11 +2742,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DrawGdiPlusCacheEnabled);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DrawGdiPlusCacheEnabled);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DrawGdiPlusCacheEnabled, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DrawGdiPlusCacheEnabled, value);
 			}
 		}
 
@@ -2754,11 +2754,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.DeviceRedirection);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.DeviceRedirection);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.DeviceRedirection, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.DeviceRedirection, value);
 			}
 		}
 
@@ -2766,11 +2766,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.DeviceCount);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.DeviceCount);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.DeviceCount, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.DeviceCount, value);
 			}
 		}
 
@@ -2778,11 +2778,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.DeviceArraySize);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.DeviceArraySize);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.DeviceArraySize, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.DeviceArraySize, value);
 			}
 		}
 
@@ -2790,11 +2790,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RedirectDrives);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RedirectDrives);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RedirectDrives, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RedirectDrives, value);
 			}
 		}
 
@@ -2802,11 +2802,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RedirectHomeDrive);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RedirectHomeDrive);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RedirectHomeDrive, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RedirectHomeDrive, value);
 			}
 		}
 
@@ -2814,11 +2814,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_string(wfi, (int) Keys.DrivesToRedirect);
+				return NativeMethods.freerdp_get_param_string(settings, (int) Keys.DrivesToRedirect);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_string(wfi, (int) Keys.DrivesToRedirect, value);
+				NativeMethods.freerdp_set_param_string(settings, (int) Keys.DrivesToRedirect, value);
 			}
 		}
 
@@ -2826,11 +2826,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RedirectSmartCards);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RedirectSmartCards);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RedirectSmartCards, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RedirectSmartCards, value);
 			}
 		}
 
@@ -2838,11 +2838,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RedirectPrinters);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RedirectPrinters);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RedirectPrinters, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RedirectPrinters, value);
 			}
 		}
 
@@ -2850,11 +2850,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RedirectSerialPorts);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RedirectSerialPorts);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RedirectSerialPorts, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RedirectSerialPorts, value);
 			}
 		}
 
@@ -2862,11 +2862,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RedirectParallelPorts);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RedirectParallelPorts);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RedirectParallelPorts, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RedirectParallelPorts, value);
 			}
 		}
 
@@ -2874,11 +2874,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_bool(wfi, (int) Keys.RedirectClipboard);
+				return NativeMethods.freerdp_get_param_bool(settings, (int) Keys.RedirectClipboard);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_bool(wfi, (int) Keys.RedirectClipboard, value);
+				NativeMethods.freerdp_set_param_bool(settings, (int) Keys.RedirectClipboard, value);
 			}
 		}
 
@@ -2886,11 +2886,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.StaticChannelCount);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.StaticChannelCount);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.StaticChannelCount, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.StaticChannelCount, value);
 			}
 		}
 
@@ -2898,11 +2898,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.StaticChannelArraySize);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.StaticChannelArraySize);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.StaticChannelArraySize, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.StaticChannelArraySize, value);
 			}
 		}
 
@@ -2910,11 +2910,11 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.DynamicChannelCount);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.DynamicChannelCount);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.DynamicChannelCount, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.DynamicChannelCount, value);
 			}
 		}
 
@@ -2922,17 +2922,18 @@ namespace AwakeCoding.FreeRDPClient.FreeRDP
 		{
 			get
 			{
-				return NativeMethods.freerdp_client_get_param_uint32(wfi, (int) Keys.DynamicChannelArraySize);
+				return NativeMethods.freerdp_get_param_uint32(settings, (int) Keys.DynamicChannelArraySize);
 			}
 			set
 			{
-				NativeMethods.freerdp_client_set_param_uint32(wfi, (int) Keys.DynamicChannelArraySize, value);
+				NativeMethods.freerdp_set_param_uint32(settings, (int) Keys.DynamicChannelArraySize, value);
 			}
 		}
 
 	}
 
 	public delegate void FreeRDPSettingsChangedEventHandler(object sender, FreeRDPSettingsChangedEventArgs e);
+
 	public class FreeRDPSettingsChangedEventArgs : EventArgs
 	{
 		public FreeRDPSettings.Keys Property  {get;set;}

@@ -536,11 +536,11 @@ namespace AwakeCoding.FreeRDPClient
 			set;
 		}
 
-		public bool RedirectDirectX
-		{
-			get;
-			set;
-		}
+		//public bool RedirectDirectX
+		//{
+		//	get;
+		//	set;
+		//}
 
 		public bool RedirectDrives
 		{

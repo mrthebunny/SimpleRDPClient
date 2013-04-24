@@ -59,12 +59,11 @@ while (<FILE>)
 			$properties = $properties . "\t\t{\n";
 			$properties = $properties . "\t\t\tget\n";
 			$properties = $properties . "\t\t\t{\n";
-			$properties = $properties . "\t\t\t\treturn NativeMethods.freerdp_client_get_param_$fcttype(wfi, (int) Keys.$name);\n";
+			$properties = $properties . "\t\t\t\treturn NativeMethods.freerdp_get_param_$fcttype(settings, (int) Keys.$name);\n";
 			$properties = $properties . "\t\t\t}\n";
 			$properties = $properties . "\t\t\tset\n";
 			$properties = $properties . "\t\t\t{\n";
-			$properties = $properties . "\t\t\t\tNativeMethods.freerdp_client_set_param_$fcttype(wfi, (int) Keys.$name, value);\n";
-# 			$properties = $properties . "\t\t\t\tOnSettingsChanged(Keys.$name);\n";
+			$properties = $properties . "\t\t\t\tNativeMethods.freerdp_set_param_$fcttype(settings, (int) Keys.$name, value);\n";
 			$properties = $properties . "\t\t\t}\n";
 			$properties = $properties . "\t\t}\n";
 			$properties = $properties . "\n";
@@ -81,35 +80,26 @@ print "namespace AwakeCoding.FreeRDPClient.FreeRDP\n";
 print "{\n";
 print "\tpublic sealed class FreeRDPSettings\n";
 print "\t{\n";
-# print "\t\tpublic event FreeRDPSettingsChangedEventHandler SettingsChanged;\n\n";
 print "\t\tpublic enum Keys\n";
 print "\t\t{\n";
 print $keys . "\n";
 print "\t\t}\n";
 
 print "\t\n";
-print "\t\tprivate IntPtr wfi;\n";
+print "\t\tprivate IntPtr settings;\n";
 print "\n";
 print "\t\tpublic FreeRDPSettings(IntPtr wfi)\n";
 print "\t\t{\n";
-print "\t\t\tthis.wfi = wfi;\n";
+print "\t\t\tthis.settings = NativeMethods.freerdp_client_get_settings(wfi);\n";
 print "\t\t}\n";
 print "\n";
-
-# print "\t\tprivate void OnSettingsChanged(Keys key)\n";
-# print "\t\t{\n";
-# print "\t\t\tif (SettingsChanged != null)\n";
-# print "\t\t\t{\n";
-# print "\t\t\t\tSettingsChanged(this, new FreeRDPSettingsChangedEventArgs() { Property = key });\n";
-# print "\t\t\t}\n";
-# print "\t\t}\n";
-# print "\n";
 
 print $properties;
 
 print "\t}\n";
 print "\n";
 print "\tpublic delegate void FreeRDPSettingsChangedEventHandler(object sender, FreeRDPSettingsChangedEventArgs e);\n";
+print "\n";
 print "\tpublic class FreeRDPSettingsChangedEventArgs : EventArgs\n";
 print "\t{\n";
 print "\t\tpublic FreeRDPSettings.Keys Property  {get;set;}\n";

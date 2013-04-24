@@ -88,7 +88,7 @@ namespace AwakeCoding.FreeRDPClient
 
 				callbackDelegate = new FreeRDPCallbackDelegate(FreeRDP_Callback);
 				IntPtr callbackPtr = Marshal.GetFunctionPointerForDelegate(callbackDelegate);
-				NativeMethods.freerdp_client_set_callback_function(wfi, callbackPtr);
+				NativeMethods.freerdp_client_set_client_callback_function(wfi, callbackPtr);
 			}
 			catch (Exception ex)
 			{
@@ -239,7 +239,7 @@ namespace AwakeCoding.FreeRDPClient
 			{
 				components.Dispose();
 
-				NativeMethods.freerdp_client_set_callback_function(wfi, IntPtr.Zero);
+				NativeMethods.freerdp_client_set_client_callback_function(wfi, IntPtr.Zero);
 				callbackDelegate = null;
 
 				FreeWfi();

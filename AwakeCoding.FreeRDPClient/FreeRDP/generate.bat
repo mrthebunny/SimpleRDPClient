@@ -1,0 +1,1 @@
+@perl settings.pl > FreeRDPSettings.cs

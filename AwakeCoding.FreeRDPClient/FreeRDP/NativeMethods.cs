@@ -58,31 +58,34 @@ namespace AwakeCoding.FreeRDPClient
 		public static extern void freerdp_client_focus_out(IntPtr wfi);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern bool freerdp_client_get_param_bool(IntPtr wfi, int id);
+		public static extern IntPtr freerdp_client_get_settings(IntPtr wfi);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern int freerdp_client_set_param_bool(IntPtr wfi, int id, bool param);
+		public static extern bool freerdp_get_param_bool(IntPtr wfi, int id);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern uint freerdp_client_get_param_uint32(IntPtr wfi, int id);
+		public static extern int freerdp_set_param_bool(IntPtr wfi, int id, bool param);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern int freerdp_client_set_param_uint32(IntPtr wfi, int id, uint param);
+		public static extern uint freerdp_get_param_uint32(IntPtr wfi, int id);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern ulong freerdp_client_get_param_uint64(IntPtr wfi, int id);
+		public static extern int freerdp_set_param_uint32(IntPtr wfi, int id, uint param);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern int freerdp_client_set_param_uint64(IntPtr wfi, int id, ulong param);
-
-		[DllImport("libwfreerdp-client", EntryPoint="freerdp_client_get_param_string")]
-		public static extern IntPtr freerdp_client_get_param_string_raw(IntPtr wfi, int id);
+		public static extern ulong freerdp_get_param_uint64(IntPtr wfi, int id);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern int freerdp_client_set_param_string(IntPtr wfi, int id, string param);
+		public static extern int freerdp_set_param_uint64(IntPtr wfi, int id, ulong param);
+
+		[DllImport("libwfreerdp-client", EntryPoint="freerdp_get_param_string")]
+		public static extern IntPtr freerdp_get_param_string_raw(IntPtr wfi, int id);
 
 		[DllImport("libwfreerdp-client")]
-		public static extern int freerdp_client_set_callback_function(IntPtr wfi, IntPtr callbackFunc);
+		public static extern int freerdp_set_param_string(IntPtr wfi, int id, string param);
+
+		[DllImport("libwfreerdp-client")]
+		public static extern int freerdp_client_set_client_callback_function(IntPtr wfi, IntPtr callbackFunc);
 
 
 		[DllImport("libwfreerdp-client")]
@@ -91,7 +94,7 @@ namespace AwakeCoding.FreeRDPClient
 		[DllImport("libwfreerdp-client")]
 		public static extern int freerdp_client_save_settings_to_rdp_file(IntPtr cfi, string filename);
 
-		public static string freerdp_client_get_param_string(IntPtr wfi, int id)
+		public static string freerdp_get_param_string(IntPtr wfi, int id)
 		{
 			// Native function returns a null-terminated ansi char array. 
 			// The memory space allocation and release is handled on the C side.
@@ -99,7 +102,7 @@ namespace AwakeCoding.FreeRDPClient
 
 			string str = null;
 
-			IntPtr pt = freerdp_client_get_param_string_raw(wfi, id);
+			IntPtr pt = freerdp_get_param_string_raw(wfi, id);
 			if (pt != IntPtr.Zero)
 			{
 				str = Marshal.PtrToStringAnsi(pt);

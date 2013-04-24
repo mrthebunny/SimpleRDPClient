@@ -39,32 +39,81 @@ namespace AwakeCoding.FreeRDPClient
 
 		public int AudioRedirectionMode
 		{
-			get;
-			set;
+			get
+			{
+				if (settings.AudioPlayback)
+					return (int) RDPConstants.AUDIO_MODE_REDIRECT;
+
+				if (settings.RemoteConsoleAudio)
+					return (int) RDPConstants.AUDIO_MODE_PLAY_ON_SERVER;
+
+				return (int) RDPConstants.AUDIO_MODE_NONE;
+			}
+			set
+			{
+				bool audioPlayback = false;
+				bool remoteConsoleAudio = false;
+
+				if (value == RDPConstants.AUDIO_MODE_REDIRECT)
+				{
+					audioPlayback = true;
+				}
+				else if (value == RDPConstants.AUDIO_MODE_PLAY_ON_SERVER)
+				{
+					remoteConsoleAudio = true;
+				}
+
+				settings.AudioPlayback = audioPlayback;
+				settings.RemoteConsoleAudio = remoteConsoleAudio;
+			}
 		}
 
 		public int FullScreen
 		{
-			get;
-			set;
+			get
+			{
+				return settings.Fullscreen ? 1 : 0;
+			}
+			set
+			{
+				settings.Fullscreen = (value == 0 ? false : true);
+			}
 		}
 
 		public int KeyboardHookMode
 		{
-			get;
-			set;
+			get
+			{
+				throw new NotSupportedException();
+			}
+			set
+			{
+				throw new NotSupportedException();
+			}
 		}
 
 		public string StartProgram
 		{
-			get;
-			set;
+			get
+			{
+				throw new NotSupportedException();
+			}
+			set
+			{
+				throw new NotSupportedException();
+			}
 		}
 
 		public string WorkDir
 		{
-			get;
-			set;
+			get
+			{
+				throw new NotSupportedException();
+			}
+			set
+			{
+				throw new NotSupportedException();
+			}
 		}
 	}
 }
