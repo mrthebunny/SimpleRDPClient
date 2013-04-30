@@ -63,32 +63,9 @@ namespace AwakeCoding.FreeRDPClient
 			{
 				GlobalInit();
 
-				string[] argv = new string[] { System.IO.Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly().Location) };
-
-				StringBuilder cmdline = new StringBuilder();
-				for (int i = 0; i < argv.Length; i++)
-				{
-					cmdline.Append(argv[i] + " ");
-				}
-
-				System.Diagnostics.Debug.WriteLine(cmdline.ToString());
-
-				wfi = NativeMethods.freerdp_client_new(argv.Length, argv);
-				freeRDPsettings = new FreeRDPSettings(wfi);
-
-				AdvancedSettings = new FreeRDPAdvancedSettings(freeRDPsettings);
-				TransportSettings = new FreeRDPTransportSettings(freeRDPsettings);
-				SecuredSettings = new FreeRDPSecuredSettings(freeRDPsettings);
-
 				Visible = false;
 
-				((FreeRDPAdvancedSettings)AdvancedSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
-				((FreeRDPTransportSettings)TransportSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
-				((FreeRDPSecuredSettings)SecuredSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
-
-				callbackDelegate = new FreeRDPCallbackDelegate(FreeRDP_Callback);
-				IntPtr callbackPtr = Marshal.GetFunctionPointerForDelegate(callbackDelegate);
-				NativeMethods.freerdp_client_set_client_callback_function(wfi, callbackPtr);
+				CreateWfi();
 			}
 			catch (Exception ex)
 			{
@@ -99,6 +76,61 @@ namespace AwakeCoding.FreeRDPClient
 			this.SetStyle(ControlStyles.Selectable, true);
 
 			this.TabStop = true;
+		}
+
+		protected void CreateWfi()
+		{
+			string[] argv = new string[] { System.IO.Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly().Location) };
+
+			StringBuilder cmdline = new StringBuilder();
+			for (int i = 0; i < argv.Length; i++)
+			{
+				cmdline.Append(argv[i] + " ");
+			}
+
+			System.Diagnostics.Debug.WriteLine(cmdline.ToString());
+
+			wfi = NativeMethods.freerdp_client_new(argv.Length, argv);
+			freeRDPsettings = new FreeRDPSettings(wfi);
+
+			AdvancedSettings = new FreeRDPAdvancedSettings(freeRDPsettings);
+			TransportSettings = new FreeRDPTransportSettings(freeRDPsettings);
+			SecuredSettings = new FreeRDPSecuredSettings(freeRDPsettings);
+
+			((FreeRDPAdvancedSettings)AdvancedSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
+			((FreeRDPTransportSettings)TransportSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
+			((FreeRDPSecuredSettings)SecuredSettings).SettingsChanged += FreeRDPClient_SettingsChanged;
+
+			callbackDelegate = new FreeRDPCallbackDelegate(FreeRDP_Callback);
+			IntPtr callbackPtr = Marshal.GetFunctionPointerForDelegate(callbackDelegate);
+			NativeMethods.freerdp_client_set_client_callback_function(wfi, callbackPtr);
+		}
+
+		protected void ReleaseWfi()
+		{
+			if (wfi != IntPtr.Zero)
+			{
+				NativeMethods.freerdp_client_set_client_callback_function(wfi, IntPtr.Zero);
+				callbackDelegate = null;
+
+				NativeMethods.freerdp_client_free(wfi);
+				wfi = IntPtr.Zero;
+			}
+		}
+
+		/// <summary> 
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				components.Dispose();
+				ReleaseWfi();
+			}
+
+			base.Dispose(disposing);
 		}
 
 		private void FreeRDP_Callback(IntPtr wfi, int id, uint param1, uint param2)
@@ -134,6 +166,11 @@ namespace AwakeCoding.FreeRDPClient
 
 				case RDPConstants.FREERDP_CALLBACK_TYPE_DISCONNECTED:
 					System.Diagnostics.Debug.WriteLine("Disconnected invoke? " + InvokeRequired);
+
+					// Recreate FreeRDP resources
+					ReleaseWfi();
+					CreateWfi();
+
 					if (InvokeRequired)
 					{
 						Invoke(new MethodInvoker(() =>
@@ -218,34 +255,6 @@ namespace AwakeCoding.FreeRDPClient
 
 				SettingsChanged(this, e);
 			}
-		}
-
-		protected void FreeWfi()
-		{
-			if (wfi != IntPtr.Zero)
-			{
-				NativeMethods.freerdp_client_free(wfi);
-				wfi = IntPtr.Zero;
-			}
-		}
-
-		/// <summary> 
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				components.Dispose();
-
-				NativeMethods.freerdp_client_set_client_callback_function(wfi, IntPtr.Zero);
-				callbackDelegate = null;
-
-				FreeWfi();
-			}
-
-			base.Dispose(disposing);
 		}
 
 		public RDPClientVersion ClientVersion
@@ -361,8 +370,6 @@ namespace AwakeCoding.FreeRDPClient
 
 			if (parentForm != null)
 			{
-				//parentForm.ResizeEnd += parentForm_ResizeEnd;
-				
 				parentForm.Deactivate += parentForm_Deactivate;
 				parentForm.Activated += parentForm_Activated;
 			}
@@ -372,38 +379,14 @@ namespace AwakeCoding.FreeRDPClient
 			Visible = true;
 			IsConnected = true;
 
-			//if (Connected != null)
-			//{
-			//	Connected(this, EventArgs.Empty);
-			//}
-
 			Focus();
 		}
 
 		private void ApplySettings()
 		{
 			freeRDPsettings.ParentWindowId = (ulong)this.Handle.ToInt64();
-			freeRDPsettings.Domain = this.Domain;
-			freeRDPsettings.ServerHostname = this.Server;
-			freeRDPsettings.Username = this.UserName;
-			freeRDPsettings.Password = ((FreeRDPAdvancedSettings) this.AdvancedSettings).ClearTextPassword;
-			freeRDPsettings.DesktopHeight = (uint) DesktopHeight;
-			freeRDPsettings.DesktopWidth = (uint) DesktopWidth;
 			freeRDPsettings.Decorations = false;
 			freeRDPsettings.IgnoreCertificate = true;
-			freeRDPsettings.SmartSizing = AdvancedSettings.SmartSizing;
-
-			if (AdvancedSettings.RDPPort > 0)
-			{
-				freeRDPsettings.ServerPort = (uint) AdvancedSettings.RDPPort;
-			}
-
-			if (ColorDepth > 0)
-			{
-				freeRDPsettings.ColorDepth = (uint) ColorDepth;
-			}
-
-			// gateway ?
 		}
 
 		public void Disconnect()
@@ -428,10 +411,6 @@ namespace AwakeCoding.FreeRDPClient
 			NativeMethods.freerdp_client_stop(wfi);
 
 			IsConnected = false;
-			//if (Disconnected != null)
-			//{
-			//	Disconnected(this, new DisconnectedEventArgs(0));
-			//}
 		}
 
 		public void Attach(Control parent)
