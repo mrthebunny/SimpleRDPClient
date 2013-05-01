@@ -23,6 +23,7 @@ using MSTSCLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using IMsTscAxEvents_OnDisconnectedEventHandler = AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler;
@@ -37,6 +38,7 @@ namespace AwakeCoding.MsRdpClient
 		// Last detected version of the ActiveX control
 		private static RDPClientVersion lastDetectedVersion = RDPClientVersion.Unknown;
 
+		private Control parent;
 		private IMsRDPClient client;
 		private InterfaceProxy<IAdvancedSettings> advancedSettingsProxy;
 		private InterfaceProxy<ITransportSettings> transportSettingsProxy;
@@ -44,6 +46,11 @@ namespace AwakeCoding.MsRdpClient
 		private AxHost host;
 
 		public MsRdpClientAdapter()
+		{
+			// CreateClient();
+		}
+
+		private void CreateClient()
 		{
 			try
 			{
@@ -53,15 +60,12 @@ namespace AwakeCoding.MsRdpClient
 				TryVersion(RDPClientVersion.MsRDPClient60, () => { client = new MsRDPClient60(); });
 				TryVersion(RDPClientVersion.MsRDPClient50, () => { client = new MsRDPClient50(); });
 
-				if (lastDetectedVersion == RDPClientVersion.Unknown)
+				if (client == null || lastDetectedVersion == RDPClientVersion.Unknown)
 				{
 					throw new NotSupportedException("MsRrdpClient could not be instanciated");
 				}
 
 				System.Diagnostics.Debug.WriteLine("AxRDPClient version instanciated: " + lastDetectedVersion);
-
-				host = (AxHost)client;
-				host.HandleCreated += MsRdpClientAdapter_HandleCreated;
 
 				RegisterEvents();
 			}
@@ -79,51 +83,22 @@ namespace AwakeCoding.MsRdpClient
 			get { return true; }
 		}
 
-		void MsRdpClientAdapter_HandleCreated(object sender, EventArgs e)
-		{
-			// Finish initialization - com object proxies
-
-			// Rewrap to "authentication settings" ?
-			IMsTscNonScriptable securedSettingsOcx = (IMsTscNonScriptable)client.GetOcx();
-			//securedSettingsProxy = new InterfaceProxy<ISecuredSettings>();
-			//securedSettingsProxy.TargetInstance = securedSettingsOcx;
-			//securedSettingsProxy.TargetType = typeof(IMsTscNonScriptable);
-			//SecuredSettings = securedSettingsProxy.GetStrongTypedProxy();
-
-			TrySetSecuredSettings(client.SecuredSettings, typeof(IMsTscSecuredSettings));
-			TrySetSecuredSettings(client.SecuredSettings2, typeof(IMsRdpClientSecuredSettings));
-
-			TrySetAdvancedSettings(client.AdvancedSettings9, typeof(MSTSCLib.IMsRdpClientAdvancedSettings8));
-			TrySetAdvancedSettings(client.AdvancedSettings8, typeof(MSTSCLib.IMsRdpClientAdvancedSettings7));
-			TrySetAdvancedSettings(client.AdvancedSettings7, typeof(MSTSCLib.IMsRdpClientAdvancedSettings6));
-			TrySetAdvancedSettings(client.AdvancedSettings6, typeof(MSTSCLib.IMsRdpClientAdvancedSettings5));
-			TrySetAdvancedSettings(client.AdvancedSettings5, typeof(MSTSCLib.IMsRdpClientAdvancedSettings4));
-			TrySetAdvancedSettings(client.AdvancedSettings3, typeof(MSTSCLib.IMsRdpClientAdvancedSettings2));
-			TrySetAdvancedSettings(client.AdvancedSettings2, typeof(MSTSCLib.IMsRdpClientAdvancedSettings));
-			TrySetAdvancedSettings(client.AdvancedSettings, typeof(MSTSCLib.IMsTscAdvancedSettings));
-
-			transportSettingsProxy = new InterfaceProxy<ITransportSettings>();
-			transportSettingsProxy.TargetInstance = client.TransportSettings2;
-			transportSettingsProxy.TargetType = typeof(IMsRdpClientTransportSettings2);
-			TransportSettings = transportSettingsProxy.GetStrongTypedProxy();
-
-			host.Width = host.Parent.ClientRectangle.Width;
-			host.Height = host.Parent.ClientRectangle.Height;
-			host.Dock = DockStyle.Fill;
-
-			host.Visible = false;
-		}
-
 		private void TrySetAdvancedSettings(object targetInstance, Type targetType)
 		{
-			if (AdvancedSettings == null && targetInstance != null)
+			try
 			{
-				advancedSettingsProxy = new InterfaceProxy<IAdvancedSettings>();
-				advancedSettingsProxy.TargetInstance = targetInstance;
-				advancedSettingsProxy.TargetType = targetType;
-				AdvancedSettings = advancedSettingsProxy.GetStrongTypedProxy();
-
-				advancedSettingsProxy.SettingsChanged += advancedSettingsProxy_SettingsChanged;
+				if (AdvancedSettings == null && targetInstance != null)
+				{
+					advancedSettingsProxy = new InterfaceProxy<IAdvancedSettings>();
+					advancedSettingsProxy.TargetInstance = targetInstance;
+					advancedSettingsProxy.TargetType = targetType;
+					AdvancedSettings = advancedSettingsProxy.GetStrongTypedProxy();
+					advancedSettingsProxy.SettingsChanged += advancedSettingsProxy_SettingsChanged;
+				}
+			}
+			catch
+			{
+				AdvancedSettings = null;
 			}
 		}
 
@@ -137,12 +112,21 @@ namespace AwakeCoding.MsRdpClient
 
 		private void TrySetSecuredSettings(object targetInstance, Type targetType)
 		{
-			if (SecuredSettings == null && targetInstance != null)
+			try
 			{
-				securedSettingsProxy = new InterfaceProxy<ISecuredSettings>();
-				securedSettingsProxy.TargetInstance = targetInstance;
-				securedSettingsProxy.TargetType = targetType;
-				SecuredSettings = securedSettingsProxy.GetStrongTypedProxy();
+				if (SecuredSettings == null && targetInstance != null)
+				{
+					securedSettingsProxy = new InterfaceProxy<ISecuredSettings>();
+					securedSettingsProxy.TargetInstance = targetInstance;
+					securedSettingsProxy.TargetType = targetType;
+					SecuredSettings = securedSettingsProxy.GetStrongTypedProxy();
+
+					string test = SecuredSettings.WorkDir;
+				}
+			}
+			catch
+			{
+				SecuredSettings = null;
 			}
 		}
 
@@ -156,8 +140,21 @@ namespace AwakeCoding.MsRdpClient
 
 		public void Attach(Control parent)
 		{
-			parent.Controls.Add((Control)client);
+			this.parent = parent;
+			CreateClient();
+
+			parent.SizeChanged += parent_SizeChanged;
 		}
+
+		void parent_SizeChanged(object sender, EventArgs e)
+		{
+			if (host != null && parent != null) 
+			{
+				host.Size = new System.Drawing.Size(parent.ClientRectangle.Width, parent.ClientRectangle.Height);
+			}
+
+		}
+
 
 		private void RegisterEvents()
 		{
@@ -214,12 +211,48 @@ namespace AwakeCoding.MsRdpClient
 				if (lastDetectedVersion == RDPClientVersion.Unknown || lastDetectedVersion == clientVersion)
 				{
 					doApplyVersion();
+					parent.Controls.Add((Control)client); // can throw a COMException
+
+					// Finish initialization - com object proxies
+					TrySetSecuredSettings(client.SecuredSettings, typeof(IMsTscSecuredSettings));
+					TrySetSecuredSettings(client.SecuredSettings2, typeof(IMsRdpClientSecuredSettings));
+
+					TrySetAdvancedSettings(client.AdvancedSettings9, typeof(MSTSCLib.IMsRdpClientAdvancedSettings8));
+					TrySetAdvancedSettings(client.AdvancedSettings8, typeof(MSTSCLib.IMsRdpClientAdvancedSettings7));
+					TrySetAdvancedSettings(client.AdvancedSettings7, typeof(MSTSCLib.IMsRdpClientAdvancedSettings6));
+					TrySetAdvancedSettings(client.AdvancedSettings6, typeof(MSTSCLib.IMsRdpClientAdvancedSettings5));
+					TrySetAdvancedSettings(client.AdvancedSettings5, typeof(MSTSCLib.IMsRdpClientAdvancedSettings4));
+					TrySetAdvancedSettings(client.AdvancedSettings3, typeof(MSTSCLib.IMsRdpClientAdvancedSettings2));
+					TrySetAdvancedSettings(client.AdvancedSettings2, typeof(MSTSCLib.IMsRdpClientAdvancedSettings));
+					TrySetAdvancedSettings(client.AdvancedSettings, typeof(MSTSCLib.IMsTscAdvancedSettings));
+
+					if (AdvancedSettings == null)
+					{
+						throw new NotSupportedException();
+					}
+
+					transportSettingsProxy = new InterfaceProxy<ITransportSettings>();
+					transportSettingsProxy.TargetInstance = client.TransportSettings2;
+					transportSettingsProxy.TargetType = typeof(IMsRdpClientTransportSettings2);
+					TransportSettings = transportSettingsProxy.GetStrongTypedProxy();
+
+					host = (AxHost)client;
+					host.Width = host.Parent.ClientRectangle.Width;
+					host.Height = host.Parent.ClientRectangle.Height;
+
+					host.Visible = false;
+
 					lastDetectedVersion = clientVersion;
 				}
 			}
-			catch
+			catch (COMException ex)
 			{
+				if (parent.Controls.Contains((Control)client))
+					parent.Controls.Remove((Control)client); // yes, this is required!
 
+				host = null;
+				client = null;
+				System.Diagnostics.Debug.WriteLine(clientVersion + " failed to initialize: " + ex.Message);
 				lastDetectedVersion = RDPClientVersion.Unknown;
 			}
 		}

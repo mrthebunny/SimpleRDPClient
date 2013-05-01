@@ -273,7 +273,6 @@ namespace AwakeCoding.FreeRDPClient
 
 			rdpClientImpl.DesktopWidth = DesktopWidth;
 			rdpClientImpl.DesktopHeight = DesktopHeight;
-			this.AutoScrollMinSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
 
 			rdpClientImpl.Connect();
 			AdjustSizeAndPosition();
@@ -462,8 +461,16 @@ namespace AwakeCoding.FreeRDPClient
 		// if PARENT size is greater than DesktopHeight*DesktopWidth, center panel in parent container
 		private void AdjustSizeAndPosition()
 		{
+			if (rdpClientImpl.HandleSizingInternally)
+			{
+				AutoScroll = false;
+			}
+
 			if (rdpClientImpl != null && !rdpClientImpl.HandleSizingInternally)
 			{
+				AutoScroll = true;
+				this.AutoScrollMinSize = new System.Drawing.Size(DesktopWidth, DesktopHeight);
+
 				int x = Location.X;
 				int y = Location.Y;
 				int width;

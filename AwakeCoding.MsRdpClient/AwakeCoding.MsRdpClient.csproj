@@ -60,11 +60,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MsRdpClient\IMsRDPClient.cs" />
-    <Compile Include="MsRdpClient\MsRDPClient50.cs" />
-    <Compile Include="MsRdpClient\MsRDPClient60.cs" />
-    <Compile Include="MsRdpClient\MsRDPClient61.cs" />
-    <Compile Include="MsRdpClient\MsRDPClient70.cs" />
-    <Compile Include="MsRdpClient\MsRDPClient80.cs" />
+    <Compile Include="MsRdpClient\MsRDPClient50.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MsRdpClient\MsRDPClient60.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MsRdpClient\MsRDPClient61.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MsRdpClient\MsRDPClient70.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MsRdpClient\MsRDPClient80.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MsRdpClient\MsRdpClientAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

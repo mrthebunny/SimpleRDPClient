@@ -32,9 +32,18 @@ namespace ActiveXClient
 		[STAThread]
 		static void Main()
 		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Form1());
+			//try
+			//{
+				Application.EnableVisualStyles();
+				Application.SetCompatibleTextRenderingDefault(false);
+				Application.Run(new Form1());
+			//}
+			//catch (Exception ex)
+			//{
+			//	System.Diagnostics.Debug.WriteLine("An unhandled exception occurred: " + ex.Message + Environment.NewLine + Environment.NewLine +
+			//		ex.ToString());
+			//	 throw;
+			//}
 		}
 	}
 }

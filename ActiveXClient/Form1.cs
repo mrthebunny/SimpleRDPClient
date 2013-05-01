@@ -41,16 +41,143 @@ namespace ActiveXClient
 		private bool smartSizing = false;
 		private int backgroundInput = 0;
 
+		private AxHost rdpConnection;
+
 		public Form1()
 		{
 			InitializeComponent();
 
-			ReadSettings(
-			    Environment.GetEnvironmentVariable("HOMEDRIVE") +
-			    Path.Combine(
-			    Environment.GetEnvironmentVariable("HOMEPATH"),
-			    @"Dropbox\connect.txt"));
+			this.Load += Form1_HandleCreated;
+		}
 
+		void Form1_HandleCreated(object sender, EventArgs e)
+		{
+			TryCreateRDPControl();
+			ReadSettings(
+				Environment.GetEnvironmentVariable("HOMEDRIVE") +
+				Path.Combine(
+				Environment.GetEnvironmentVariable("HOMEPATH"),
+				@"Dropbox\connect.txt"));
+
+		}
+
+		void Form1_Shown(object sender, EventArgs e)
+		{
+			//TryCreateRDPControl();
+			//ReadSettings(
+			//	Environment.GetEnvironmentVariable("HOMEDRIVE") +
+			//	Path.Combine(
+			//	Environment.GetEnvironmentVariable("HOMEPATH"),
+			//	@"Dropbox\connect.txt"));
+
+		}
+
+		private void TryCreateRDPControl()
+		{
+			this.rdpConnection = null;
+			try
+			{
+				this.rdpConnection = new AxMSTSCLib.AxMsRdpClient8NotSafeForScripting();
+				//this.rdpConnection.CreateControl();
+
+				((AxMSTSCLib.AxMsRdpClient8NotSafeForScripting)this.rdpConnection).OnConnected += new System.EventHandler(this.rdpConnection_OnConnected);
+				((AxMSTSCLib.AxMsRdpClient8NotSafeForScripting)this.rdpConnection).OnDisconnected += new AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler(this.rdpConnection_OnDisconnected);
+				InitRDPControl();
+			
+				txtStatus.Text = "Ms RDP Component version 8";
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine(ex.ToString());
+				this.rdpConnection = null;
+			}
+
+			try
+			{
+				if (this.rdpConnection == null)
+				{
+					this.rdpConnection = new AxMSTSCLib.AxMsRdpClient7NotSafeForScripting();
+					((AxMSTSCLib.AxMsRdpClient7NotSafeForScripting)this.rdpConnection).OnConnected += new System.EventHandler(this.rdpConnection_OnConnected);
+					((AxMSTSCLib.AxMsRdpClient7NotSafeForScripting)this.rdpConnection).OnDisconnected += new AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler(this.rdpConnection_OnDisconnected);
+					InitRDPControl();
+
+					txtStatus.Text = "Ms RDP Component version 6";
+				}
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine(ex.ToString());
+				this.rdpConnection = null;
+			}
+
+			try
+			{
+				if (this.rdpConnection == null)
+				{
+					this.rdpConnection = new AxMSTSCLib.AxMsRdpClient6NotSafeForScripting();
+					((AxMSTSCLib.AxMsRdpClient6NotSafeForScripting)this.rdpConnection).OnConnected += new System.EventHandler(this.rdpConnection_OnConnected);
+					((AxMSTSCLib.AxMsRdpClient6NotSafeForScripting)this.rdpConnection).OnDisconnected += new AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler(this.rdpConnection_OnDisconnected);
+					InitRDPControl();
+					txtStatus.Text = "Ms RDP Component version 6";
+				}
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine(ex.ToString());
+				rdpConnection = null;
+			}
+
+			try
+			{
+				if (rdpConnection == null)
+				{
+					rdpConnection = new AxMSTSCLib.AxMsRdpClient5NotSafeForScripting();
+					((AxMSTSCLib.AxMsRdpClient5NotSafeForScripting)this.rdpConnection).OnConnected += new System.EventHandler(this.rdpConnection_OnConnected);
+					((AxMSTSCLib.AxMsRdpClient5NotSafeForScripting)this.rdpConnection).OnDisconnected += new AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler(this.rdpConnection_OnDisconnected);
+					InitRDPControl();
+					txtStatus.Text = "Ms RDP Component version 5";
+				}
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine(ex.ToString());
+				rdpConnection = null;
+			}
+
+
+			if (rdpConnection == null)
+			{
+				txtStatus.Text = "ERROR instanciating Ms RDP Component version";
+				this.tabControl1.Controls.Remove(tabPageActiveX);
+				return;
+			}
+		}
+
+		private void InitRDPControl()
+		{
+			try
+			{
+				this.rdpConnection.BeginInit();
+				this.rdpConnection.Dock = System.Windows.Forms.DockStyle.Fill;
+				this.rdpConnection.Enabled = true;
+				this.rdpConnection.Location = new System.Drawing.Point(0, 0);
+				this.rdpConnection.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+				this.rdpConnection.Name = "rdpConnection";
+				//this.rdpConnection.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("rdpConnection.OcxState")));
+				this.rdpConnection.Size = new System.Drawing.Size(909, 529);
+				this.rdpConnection.TabIndex = 0;
+				this.rdpConnection.EndInit();
+
+				this.toolStripContainer1.ContentPanel.Controls.Add(this.rdpConnection);
+				this.rdpConnection.CreateControl();
+			}
+			catch
+			{
+				if (this.toolStripContainer1.ContentPanel.Controls.Contains(rdpConnection))
+					this.toolStripContainer1.ContentPanel.Controls.Remove(rdpConnection);
+
+				throw;
+			}
 		}
 
 		private void ReadSettings(string path)
@@ -95,19 +222,19 @@ namespace ActiveXClient
 			//rdpConnection.DesktopWidth = rdpConnection.Width;
 			//rdpConnection.DesktopHeight = rdpConnection.Height;
 
-			rdpConnection.Server = server;
-			rdpConnection.UserName = userName;
-			rdpConnection.Domain = domain;
+			((IMsRdpClient) rdpConnection.GetOcx()).Server = server;
+			((IMsRdpClient) rdpConnection.GetOcx()).UserName = userName;
+			((IMsRdpClient) rdpConnection.GetOcx()).Domain = domain;
 
 			if (bpp > 0)
 			{
-				rdpConnection.ColorDepth = bpp;
+				((IMsRdpClient) rdpConnection.GetOcx()).ColorDepth = bpp;
 			}
 
-			rdpConnection.AdvancedSettings2.ClearTextPassword = clearTextPassword;
-			rdpConnection.AdvancedSettings2.SmartSizing = smartSizing;
-			rdpConnection.AdvancedSettings.allowBackgroundInput = backgroundInput;
-			rdpConnection.Connect();
+			((IMsRdpClient) rdpConnection.GetOcx()).AdvancedSettings2.ClearTextPassword = clearTextPassword;
+			((IMsRdpClient) rdpConnection.GetOcx()).AdvancedSettings2.SmartSizing = smartSizing;
+			((IMsRdpClient) rdpConnection.GetOcx()).AdvancedSettings.allowBackgroundInput = backgroundInput;
+			((IMsRdpClient) rdpConnection.GetOcx()).Connect();
 		}
 
 
@@ -140,7 +267,7 @@ namespace ActiveXClient
 
 		private void toolStripButtonDisconnect_Click(object sender, EventArgs e)
 		{
-			rdpConnection.Disconnect();
+			((IMsRdpClient) rdpConnection.GetOcx()).Disconnect();
 		}
 
 		private void toolStripButtonDisconnect2_Click(object sender, EventArgs e)
@@ -278,24 +405,34 @@ namespace ActiveXClient
 		{
 			smartSizing = cxSmartSize.Checked;
 
-			if (rdpConnection.Connected != 0)
+			if (((IMsRdpClient) rdpConnection.GetOcx()).Connected != 0)
 			{
-				rdpConnection.AdvancedSettings9.SmartSizing = smartSizing;
+				try
+				{
+					((IMsRdpClient5)rdpConnection.GetOcx()).AdvancedSettings2.SmartSizing = smartSizing;
+				}
+				catch (Exception ex)
+				{
+					System.Diagnostics.Debug.WriteLine(ex.Message);
+				}
 			}
 
 			if (rdpClientFrame1.IsConnected)
 			{
 				rdpClientFrame1.AdvancedSettings.SmartSizing = smartSizing;
+				System.Diagnostics.Debug.WriteLine("test: SmartSizing=" + rdpClientFrame1.AdvancedSettings.SmartSizing);
 			}
 
 			if (rdpClientFrame2.IsConnected)
 			{
 				rdpClientFrame2.AdvancedSettings.SmartSizing = smartSizing;
+				System.Diagnostics.Debug.WriteLine("test: SmartSizing=" + rdpClientFrame2.AdvancedSettings.SmartSizing);
 			}
 
 			if (rdpClientFrame3.IsConnected)
 			{
 				rdpClientFrame3.AdvancedSettings.SmartSizing = smartSizing;
+				System.Diagnostics.Debug.WriteLine("test: SmartSizing=" + rdpClientFrame3.AdvancedSettings.SmartSizing);
 			}
 		}
 
